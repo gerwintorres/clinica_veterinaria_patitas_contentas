@@ -1,0 +1,43 @@
+.barra{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 1rem;
+    
+    .lado-izq{
+        display: flex;
+        img{
+            height: 6rem;
+            width: 6rem;
+        }
+        .titulo{
+            max-width: 20rem;
+            color: $azul_oscuro;
+            text-decoration: none;
+            line-height: 1.2;
+            font-weight: 800;
+            font-family: $fuente_secundaria;
+            font-size: 1.8rem;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            margin-left: 0.8rem;
+
+            .segunda_parte{
+                color: $azul_claro;
+            }
+        }
+    }
+}
+
+.navegacion{
+
+    display: flex;
+    align-items: center;
+
+    a{
+        color: $negro;
+        font-size: 1.5rem;
+        margin-right: 2rem;
+        font-weight: 600;
+    }
+}

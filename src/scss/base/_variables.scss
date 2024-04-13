@@ -1,7 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+@import url('https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 // Fuentes
-$fuente_principal: 'Lato', sans-serif;
+$fuente_principal: 'Inter', sans-serif;
+$fuente_secundaria: 'Poppins', sans-serif;
 
 // Tamaño de Media Queries
 $telefono: 480px;
@@ -10,8 +12,8 @@ $desktop: 1024px;
 
 // Colores
 $negro: #000000;
-$amarillo: #E08709;;
-$verde: #71B100;
+$azul_oscuro: #231F57;;
+$azul_claro: #30BDBC;
 $blanco: #FFFFFF;
 $gris: #e1e1e1;
 $grisOscuro: #333333;

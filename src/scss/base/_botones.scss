@@ -1,0 +1,6 @@
+.boton-blanco, .navegacion .boton-blanco{
+    @include boton($blanco, $azul_oscuro, $azul_oscuro);  
+}
+.boton-azul, .boton-azul, .navegacion .boton-azul {
+    @include boton($azul_oscuro, $blanco, $azul_oscuro);
+}
