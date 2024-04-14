@@ -1,0 +1,35 @@
+.contenido-eslogan{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+
+    h1{
+        color: $azul_oscuro;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 5.8rem;
+        text-align: left;
+        line-height: 1.1;
+    }
+    .eslogan{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:flex-start;
+        background-image:url("../../build/img/Vector1.svg");
+        background-size: contain; /* Ajusta la imagen para cubrir todo el cuadrado */
+        background-repeat: no-repeat;
+        background-position: center;
+        background-position-y: 45%; /* Mover un poco hacia arriba */
+        background-position-x: 0%;
+        background-size: 80%;
+    }
+    .eslogan_img{
+        width:100%; /* Ancho del cuadrado */
+        height: 54rem; /* Alto del cuadrado */
+        background-image: url('../../build/img/imagen_seccion_eslogan.png'); /* Ruta de la imagen */
+        background-size: cover; /* Ajusta la imagen para cubrir todo el cuadrado */
+        background-position: center; 
+        border-radius: 4rem;
+    }
+}

@@ -12,7 +12,9 @@ body {
 }
 p {
     color: $negro;
-    font-size: 2rem;
+    text-align: justify;
+    font-size: 1.7rem;
+    font-weight: 400; 
 }
 .contenedor {
     width: 95%;
@@ -32,17 +34,18 @@ picture {
 
 h1, h2, h3 {
     font-family: $fuente_principal;
-    margin: calc($separacion / 2) 0;
-    font-weight: 300;
-    text-align: center;
-    
+    margin: calc($separacion / 2) 0; 
 }
 
 h1 {
     font-size: 3.8rem;
 }
 h2 {
-    font-size: 3.4rem;
+    font-family: $fuente_principal;
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 7rem;
 }
 h3 {
     font-size: 3rem;

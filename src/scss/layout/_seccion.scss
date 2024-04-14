@@ -1,0 +1,19 @@
+.seccion-principal{
+    h2{
+        font-size: 3rem;
+        font-weight: 800;
+        text-align: center;
+        margin-top: 8rem;
+    }
+
+    .seccion{
+        display: grid;
+        grid-template-columns: 0.7fr 1fr;
+
+        span{
+            margin-top: 4rem;
+            font-weight: 800;
+        }
+        
+    }
+}
