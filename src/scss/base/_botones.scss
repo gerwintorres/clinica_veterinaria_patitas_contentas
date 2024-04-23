@@ -4,3 +4,6 @@
 .boton-azul, .boton-azul, .navegacion .boton-azul {
     @include boton($azul_oscuro, $blanco, $azul_oscuro);
 }
+.boton-chatbot{
+    @include boton($blanco, $negro, $azul_oscuro);
+}

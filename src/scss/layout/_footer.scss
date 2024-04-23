@@ -1,7 +1,19 @@
-.contenedor-footer{
+.footer{
     width: 98%;
     max-width: 140rem;
-    margin: 5rem auto;
+    margin-right: auto;
+    margin-left: auto;
+
+    p{
+        font-weight: 400;
+        font-size: 1.4rem;
+        text-align: center;
+    }
+}
+
+.contenedor-footer{
+    width: 100%;
+    
     background-color: $azul_oscuro;
     display: grid;
     grid-template-columns: 1.3fr 1fr 1.5fr 1fr;

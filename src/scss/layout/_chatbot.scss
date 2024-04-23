@@ -1,0 +1,21 @@
+.contenedor-chatbot{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+
+    button{
+        color: $negro;
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 1.5rem;
+        box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.2);
+
+        &:hover{
+            background-color: $azul_oscuro;
+            color: $blanco;
+            transition: all 0.5s;
+        
+        }
+    }
+}
