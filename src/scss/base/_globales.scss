@@ -9,12 +9,12 @@ body {
     font-family: $fuente_principal;
     font-size: 1.6rem;
     line-height: 1.8;
+    color: $negro;
 }
 p {
-    color: $negro;
     text-align: justify;
     font-size: 1.7rem;
-    font-weight: 400; 
+    font-weight: 400;
 }
 .contenedor {
     width: 95%;
@@ -49,6 +49,7 @@ h2 {
 }
 h3 {
     font-size: 3rem;
+    margin: 0;
 }
 h4 {
     font-size: 2.6rem;

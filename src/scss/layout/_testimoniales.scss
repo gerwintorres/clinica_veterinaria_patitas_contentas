@@ -1,0 +1,24 @@
+.testimoniales-contenedor-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.4rem;
+
+    .testimoniales-card{
+        background-color: $azul_claro;
+        padding: 4rem;
+        border-radius: 2.4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        img{
+            width: 5.6rem;
+            height: 5.6rem;
+        }
+
+        strong{
+            text-transform: uppercase;
+        }
+    }
+}

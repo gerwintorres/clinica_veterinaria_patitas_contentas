@@ -1,0 +1,36 @@
+.estadisticas{
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+
+    .estadisticas-img{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img{
+            width: 43.8rem;
+            height: 40.3rem;
+        }
+    }
+
+    .estadisticas-informacion{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr); 
+        grid-column-gap: 5rem;
+        padding: 5rem;
+
+        h3{
+            font-weight: 900;
+            font-size: 3.5rem;
+            color: $azul_oscuro;
+        }
+
+        p{
+            font-weight: 500;
+            margin: 0;
+        }
+    }
+}
