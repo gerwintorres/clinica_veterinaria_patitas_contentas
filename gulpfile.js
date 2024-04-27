@@ -46,7 +46,7 @@ function imagenes() {
     return src(paths.imagenes)
         .pipe(cache(imagemin({ optimizationLevel: 3 })))
         .pipe(dest('build/img'))
-        .pipe(notify({ message: 'Imagen Completada' }));
+        // .pipe(notify({ message: 'Imagen Completada' }));
 }
 
 // Crea versiones WebP de las imagenes originales y las guarda en la carpeta 'build/img'
@@ -54,7 +54,7 @@ function versionWebp() {
     return src(paths.imagenes)
         .pipe(webp())
         .pipe(dest('build/img'))
-        .pipe(notify({ message: 'Imagen Completada' }));
+        // .pipe(notify({ message: 'Imagen Completada' }));
 }
 
 // Observa cambios en los archivos SCSS, JavaScript e imagenes.
