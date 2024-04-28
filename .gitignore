@@ -1,1 +1,10 @@
+#js
 node_modules/
+
+
+
+
+#py
+env/
+venv/
+__pycache__/
