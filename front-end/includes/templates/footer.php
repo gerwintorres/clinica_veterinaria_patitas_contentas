@@ -7,11 +7,11 @@
             <div class="footer-2">
                 <h6>Explora</h6>
                 <ul class="navegacion-footer">
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="servicios.html">Servicios</a></li>
-                    <li><a href="nosotros.html">Nosotros</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="contactanos.html">Contáctanos</a></li>
+                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="servicios.php">Servicios</a></li>
+                    <li><a href="nosotros.php">Nosotros</a></li>
+                    <li><a href="blog.php">Blog</a></li>
+                    <li><a href="contactanos.php">Contáctanos</a></li>
                 </ul>
             </div>
             <div class="footer-3">
@@ -59,10 +59,10 @@
                 <h6>Síguenos</h6>
                 <div class="navegacion-footer">
                     <ul>
-                        <li><a href="index.html">Facebook</a></li>
-                        <li><a href="servicios.html">Instagram</a></li>
-                        <li><a href="nosotros.html">X</a></li>
-                        <li><a href="blog.html">Youtube</a></li>
+                        <li><a href="index.php">Facebook</a></li>
+                        <li><a href="servicios.php">Instagram</a></li>
+                        <li><a href="nosotros.php">X</a></li>
+                        <li><a href="blog.php">Youtube</a></li>
                     </ul>
                 </div>
             </div>

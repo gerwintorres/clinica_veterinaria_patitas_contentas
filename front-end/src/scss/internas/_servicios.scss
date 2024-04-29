@@ -32,6 +32,10 @@
         text-align: left;
         margin-bottom: 0;
         margin-top: 0;
+
+        &.titulo-vision{
+            text-align: right;
+        }
     }
 
     p{
@@ -41,5 +45,5 @@
     img{
         width: 75%;
         height: 100%;
-    }
+    } 
 }
