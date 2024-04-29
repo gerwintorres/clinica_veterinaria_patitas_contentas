@@ -45,7 +45,7 @@ h1 {
     font-size: 3.8rem;
 }
 h2 {
-    font-family: $fuente_principal;
+    font-family: $fuente_principal; 
     font-size: 3rem;
     font-weight: 800;
     text-align: center;
@@ -57,4 +57,18 @@ h3 {
 }
 h4 {
     font-size: 2.6rem;
+}
+.contenido-centrado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.titulo-h1-pagina{
+    font-size: 5rem;
+    font-weight: 800;
+    color: $azul_oscuro;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.1;
+    margin-top: 4rem;
 }

@@ -43,5 +43,10 @@
         &:last-child {
             margin-right: 0;
           }
+
+        &.activo{
+            color: $azul_oscuro;
+            font-weight: 900;
+        }
     }
 }

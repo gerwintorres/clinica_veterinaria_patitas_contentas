@@ -1,0 +1,45 @@
+.articulo-servicios-izq{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    margin-top: 4rem;
+
+    .articulo-servicios-titulo{
+        color: $azul_oscuro;
+        text-align: left;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    p{
+        margin-top: 0;
+    }
+
+    img{
+        width: 75%;
+        height: 100%;
+    }
+}
+
+.articulo-servicios-der{
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+    margin-top: 4rem;
+
+    .articulo-servicios-titulo{
+        color: $azul_oscuro;
+        text-align: left;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    p{
+        margin-top: 0;
+    }
+
+    img{
+        width: 75%;
+        height: 100%;
+    }
+}
