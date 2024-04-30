@@ -10,6 +10,7 @@
             <a href="contactanos.html" class="boton-azul">Contáctanos Ya!</a>        
         </div>
         <div class="eslogan_img">
+            <img src="./build/img/imagen_principal.webp" alt="">
         </div>
     </div> 
     
