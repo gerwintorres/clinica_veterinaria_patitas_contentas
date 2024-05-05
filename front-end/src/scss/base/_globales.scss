@@ -80,3 +80,45 @@ h4 {
     color: $azul_oscuro;
     font-weight: 900;
 }
+label{
+    font-family: $fuente_secundaria;
+    font-size: 1.7rem;
+    font-weight: 500;
+    display: block;
+}
+.campos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-top: 4rem;
+
+    input{
+        width: 100%;
+        padding: 0.5rem 0.5rem 0.5rem 0;
+        border: none; /* Primero, eliminamos todos los bordes */
+        border-bottom: 0.2rem solid $azul_oscuro; /* Luego, agregamos un borde solo en la parte inferior */
+        outline: none;
+    }
+}
+
+textarea{
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    border: none; /* Primero, eliminamos todos los bordes */
+    border-bottom: 0.2rem solid $azul_oscuro; /* Luego, agregamos un borde solo en la parte inferior */
+    outline: none;
+    resize: none;
+}
+
+
+.boton-formulario-azul{
+    padding: 1.5rem 4rem;
+    background-color: $azul_oscuro;
+    border: none;
+    color: $blanco;
+    border-radius: 0.5rem;
+    font-family: $fuente_secundaria;
+    cursor: pointer;
+    margin-top: 5rem;
+    float: right;
+}

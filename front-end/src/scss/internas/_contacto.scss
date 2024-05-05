@@ -1,0 +1,63 @@
+.formulario-contacto{
+    display: grid;
+    grid-template-columns: 1.12fr 2fr;
+    gap: 2rem;
+    margin-top: 5rem;
+
+    h4{
+        font-family: $fuente_secundaria;
+        font-size: 2.5rem;
+        color: $azul_claro;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    form{
+        padding: 6rem;
+
+        .campo-mensaje{
+            margin-top: 4rem;
+        }
+    }
+
+    .formulario-contacto-izq{
+        background-color: $azul_oscuro;
+        background-image: url('../../../build/img/Ellipse793.webp'); /* Ruta de la imagen de fondo */
+        background-position: right bottom; /* Posición de la imagen de fondo (derecha abajo) */
+        background-repeat: no-repeat; /* No se repite la imagen */
+        background-size: auto;
+        padding: 3rem;
+        border-radius: 0.7rem;
+        
+        p{
+            color: $blanco;
+            text-align: left;
+        }
+
+        ul{
+            list-style: none;
+            display: flex;
+            flex-direction: column; 
+            padding-left: 0; 
+            margin-top: 3rem; 
+               
+        }
+        li{
+            color: $blanco;
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-top: 3.5rem;
+            display: flex;
+            gap: 1rem;
+                
+            &:first-child{
+                margin-top: 0;
+            }
+        }
+        .circulo{
+            margin-bottom: 5rem;
+            float: right;
+            margin-right: 3rem;
+        }
+    }
+}
