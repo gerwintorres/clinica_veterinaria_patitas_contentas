@@ -70,10 +70,10 @@
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     gap: 3rem;
-    margin-top: 4rem;
+    margin-top: 4rem;  
 
     .formulario-iniciar-sesion-izq{
-        background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0, 0, 0, 0.85)), url('../../../build/img/fondoInicioS.webp'); /* Ruta de la imagen de fondo */
+        background-image: linear-gradient(rgba(0,0,0,0.78), rgba(0, 0, 0, 0.78)), url('../../../build/img/fondoInicioS.webp'); /* Ruta de la imagen de fondo */
         background-repeat: no-repeat;
         background-size: cover;
         border-radius: 5rem 0 0 5rem;
