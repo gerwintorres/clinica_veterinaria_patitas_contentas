@@ -9,7 +9,7 @@
     
 <h1 class="titulo-h1-pagina">Inicio de Sesión</h1>
 
-<main class="formulario-iniciar-sesion contenedor">
+<main class="formulario-iniciar-sesion contenedor-interior">
     <div class="formulario-iniciar-sesion-izq">
         <h4>Clínica Veterinaria Patitas Contentas</h4>
         <p>¡Bienvenido de nuevo! Por favor, inicia sesión para acceder a nuestros servicios veterinarios. Gracias por confiar en nosotros para el cuidado de tu mascota.</p>
