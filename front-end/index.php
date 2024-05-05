@@ -44,7 +44,7 @@
     </main>
 
     <article class="testimoniales contenedor">
-        <h2 class="testimoniales-titulo">¿Que piensan nuestros clientes?</h2>
+        <h2 class="testimoniales-titulo">¿Qué piensan nuestros clientes?</h2>
         <div class="testimoniales-contenedor-cards">
             <div class="testimoniales-card">
                 <img src="./build/img/Avatar Testimonial 1.png" alt="">
@@ -54,7 +54,7 @@
             <div class="testimoniales-card">
                 <img src="./build/img/Avatar Testimonial 2.png" alt="">
                 <p>"La experiencia en Patitas Contentas fue excepcional. Desde el primer momento, sentí que mi mascota estaba en buenas manos. El trato cálido y la atención experta hicieron que mi visita fuera reconfortante. Definitivamente volveré y recomendaré esta clínica a mis amigos y familiares".</p>
-                <strong>Camilo Martinez</strong>
+                <strong>Camilo Martínez</strong>
             </div>
         </div>
     </article>
