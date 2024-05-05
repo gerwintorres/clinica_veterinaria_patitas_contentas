@@ -57,21 +57,21 @@
         <div class="campos">
             <div>
                 <label for="nombre">Nombre(s)</label>
-                <input type="text" id="nombre" name="nombre" required>
+                <input class="inputs" type="text" id="nombre" name="nombre" required>
             </div>
             <div>
                 <label for="nombre">Apellidos</label>
-                <input type="text" id="nombre" name="nombre" required>
+                <input class="inputs" type="text" id="nombre" name="nombre" required>
             </div>
         </div>
         <div class="campos">
             <div>
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input class="inputs" type="email" id="email" name="email" required>
             </div>
             <div>
                 <label for="numero">Número de contacto</label>
-                <input type="numero" id="numero" name="numero" required>
+                <input class="inputs" type="numero" id="numero" name="numero" required>
             </div>
         </div>
         <div class="campo-mensaje">

@@ -1,0 +1,129 @@
+.formulario-contacto{
+    display: grid;
+    grid-template-columns: 1.12fr 2fr;
+    gap: 2rem;
+    margin-top: 5rem;
+
+    h4{
+        font-family: $fuente_secundaria;
+        font-size: 2.5rem;
+        color: $azul_claro;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    form{
+        padding: 6rem;
+
+        .campo-mensaje{
+            margin-top: 4rem;
+        }
+
+        input[type="submit"]{
+            margin-top: 5rem;
+        }
+    }
+
+    .formulario-contacto-izq{
+        background-color: $azul_oscuro;
+        background-image: url('../../../build/img/Ellipse793.webp'); /* Ruta de la imagen de fondo */
+        background-position: right bottom; /* Posición de la imagen de fondo (derecha abajo) */
+        background-repeat: no-repeat; /* No se repite la imagen */
+        background-size: auto;
+        padding: 3rem;
+        border-radius: 0.7rem;
+        
+        p{
+            color: $blanco;
+            text-align: left;
+        }
+
+        ul{
+            list-style: none;
+            display: flex;
+            flex-direction: column; 
+            padding-left: 0; 
+            margin-top: 3rem; 
+               
+        }
+        li{
+            color: $blanco;
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-top: 3.5rem;
+            display: flex;
+            gap: 1rem;
+                
+            &:first-child{
+                margin-top: 0;
+            }
+        }
+        .circulo{
+            margin-bottom: 5rem;
+            float: right;
+            margin-right: 3rem;
+        }
+    }
+}
+
+.formulario-iniciar-sesion{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 3rem;
+    margin-top: 4rem;
+
+    .formulario-iniciar-sesion-izq{
+        background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0, 0, 0, 0.85)), url('../../../build/img/fondoInicioS.webp'); /* Ruta de la imagen de fondo */
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 5rem 0 0 5rem;
+        padding: 4rem 6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h4{
+            color: $blanco;
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-family: $fuente_secundaria;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        p{
+            color: $blanco;
+            font-size: 1.8rem;
+            font-family: $fuente_secundaria;
+        }
+        img{
+            width: 20%;
+        }
+    }
+
+    .formulario-iniciar-sesion-der{
+        display: flex;
+        flex-direction: column;
+        
+        padding: 3rem 3rem 6rem 3rem;
+        img{
+            width: 25%;
+            margin: 0 auto 3rem auto;
+            
+        }
+        .ultimo-elemento{
+            margin-top: 2rem;
+        }
+        p{
+            margin: 0.5rem auto;
+        }
+        .olvidar-clave{
+            color: #FF3333;
+            font-family: $fuente_secundaria;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-align: right;
+            margin: 1rem 0 2rem 0;
+        }
+    }
+}
