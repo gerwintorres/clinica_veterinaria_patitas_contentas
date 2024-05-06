@@ -7,10 +7,10 @@
         <div class="eslogan">
             <h1>Tu compañero de confianza en el cuidado veterinario</h1>
             <p>En Clínica Veterinaria Patitas Contentas, estamos listos para atender cualquier emergencia veterinaria que pueda surgir. Tu mascota siempre es nuestra prioridad.</p>
-            <a href="contactanos.html" class="boton-azul">Contáctanos Ya!</a>        
+            <a href="contactanos.php" class="boton-azul">Contáctanos Ya!</a>        
         </div>
         <div class="eslogan_img">
-            <img src="./build/img/imagen_principal.webp" alt="">
+            <img src="./build/img/imagenPrincipal.webp" alt="">
         </div>
     </div> 
     
@@ -31,7 +31,7 @@
         <h2>¿Por qué elegir Patitas Contentas para el cuidado de tu mascota?</h2>
         <div class="seccion">
             <div class="seccion_img">
-                <img src="./build/img/imagen_eligenos.webp" alt="">
+                <img src="./build/img/imagen_eligenos.jpeg" alt="">
             </div>
             <p>En Patitas Contentas, entendemos que tu mascota es más que un simple animal; es un miembro querido de tu familia. Es por eso que nos comprometemos a ofrecer un cuidado excepcional que va más allá de lo convencional. Aquí hay algunas razones por las cuales miles de familias confían en nosotros con la salud y el bienestar de sus compañeros peludos: <br><br>
                 <span>Equipo experto:</span> Veterinarios y personal altamente calificados. <br>
@@ -79,7 +79,7 @@
             </div>
         </section>
         <section class="estadisticas-img">
-            <img src="./build/img/img_estadisticas.webp" alt="">
+            <img src="./build/img/imagenPrincipalEstadisticas.webp" alt="">
         </section>
     </article>
 

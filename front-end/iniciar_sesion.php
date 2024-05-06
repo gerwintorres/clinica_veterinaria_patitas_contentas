@@ -1,5 +1,5 @@
 <?php
-    $pagina_actual = 'servicios';
+    $pagina_actual = '';
     include 'includes/templates/header.php';
 ?>
 
@@ -17,7 +17,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="">Médico
+    <a class="card" href="./iniciar_sesion_medico.php">Médico
         <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect x="0.5" width="90" height="90" fill="url(#pattern0_33_1278)"/>
             <defs>
@@ -28,7 +28,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="">Administrador
+    <a class="card" href="./iniciar_sesion_admin.php">Administrador
         <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect x="0.5" width="90" height="90" fill="url(#pattern0_33_1279)"/>
             <defs>

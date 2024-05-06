@@ -21,13 +21,13 @@
             <p>Los perros pueden mostrar una variedad de signos cuando están enfermos. Algunos de los síntomas más comunes incluyen pérdida de apetito, letargo, vómitos, diarrea, dificultad para respirar, tos persistente, aumento de la sed y la micción, cojera o dificultad para moverse, cambios en el comportamiento, como agresividad o retraimiento, y cambios en la piel, como picazón, enrojecimiento o pérdida de pelo.</p>
         </section>
         <div class="contenido-centrado">
-            <img class="contenido-centrado" src="./build/img/blog1.webp" alt="">
+            <img class="contenido-centrado" src="./build/img/blog2_1.webp" alt="">
         </div>
     </article>
 
     <article class="contenedor articulo-servicios-der margen-inferior">
         <div>
-            <img class="contenido-centrado" src="./build/img/servicio2.webp" alt="">
+            <img class="contenido-centrado" src="./build/img/blog2_2.webp" alt="">
         </div>
         <section>
             <h2 class="articulo-servicios-titulo">Signos de enfermedad en Gatos:</h2>

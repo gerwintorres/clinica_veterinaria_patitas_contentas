@@ -7,7 +7,7 @@
     <p>¡Bienvenido a nuestro blog! Sumérgete en el apasionante mundo de la salud y el bienestar animal con nuestras publicaciones informativas y entretenidas. Descubre consejos útiles, historias conmovedoras, noticias de actualidad y mucho más. En nuestro blog, nos esforzamos por compartir contenido relevante y útil que te ayudará a cuidar mejor a tu mascota y fortalecer vuestro vínculo. ¡Explora nuestro blog y únete a nuestra comunidad de amantes de los animales!</p>
 </main>
 
-<article class="contenedor articulo-blog">
+<article class="contenedor blog-articles">
     <section>
         <div>
             <img src="./build/img/blog1.webp" alt="">

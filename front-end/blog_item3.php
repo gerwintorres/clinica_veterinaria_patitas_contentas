@@ -19,13 +19,13 @@
             <p>Una vez que se ha identificado una alergia alimentaria en tu mascota, es importante tomar medidas para controlarla y minimizar los síntomas. Una de las formas más efectivas de hacerlo es mediante la implementación de una dieta hipoalergénica. Estas dietas están formuladas con ingredientes limitados y seleccionados cuidadosamente para reducir el riesgo de desencadenar una reacción alérgica en tu mascota. Los ingredientes comúnmente utilizados en dietas hipoalergénicas incluyen proteínas de fuentes poco comunes, como cordero, pato o salmón, y carbohidratos como arroz, patata o guisantes.</p>
         </section>
         <div class="contenido-centrado">
-            <img class="contenido-centrado" src="./build/img/blog1.webp" alt="">
+            <img class="contenido-centrado" src="./build/img/blog3_1.webp" alt="">
         </div>
     </article>
 
     <article class="contenedor articulo-servicios-der margen-inferior">
         <div>
-            <img class="contenido-centrado" src="./build/img/servicio2.webp" alt="">
+            <img class="contenido-centrado" src="./build/img/blog3_2.webp" alt="">
         </div>
         <section>
             <p>Es importante trabajar en estrecha colaboración con tu veterinario para desarrollar un plan de dieta y nutrición adecuado para tu mascota con alergias alimentarias. Tu veterinario puede realizar pruebas de alergia para identificar los alimentos desencadenantes específicos y recomendar la mejor dieta hipoalergénica para tu mascota. Además, es importante seguir estrictamente las instrucciones y recomendaciones de tu veterinario sobre la introducción gradual de nuevos alimentos y la monitorización de la respuesta de tu mascota a la nueva dieta.</p>
