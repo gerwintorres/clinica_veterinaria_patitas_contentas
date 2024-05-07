@@ -15,7 +15,7 @@
         <p>¡Bienvenido de nuevo! Por favor, inicia sesión para acceder a nuestros servicios veterinarios. Gracias por confiar en nosotros para el cuidado de tu mascota.</p>
         <img src="./build/img/patitas.webp" alt="">
     </div>
-    <form action="" class="formulario-iniciar-sesion-der">
+    <form action="" class="formulario-iniciar-sesion-der" id="formulario-iniciar-sesion-der">
         <img src="./build/img/logo.webp" alt="">
         <div>
             <label for="email">Email</label>
@@ -34,6 +34,45 @@
         
     </div>
 </main>
+
+<script>
+    document.getElementById('formulario-iniciar-sesion-der').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+
+        // Obtener los valores del formulario
+        var email = document.getElementById('email').value;
+        var clave = document.getElementById('clave').value;
+
+        // Crear un objeto con los datos del formulario
+        var formData = {
+            email: email,
+            clave: clave
+        };
+
+        // Realizar la solicitud POST a la API FastAPI
+        fetch('http://127.0.0.1:8000/login/client', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            // Manejar la respuesta de la API
+            if (response.ok) {
+                // Si la respuesta es exitosa, redirigir al usuario a la página de inicio
+                alert('FUNCIONO EL MIERDERO');
+            } else {
+                alert('NO FUNCIONO EL MIERDERO');
+                // Si la respuesta es un error, manejarlo (mostrar mensaje de error, etc.)
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    });
+</script>
+
 
 <?php
     include 'includes/templates/footer.php';

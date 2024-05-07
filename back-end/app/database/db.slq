@@ -1,0 +1,137 @@
+CREATE DATABASE bd_clinica;
+USE bd_clinica;
+
+CREATE TABLE cargo (
+    id_cargo INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_cargo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE servicio (
+    id_servicio INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    precio INT NOT NULL CHECK (precio >= 0)
+);
+
+CREATE TABLE clientes (
+    id_cliente INT PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    tipo_documento VARCHAR(20) NOT NULL,
+    telefono INT NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    clave VARCHAR(100) NOT NULL,
+    direccion VARCHAR(50)
+);
+
+CREATE TABLE mascotas (
+    id_mascota INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    tipo_mascota VARCHAR(100) NOT NULL,
+    raza VARCHAR(50) NOT NULL,
+    edad INT NOT NULL CHECK (edad >= 0),
+    peso FLOAT NOT NULL CHECK (peso >= 0),
+    historia_clinica TEXT,
+    id_cliente INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE medico (
+    id_medico INT PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    clave VARCHAR(50) NOT NULL,
+    telefono INT NOT NULL UNIQUE
+);
+
+CREATE TABLE colaborador (
+    id_colaborador INT PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    cargo VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    telefono INT NOT NULL UNIQUE,
+    id_cargo INT NOT NULL,
+    FOREIGN KEY (id_cargo) REFERENCES cargo(id_cargo) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE citas (
+    id_cita INT PRIMARY KEY AUTO_INCREMENT,
+    hora TIME NOT NULL,
+    fecha DATE NOT NULL,
+    procedimiento VARCHAR(100) NOT NULL,
+    id_medico INT NOT NULL,
+    id_colaborador INT NOT NULL,
+    id_servicio INT NOT NULL,
+    id_mascota INT NOT NULL,
+    FOREIGN KEY (id_medico) REFERENCES medico(id_medico) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_colaborador) REFERENCES colaborador(id_colaborador) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_servicio) REFERENCES servicio(id_servicio) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_mascota) REFERENCES mascotas(id_mascota) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE orden_medica (
+    id_orden INT PRIMARY KEY AUTO_INCREMENT,
+    descripcion TEXT NOT NULL,
+    id_cita INT NOT NULL,
+    id_servicio INT NOT NULL,
+    FOREIGN KEY (id_cita) REFERENCES citas(id_cita) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_servicio) REFERENCES servicio(id_servicio) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE guarderia (
+    id_registro INT PRIMARY KEY AUTO_INCREMENT,
+    hora TIME NOT NULL,
+    fecha DATE NOT NULL,
+    comentarios TEXT,
+    id_mascota INT NOT NULL,
+    FOREIGN KEY (id_mascota) REFERENCES mascotas(id_mascota) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE lotes (
+    id_lote INT PRIMARY KEY AUTO_INCREMENT,
+    lote INT NOT NULL UNIQUE,
+    id_producto INT
+);
+
+CREATE TABLE productos (
+    id_producto INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    fecha_vencimiento DATE NOT NULL,
+    cantidad INT NOT NULL CHECK (cantidad >= 0),
+    precio_compra FLOAT NOT NULL CHECK (precio_compra >= 0),
+    precio_venta FLOAT NOT NULL CHECK (precio_venta >= 0),
+    id_lote INT,
+    FOREIGN KEY (id_lote) REFERENCES lotes(id_lote) ON UPDATE CASCADE ON DELETE SET NULL
+);
+
+CREATE TABLE proveedor (
+    id_proveedor INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    ubicacion VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    telefono VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE registro_productos (
+    id_registro INT PRIMARY KEY AUTO_INCREMENT,
+    id_producto INT NOT NULL,
+    id_proveedor INT NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES productos(id_producto) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE lotes (
+    id_lote INT PRIMARY KEY AUTO_INCREMENT,
+    lote INT NOT NULL UNIQUE,
+    id_producto INT NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES productos(id_producto) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE administrador (
+    id_administrador INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    clave VARCHAR(100) NOT NULL
+);
