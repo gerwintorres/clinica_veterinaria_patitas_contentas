@@ -2,7 +2,7 @@
         <div class="contenedor-footer seccion">
             <div class="footer-1">
                 <h5>Patitas<br>Contentas</h5>
-                <img src="build/img/logoooo.webp" alt="Logotipo Patitas Contentas">
+                <img src="build/img/logo.webp" alt="Logotipo Patitas Contentas">
             </div>
             <div class="footer-2">
                 <h6>Explora</h6>

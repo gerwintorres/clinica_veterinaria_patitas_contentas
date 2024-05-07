@@ -21,6 +21,11 @@ p {
     max-width: 135rem;
     margin: 0 auto;
 }
+.contenedor-interior {
+    width: 80%;
+    max-width: 135rem;
+    margin: 0 auto;
+}
 
 a {
     text-decoration: none;
@@ -71,4 +76,81 @@ h4 {
     text-align: center;
     line-height: 1.1;
     margin-top: 4rem;
+}
+.boton-atras{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    color: $azul_oscuro;
+    font-weight: 900;
+}
+label{
+    font-family: $fuente_secundaria;
+    font-size: 1.7rem;
+    font-weight: 500;
+    display: block;
+}
+.campos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-top: 4rem;
+}
+
+.inputs{
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    border: none; /* Primero, eliminamos todos los bordes */
+    border-bottom: 0.2rem solid $azul_oscuro; /* Luego, agregamos un borde solo en la parte inferior */
+    outline: none;
+}
+
+textarea{
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    border: none; /* Primero, eliminamos todos los bordes */
+    border-bottom: 0.2rem solid $azul_oscuro; /* Luego, agregamos un borde solo en la parte inferior */
+    outline: none;
+    resize: none;
+}
+
+
+.boton-formulario-azul{
+    padding: 1.5rem 4rem;
+    background-color: $azul_oscuro;
+    border: none;
+    color: $blanco;
+    border-radius: 0.5rem;
+    font-family: $fuente_secundaria;
+    cursor: pointer;
+    float: right;
+}
+
+.boton-formulario-blanco{
+    padding: 0.8rem;
+    background-color: $blanco;
+    border: 0.1rem solid $azul_oscuro;
+    color: $negro;
+    border-radius: 0.5rem;
+    font-family: $fuente_secundaria;
+    cursor: pointer;
+    text-align: center;
+}
+
+.card{
+    background-color: $azul_claro;
+    text-align: center;
+    font-family: $fuente_secundaria;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1.5rem;
+    font-weight: 800;
+    color: $azul_oscuro;
+    font-size: 2.5rem;
+    padding: 1.5rem 0;
+    cursor: pointer;
 }
