@@ -1,5 +1,6 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
 from starlette.status import HTTP_201_CREATED
+from sqlalchemy import text 
 from sqlalchemy.orm import Session
 from database.db import conn
 from models.models import clientes
@@ -24,7 +25,7 @@ class CredencialesSchema(BaseModel):
 def root():
     return {"Message": "Hi, I'm root of kickcoders plataform"}
 
-@router.post("/registro/cliente")
+@router.post("/register/client")
 def registrar_cliente(cliente: ClienteSchema):
     #with engine.connect() as conn:
     new_client = cliente.dict()
@@ -34,6 +35,21 @@ def registrar_cliente(cliente: ClienteSchema):
     print(result)
     return Response(status_code=HTTP_201_CREATED)
 
+@router.post('/login/cliente')
+def login_cliente(credenciales: CredencialesSchema):
+    # Buscar usuario en la base de datos por correo electrónico
+    query = text(f"SELECT clave FROM cliente WHERE email = '{credenciales.email}'")
+    result = conn.execute(query).fetchone()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    
+    clave_encriptada = result[0]
+    clave_desencriptada = f.decrypt(clave_encriptada.encode()).decode()
+    if credenciales.clave != clave_desencriptada:
+        raise HTTPException(status_code=401, detail="Credenciales inválidas")
+
+    return Response(status_code=200)
 
 """@router.post("/registro/administrador")
 def registrar_administrador(administrador: AdministradorSchema, db: Session = Depends(get_db)):

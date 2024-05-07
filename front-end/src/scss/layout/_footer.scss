@@ -1,4 +1,5 @@
 .footer{
+    margin-top: 5rem;
     width: 98%;
     max-width: 140rem;
     margin-right: auto;
@@ -33,6 +34,7 @@
     .navegacion-footer{
         display: flex;
         flex-direction: column;
+        margin-bottom: 3rem;
         a{
             color: $blanco;
             font-size: 1.4rem;
@@ -50,7 +52,8 @@
         display: flex;
         flex-direction: column; 
         padding-left: 0;  
-           
+        margin-top: 0;
+        
     }
     li{
         color: $blanco;
@@ -67,14 +70,13 @@
 
     .footer-1{
         background-color: $blanco;
-        margin: 3.5rem;
+        margin: 2.5rem 12rem 2.5rem 3rem;
         border-radius: 3rem;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         padding: 1rem;
-
 
         h5{
             font-family: $fuente_principal;
@@ -84,13 +86,17 @@
             font-weight: 900;
             margin-bottom: 1rem; 
             text-align: center;
-            margin-top: 1.2rem;
+            margin-top: 0.2rem;
             line-height: 2.5rem;
             display: flex;
             justify-content: center;
             text-align: center;
             flex-direction: column;
         }   
+        img{
+            width: 80%;
+        }
+            
     }
     .footer-2, .footer-3, .footer-4{
         padding-left: 3rem;

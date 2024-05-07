@@ -27,11 +27,12 @@
         background-size: 80%;
     }
     .eslogan_img{
-        width:100%; /* Ancho del cuadrado */
-        height: 54rem; /* Alto del cuadrado */
-        background-image: url('../../build/img/imagen_seccion_eslogan.png'); /* Ruta de la imagen */
-        background-size: cover; /* Ajusta la imagen para cubrir todo el cuadrado */
-        background-position: center; 
-        border-radius: 4rem;
+
+        padding: 1rem 0 1rem 4rem;
+
+        img{
+            height: 55rem;
+            border-radius: 4rem;
+        }
     }
 }
