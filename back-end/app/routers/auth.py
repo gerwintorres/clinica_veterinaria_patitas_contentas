@@ -29,24 +29,25 @@ def root():
 def registrar_cliente(cliente: ClienteSchema):
     #with engine.connect() as conn:
     new_client = cliente.dict()
-    new_client["clave"] = f.encrypt(cliente.clave.encode("utf-8"))
+    #new_client["clave"] = f.encrypt(cliente.clave.encode("utf-8"))
     result = conn.execute(clientes.insert().values(new_client))
     conn.commit()
     print(result)
     return Response(status_code=HTTP_201_CREATED)
 
-@router.post('/login/cliente')
+@router.post('/login/client')
 def login_cliente(credenciales: CredencialesSchema):
-    # Buscar usuario en la base de datos por correo electrónico
     query = text(f"SELECT clave FROM cliente WHERE email = '{credenciales.email}'")
     result = conn.execute(query).fetchone()
-
+    print(result)
     if not result:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     
-    clave_encriptada = result[0]
-    clave_desencriptada = f.decrypt(clave_encriptada.encode()).decode()
-    if credenciales.clave != clave_desencriptada:
+    clave = result[0]
+    print(clave)
+    #clave_desencriptada = f.decrypt(clave_encriptada.encode()).decode()
+    if credenciales.clave != clave:
+        
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
 
     return Response(status_code=200)
