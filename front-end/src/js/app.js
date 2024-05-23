@@ -22,8 +22,10 @@ document.getElementById('formulario-iniciar-sesion-cliente').addEventListener('s
     .then(response => {
         // Manejar la respuesta de la API
         if (response.ok) {
-            // Si la respuesta es exitosa, redirigir al usuario a la página de inicio
-            alert('FUNCIONO EL MIERDERO');
+            // Si la respuesta es exitosa, redirigir al usuario a la página de inicio 
+            window.location.href = '../../cliente/menu_cliente.php';
+           
+            
         } else {
             alert('NO FUNCIONO EL MIERDERO');
             // Si la respuesta es un error, manejarlo (mostrar mensaje de error, etc.)
@@ -33,3 +35,4 @@ document.getElementById('formulario-iniciar-sesion-cliente').addEventListener('s
         console.log(error);
     });
 });
+

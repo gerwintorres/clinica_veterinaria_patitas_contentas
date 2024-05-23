@@ -38,6 +38,6 @@
 </main>
 
 <?php
-    include 'includes/templates/footer.php';
+    include './includes/templates/footer.php';
 ?>
 

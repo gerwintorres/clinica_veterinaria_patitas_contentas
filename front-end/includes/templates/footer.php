@@ -2,7 +2,7 @@
     <div class="contenedor-footer seccion">
         <div class="footer-1">
             <h5>Patitas<br>Contentas</h5>
-            <img src="build/img/logo.webp" alt="Logotipo Patitas Contentas">
+            <img src="../../build/img/logo.webp" alt="Logotipo Patitas Contentas">
         </div>
         <div class="footer-2">
             <h6>Explora</h6>
@@ -69,4 +69,4 @@
     </div>
     <p>Copyright &copy; <?php echo date('Y'); ?> Clínica Veterinaria Patitas Contentas | Desarrollado por V-Minds Company</p>
 </footer>
-<script src="build/js/bundle.min.js"></script>
+<script src="../../build/js/bundle.min.js"></script>

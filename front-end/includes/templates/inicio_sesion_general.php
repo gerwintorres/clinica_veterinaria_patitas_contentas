@@ -26,7 +26,7 @@
         <p><?php echo $texto?></p>
         <img src="./build/img/patitas.webp" alt="">
     </div>
-    <form action="" class="formulario-iniciar-sesion-der" id="<?php echo $id?>">
+    <form action="" method="" class="formulario-iniciar-sesion-der" id="<?php echo $id?>">
         <img src="./build/img/logo.webp" alt="">
         <div>
             <label for="email">Email</label>
