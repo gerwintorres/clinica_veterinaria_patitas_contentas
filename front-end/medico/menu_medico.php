@@ -6,7 +6,7 @@
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda">Bienvenido, [Dr(A) Nombre]</h1>
 
 <main class="contenedor main-inicio-sesion">
-    <a class="card" href="./">Programación del día
+    <a class="card" href="programacion/programacion_dia.php">Programación del día
         <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect width="90" height="90" fill="url(#pattern0_26_439)"/>
             <defs>
@@ -17,7 +17,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="./iniciar_sesion_medico.php">Consulta
+    <a class="card" href="consulta/paciente_consulta.php">Consulta
         <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect x="0.5" width="90" height="90" fill="url(#pattern0_37_54)"/>
             <defs>

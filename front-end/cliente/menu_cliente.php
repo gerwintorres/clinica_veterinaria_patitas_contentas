@@ -4,7 +4,7 @@
 ?>
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda" id="mensaje-bienvenida">BIENVENIDO, [NOMBRE]</h1>
 <main class="contenedor main-inicio-sesion">
-    <a class="card" href="">mis mascotas
+    <a class="card" href="mascotas/mis_mascotas.php">mis mascotas
         <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect width="90" height="90" fill="url(#pattern0_16_2282)"/>
             <defs>
@@ -15,7 +15,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="">citas médicas
+    <a class="card" href="citas/citas_medicas.php">citas médicas
         <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect x="0.5" width="90" height="90" fill="url(#pattern0_16_2289)"/>
             <defs>
@@ -26,7 +26,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="">guardería
+    <a class="card" href="guarderia/guarderia.php">guardería
         <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect x="0.5" width="90" height="90" fill="url(#pattern0_45_105)"/>
             <defs>
@@ -37,7 +37,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="">órdenes médicas
+    <a class="card" href="ordenes/ordenes_medicas.php">órdenes médicas
         <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect x="0.5" width="90" height="90" fill="url(#pattern0_151_1223)"/>
             <defs>

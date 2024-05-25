@@ -25,6 +25,3 @@
 </main>
 
 <h3 class="contenedor titulo-h3-pagina alineacion-izquierda"><?php echo $texto_tabla?></h3>
-<?php
-    include 'footer.php';
-?>
