@@ -28,7 +28,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="./iniciar_sesion_admin.php">Orden médica
+    <a class="card" href="orden/orden_medica.php">Orden médica
         <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect x="0.5" width="90" height="90" fill="url(#pattern0_151_1223)"/>
             <defs>
