@@ -1,5 +1,7 @@
 <?php
     $pagina_actual = '';
+    session_start();
+    $_SESSION['loggedin'] = true;
     include '../includes/templates/header.php';
 ?>
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda" id="mensaje-bienvenida">BIENVENIDO, [NOMBRE]</h1>
