@@ -77,11 +77,18 @@ h4 {
     line-height: 1.1;
     margin-top: 4rem;
 }
+.alineacion-izquierda{
+    text-align: left;
+}
+.contenedor-boton-atras{
+    display: flex;
+    align-items: center;
+    margin-top: 3rem;
+}
 .boton-atras{
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 3rem;
     color: $azul_oscuro;
     font-weight: 900;
 }

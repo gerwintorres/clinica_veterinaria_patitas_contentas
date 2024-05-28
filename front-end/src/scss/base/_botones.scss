@@ -7,3 +7,13 @@
 .boton-chatbot{
     @include boton($blanco, $negro, $azul_oscuro);
 }
+.boton-rojo, .navegacion .boton-rojo{
+    @include boton($rojo, $blanco, $rojo);  
+}
+
+.boton-perfil{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+}
