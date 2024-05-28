@@ -1,6 +1,5 @@
 <?php
     $pagina_actual = '';
-    session_start();
     $_SESSION['loggedin'] = true;
     include '../includes/templates/header.php';
 ?>
