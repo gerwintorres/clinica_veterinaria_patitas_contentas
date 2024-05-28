@@ -4,6 +4,7 @@
     $ruta_boton_atras = '../menu_cliente.php';
     $texto_card = 'agendar nuevo <br> procedimiento';
     $texto_tabla = 'Citas agendadas';
+    $ruta_card = 'agendar_cita.php';
     include '../../includes/templates/pagina_card.php';
 ?>
     <article class="contenedor contenedor-table">
