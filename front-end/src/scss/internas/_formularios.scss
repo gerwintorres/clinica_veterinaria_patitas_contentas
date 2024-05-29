@@ -113,18 +113,15 @@
             position: relative;
 
             input {
-                padding-right: 40px; /* Espacio para el icono */
-                font-size: 16px;
+                padding-right: 4rem; /* Espacio para el icono */
+                font-size: 1.6rem;
             }
 
             .toggle-password {
                 position: absolute;
-                right: 10px;
-                top: 50%;
-                transform: translateY(-10%);
-                cursor: pointer;
-                color: #2c2547; /* Color del icono */
-                font-size: 20px; /* Tamaño del icono */
+                right: 1rem;
+                top: 53%;
+                cursor: pointer;   
             }
             .hide-eye{
                 display: none;
@@ -144,7 +141,6 @@
                 font-weight: 700;
                 font-size: 1.3rem;
                 text-align: right;
-                
             }
         }
     }
