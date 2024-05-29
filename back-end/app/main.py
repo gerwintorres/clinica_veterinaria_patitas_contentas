@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers.auth import router
+from routers.rutas_medico import router_medico
 
 app = FastAPI()
 
 app.include_router(router)
+app.include_router(router_medico)
 
 
 # Configuración de CORS

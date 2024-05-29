@@ -4,11 +4,13 @@ from typing import Optional
 class CargoSchema(BaseModel):
     id_cargo: int
     nombre_cargo: str
+    
 
 class ServicioSchema(BaseModel):
     id_servicio: int
     nombre: str
     precio: int
+
 
 class ClienteSchema(BaseModel):
     id_cliente: int
@@ -20,6 +22,7 @@ class ClienteSchema(BaseModel):
     clave: str
     direccion: str
 
+
 class MascotaSchema(BaseModel):
     id_mascota: int
     nombre: str
@@ -29,6 +32,7 @@ class MascotaSchema(BaseModel):
     peso: float
     historia_clinica: Optional[str] = None
     id_cliente: int
+
 
 class MedicoSchema(BaseModel):
     id_medico: int
@@ -47,6 +51,7 @@ class ColaboradorSchema(BaseModel):
     email: str
     telefono: int
     id_cargo: int
+
 
 class CitaSchema(BaseModel):
     id_cita: int
@@ -72,7 +77,6 @@ class GuarderiaSchema(BaseModel):
     fecha: str
     comentarios: Optional[str] = None
     id_mascota: int
-
 
 
 class LoteSchema(BaseModel):
@@ -105,10 +109,14 @@ class RegistroProductoSchema(BaseModel):
     id_proveedor: int
 
 
-
 class AdministradorSchema(BaseModel):
     id_administrador: int
     nombre: str
     apellido: str
+    email: str
+    clave: str
+
+#esquema para recibir información de credenciales
+class CredencialesSchema(BaseModel):
     email: str
     clave: str
