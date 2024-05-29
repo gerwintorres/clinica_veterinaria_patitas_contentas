@@ -7,11 +7,11 @@ function cambiarIconoClave(){
 
     // Cambiar el icono dependiendo del estado
     if (type === 'password') {
-        showEye.style.display = 'block';
-        hideEye.style.display = 'none';
-    } else {
         showEye.style.display = 'none';
         hideEye.style.display = 'block';
+    } else {
+        showEye.style.display = 'block';
+        hideEye.style.display = 'none';
     }
 }
 
