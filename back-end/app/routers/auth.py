@@ -1,5 +1,5 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
-from starlette.status import HTTP_201_CREATED
+from starlette.status import HTTP_201_CREATED, H
 from sqlalchemy import text 
 from sqlalchemy.orm import Session
 from database.db import conn
@@ -16,7 +16,10 @@ f = Fernet(key)
 router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+#login, register, medicos, clientes y administrador
+#archivo de rutas para cada entidad
 
+#esquema para recibir información de credenciales
 class CredencialesSchema(BaseModel):
     email: str
     clave: str
