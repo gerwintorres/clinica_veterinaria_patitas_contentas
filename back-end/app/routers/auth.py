@@ -1,10 +1,10 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
-from starlette.status import HTTP_201_CREATED, H
+from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text 
 from sqlalchemy.orm import Session
 from database.db import conn
 from models.models import clientes
-from schemas.schemas import ClienteSchema, AdministradorSchema, MedicoSchema
+from schemas.schemas import ClienteSchema, AdministradorSchema, MedicoSchema, CredencialesSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -19,10 +19,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 #login, register, medicos, clientes y administrador
 #archivo de rutas para cada entidad
 
-#esquema para recibir información de credenciales
-class CredencialesSchema(BaseModel):
-    email: str
-    clave: str
 
 @router.get("/")
 def root():
