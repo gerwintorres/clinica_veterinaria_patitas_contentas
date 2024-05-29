@@ -1,5 +1,5 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
-from starlette.status import HTTP_201_CREATED, H
+from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text 
 from sqlalchemy.orm import Session
 from database.db import conn
@@ -13,11 +13,11 @@ key = Fernet.generate_key()
 Fernet(key)
 f = Fernet(key)
 
-router = APIRouter()
+router_medico = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-@router.post('/login/medico')
-def login_cliente(credenciales: CredencialesSchema):
+@router_medico.post('/login/medico')
+def login_medico(credenciales: CredencialesSchema):
     query = text(f"SELECT clave FROM medico WHERE email = '{credenciales.email}'")
     result = conn.execute(query).fetchone()
     print(result)
