@@ -1,7 +1,8 @@
 <?php
     $pagina_actual = '';
+    require 'config/login.php';
     include 'header.php';
-
+    
     if($usuario == 'cliente'):
         $clase = 'fondo-inicio-sesion-cliente';
         $id = 'formulario-iniciar-sesion-cliente';
@@ -12,6 +13,12 @@
         $clase = 'fondo-inicio-sesion-medico';
         $id = 'formulario-iniciar-sesion-medico';
     endif;
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $email = $_POST['email'];
+        $clave = $_POST['clave'];
+        login($email, $clave, $usuario);
+    }   
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -29,7 +36,7 @@
         <p><?php echo $texto?></p>
         <img src="./build/img/patitas.webp" alt="">
     </div>
-    <form action="" method="" class="formulario-iniciar-sesion-der" id="<?php echo $id?>">
+    <form action="" method="POST" class="formulario-iniciar-sesion-der" id="<?php echo $id?>">
         <img src="./build/img/logo.webp" alt="">
         <div>
             <label for="email">Email</label>
