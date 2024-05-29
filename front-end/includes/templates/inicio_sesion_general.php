@@ -46,7 +46,7 @@
             <label for="clave">Contraseña</label>
             <input class="inputs" type="password" id="clave" name="clave" required>
             <div class="toggle-password" id="toggle-password" onclick="cambiarIconoClave()">
-                <span id="show-eye">
+                <span id="show-eye" class="show-eye">
                     <svg width="23" height="23" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <rect x="0.5" y="0.5" width="26" height="26" fill="url(#pattern0_198_362)"/>
                         <defs>
@@ -76,7 +76,7 @@
         <input class="boton-formulario-azul" type="submit" value="Iniciar Sesión">
         <?php if($usuario == 'cliente'): ?>
             <p>ó</p>
-            <a class="boton-formulario-blanco" href="">Registrarse</a>
+            <a class="boton-formulario-blanco" href="../../registrarse.php">Registrarse</a>
         <?php endif; ?>
     </form>
     <div>
