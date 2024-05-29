@@ -12,7 +12,7 @@
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda"><?php echo $titulo?></h1>
 
 <main class="contenedor main-inicio-sesion">
-    <a class="card" href=""> <?php echo $texto_card?>
+    <a class="card" href="<?php echo $ruta_card?>"> <?php echo $texto_card?>
     <svg width="90" height="62" viewBox="0 0 90 62" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <rect y="0.523987" width="90" height="61.107" fill="url(#pattern0_41_4619)"/>
         <defs>

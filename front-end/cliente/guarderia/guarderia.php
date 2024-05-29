@@ -4,6 +4,7 @@
     $ruta_boton_atras = '../menu_cliente.php';
     $texto_card = 'agendar mascota';
     $texto_tabla = 'Estancias agendadas';
+    $ruta_card = 'agendar_mascota.php';
     include '../../includes/templates/pagina_card.php';;
 ?>
     <article class="contenedor contenedor-table">
