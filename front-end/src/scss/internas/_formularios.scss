@@ -133,13 +133,19 @@
         p{
             margin: 0.5rem auto;
         }
-        .olvidar-clave{
-            color: #FF3333;
-            font-family: $fuente_secundaria;
-            font-weight: 700;
-            font-size: 1.3rem;
-            text-align: right;
+        .contenedor-olvido-contrasena{
+            display: flex;
+            justify-content: flex-end;
             margin: 1rem 0 2rem 0;
+
+            .olvidar-clave{
+                color: #FF3333;
+                font-family: $fuente_secundaria;
+                font-weight: 700;
+                font-size: 1.3rem;
+                text-align: right;
+                
+            }
         }
     }
 }

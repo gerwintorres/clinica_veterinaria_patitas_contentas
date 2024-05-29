@@ -39,7 +39,9 @@
             <label for="clave">Contraseña</label>
             <input class="inputs" type="password" id="clave" name="clave" required>
         </div>
-        <a href="" class="olvidar-clave">Olvidé mi contraseña</a>
+        <div class="contenedor-olvido-contrasena">
+            <a href="" class="olvidar-clave">Olvidé mi contraseña</a>
+        </div>
         <input class="boton-formulario-azul" type="submit" value="Iniciar Sesión">
         <?php if($usuario == 'cliente'): ?>
             <p>ó</p>
