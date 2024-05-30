@@ -26,9 +26,23 @@ function login($email, $clave, $usuario) {
     curl_close($ch);
 
     if ($http_code == 200) {
-        $result = json_decode($response, true);
+        $response_data = json_decode($response, true);
         // Maneja la respuesta exitosa, por ejemplo, redirigir al usuario
-        header("Location: ../../../$usuario/menu_$usuario.php");
+        if (isset($response_data['id_cliente']) && isset($response_data['nombres'])) {
+            $_SESSION['id_cliente'] = $response_data['id_cliente'];
+            $_SESSION['nombres'] = $response_data['nombres'];
+            $_SESSION['loggedin'] = true;
+            $_SESSION['usuario'] = 'cliente';
+        }
+
+        if (isset($response_data['id_medico']) && isset($response_data['nombres'])) {
+            $_SESSION['id_medico'] = $response_data['id_medico'];
+            $_SESSION['nombres'] = $response_data['nombres'];
+            $_SESSION['loggedin'] = true;
+            $_SESSION['usuario'] = 'medico';
+        }
+
+        header("Location: ../../../$usuario/menu_$usuario.php");  
     } else {
         // Maneja el error
         echo '<script>alert("Error en el inicio de sesión");</script>';
