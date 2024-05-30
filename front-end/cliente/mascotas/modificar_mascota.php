@@ -1,6 +1,24 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_mascotas.php';
+
+    if (isset($_SESSION['id_cliente'])) {
+        $id_cliente = $_SESSION['id_cliente'];
+        $mascotas = obtenerMascotas($id_cliente);
+    }
+
+    $id_mascota = intval($_GET['id_mascota']);
+
+    foreach ($mascotas as $mascota) {
+        if ($mascota['id_mascota'] === $id_mascota) {
+            $nombre = $mascota['nombre'];
+            $tipoMascota = $mascota['tipo_mascota'];
+            $raza = $mascota['raza'];
+            $edad = $mascota['edad'];
+            $peso = $mascota['peso'];
+        }
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -19,12 +37,12 @@
             <div class="formulario-datos">
                 <div>
                     <label for="nombre">Nombre de la mascota</label>
-                    <input type="text" id="nombre" name="nombre" required class="inputs">
+                    <input type="text" id="nombre" name="nombre" value="<?php echo $nombre?>" required class="inputs">
                 </div>
                 <div>
                     <label for="tipoMascota">Tipo de mascota</label>
-                    <select name="tipoMascota" id="tipoMascota" required class="inputs">
-                        <option value="" disabled selected>Seleccione una opción</option>
+                    <select name="tipoMascota" id="tipoMascota"  required class="inputs">
+                        <option value="<?php echo $tipoMascota?>" selected><?php echo $tipoMascota?></option>
                         <option value="canino">Canino</option>
                         <option value="felino">Felino</option>
                         <option value="ave">Ave</option>
@@ -34,17 +52,17 @@
                 </div>
                 <div>
                     <label for="raza">Raza</label>
-                    <input type="text" id="raza" name="raza" required class="inputs">
+                    <input type="text" id="raza" name="raza" value="<?php echo $raza?>" required class="inputs">
                 </div>
             </div>
             <div class="formulario-datos">
                 <div>
                     <label for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" required class="inputs">
+                    <input type="number" id="edad" name="edad" value="<?php echo $edad?>" required class="inputs">
                 </div>
                 <div>
                     <label for="peso">Peso (kg)</label>
-                    <input type="number" id="peso" name="peso" required class="inputs">
+                    <input type="number" id="peso" name="peso" value="<?php echo $peso?>" required class="inputs">
                 </div>
             </div>
             <div class="form-botones">
