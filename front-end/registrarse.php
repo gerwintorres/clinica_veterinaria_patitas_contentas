@@ -10,7 +10,7 @@
 <h1 class="titulo-h1-pagina">Formulario de registro de cliente</h1>
 
 <main class="contenedor formulario-general">
-    <div class="form-imagen"></div>
+    <div class="form-imagen-registro"></div>
     <div class="form-contenido">
         <form action="">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
