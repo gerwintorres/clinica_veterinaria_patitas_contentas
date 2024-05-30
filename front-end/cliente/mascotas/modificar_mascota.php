@@ -9,8 +9,51 @@
     </svg>Ir atrás</a>
 </div>
 
-    
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Modificar mascota</h1>
+
+<main class="contenedor formulario-general">
+    <div class="form-imagen-mascota"></div>
+    <div class="form-contenido">
+        <form action="">
+            <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
+            <div class="formulario-datos">
+                <div>
+                    <label for="nombre">Nombre de la mascota</label>
+                    <input type="text" id="nombre" name="nombre" required class="inputs">
+                </div>
+                <div>
+                    <label for="tipoMascota">Tipo de mascota</label>
+                    <select name="tipoMascota" id="tipoMascota" required class="inputs">
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="canino">Canino</option>
+                        <option value="felino">Felino</option>
+                        <option value="ave">Ave</option>
+                        <option value="roedor">Roedor (hamster, cobaya, conejillo de indias)</option>
+                        <option value="conejo">Conejo</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="raza">Raza</label>
+                    <input type="text" id="raza" name="raza" required class="inputs">
+                </div>
+            </div>
+            <div class="formulario-datos">
+                <div>
+                    <label for="edad">Edad</label>
+                    <input type="number" id="edad" name="edad" required class="inputs">
+                </div>
+                <div>
+                    <label for="peso">Peso (kg)</label>
+                    <input type="number" id="peso" name="peso" required class="inputs">
+                </div>
+            </div>
+            <div class="form-botones">
+                <input class="boton-formulario-azul margen-superior" type="submit" value="MODIFICAR MASCOTA">
+                <a class="boton-formulario-blanco margen-superior">CANCELAR</a>
+            </div>
+        </form>
+    </div>
+</main>
 
 <?php
     include '../../includes/templates/footer.php';

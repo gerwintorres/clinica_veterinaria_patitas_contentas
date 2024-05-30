@@ -8,8 +8,8 @@ function login($email, $clave, $usuario) {
 
     if($usuario == 'cliente'):
         $url = 'http://127.0.0.1:8000/login/client';
-    elseif($usuario == 'administrador'):
-        echo "COLOCAR RUTA DEL ADMINISTRADOR";
+    elseif($usuario == 'admin'):
+        $url = 'http://127.0.0.1:8000/login/admin';
     elseif($usuario == 'medico'):
         $url = 'http://127.0.0.1:8000/login/medico';
     endif;

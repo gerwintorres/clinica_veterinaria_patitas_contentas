@@ -1,6 +1,19 @@
 <?php	
     $pagina_actual = '';
-    include './includes/templates/header.php';  
+    require 'config/registrar_cliente.php';
+    include './includes/templates/header.php';
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nombre = $_POST['nombre'];
+        $apellidos = $_POST['apellidos'];
+        $tipoDocumento = $_POST['tipoDocumento'];
+        $numeroDocumento = $_POST['numeroDocumento'];
+        $telefono = $_POST['telefono'];
+        $correo = $_POST['correo'];
+        $password = $_POST['password'];
+        $direccion = $_POST['direccion'];
+        registrarCliente($nombre, $apellidos, $tipoDocumento, $numeroDocumento, $telefono, $correo, $password, $direccion);
+    }
 ?>
 <div class="contenedor contenedor-boton-atras">
     <a href="./iniciar_sesion_cliente.php" class="boton-atras"> <svg width="11" height="20" viewBox="0 0 11 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,9 +23,9 @@
 <h1 class="titulo-h1-pagina">Formulario de registro de cliente</h1>
 
 <main class="contenedor formulario-general">
-    <div class="form-imagen"></div>
+    <div class="form-imagen-registro"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>

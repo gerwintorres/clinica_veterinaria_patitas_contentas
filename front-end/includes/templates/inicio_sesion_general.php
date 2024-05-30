@@ -6,7 +6,7 @@
     if($usuario == 'cliente'):
         $clase = 'fondo-inicio-sesion-cliente';
         $id = 'formulario-iniciar-sesion-cliente';
-    elseif($usuario == 'administrador'):
+    elseif($usuario == 'admin'):
         $clase = 'fondo-inicio-sesion-admin';
         $id = 'formulario-iniciar-sesion-admin';
     elseif($usuario == 'medico'):
