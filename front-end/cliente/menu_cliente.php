@@ -52,7 +52,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="">configuración
+    <a class="card" href="configuracion/configuracion.php">configuración
         <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect width="90" height="90" fill="url(#pattern0_21_2303)"/>
             <defs>
