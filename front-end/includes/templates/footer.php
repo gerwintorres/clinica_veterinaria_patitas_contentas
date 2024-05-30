@@ -7,11 +7,11 @@
         <div class="footer-2">
             <h6>Explora</h6>
             <ul class="navegacion-footer">
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="servicios.php">Servicios</a></li>
-                <li><a href="nosotros.php">Nosotros</a></li>
-                <li><a href="blog.php">Blog</a></li>
-                <li><a href="contactanos.php">Contáctanos</a></li>
+                <li><a href="../../index.php">Inicio</a></li>
+                <li><a href="../../servicios.php">Servicios</a></li>
+                <li><a href="../../nosotros.php">Nosotros</a></li>
+                <li><a href="../../blog.php">Blog</a></li>
+                <li><a href="../../contactanos.php">Contáctanos</a></li>
             </ul>
         </div>
         <div class="footer-3">

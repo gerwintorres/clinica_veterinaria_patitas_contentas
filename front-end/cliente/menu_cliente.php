@@ -3,10 +3,13 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    $_SESSION['loggedin'] = true;
+    if (isset($_SESSION['id_cliente']) && isset($_SESSION['nombres'])) {
+        $id_cliente = $_SESSION['id_cliente'];
+        $nombres = $_SESSION['nombres'];
+    }
     include '../includes/templates/header.php';
 ?>
-<h1 class="contenedor titulo-h1-pagina alineacion-izquierda" id="mensaje-bienvenida">BIENVENIDO, [NOMBRE]</h1>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda" id="mensaje-bienvenida">BIENVENIDO, <?php echo $nombres?></h1>
 <main class="contenedor main-inicio-sesion">
     <a class="card" href="mascotas/mis_mascotas.php">mis mascotas
         <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -41,7 +44,9 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="ordenes/ordenes_medicas.php">órdenes médicas
+</main>
+<div class="ultima-fila-card contenedor">
+    <a class="card last1" href="ordenes/ordenes_medicas.php">órdenes médicas
         <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect x="0.5" width="90" height="90" fill="url(#pattern0_151_1223)"/>
             <defs>
@@ -52,7 +57,7 @@
             </defs>
         </svg>
     </a>
-    <a class="card" href="">configuración
+    <a class="card last1" href="configuracion/configuracion.php">configuración
         <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect width="90" height="90" fill="url(#pattern0_21_2303)"/>
             <defs>
@@ -63,7 +68,7 @@
             </defs>
         </svg>
     </a>
-</main>
+</div>
 
 <?php
     $pagina_actual = '';

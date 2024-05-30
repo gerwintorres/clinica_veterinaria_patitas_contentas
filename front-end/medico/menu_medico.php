@@ -1,10 +1,16 @@
 <?php
     $pagina_actual = '';
-    $_SESSION['loggedin'] = true;
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (isset($_SESSION['id_medico']) && isset($_SESSION['nombres'])) {
+        $id_cliente = $_SESSION['id_medico'];
+        $nombres = $_SESSION['nombres'];
+    }
     include '../includes/templates/header.php';
 ?>
 
-<h1 class="contenedor titulo-h1-pagina alineacion-izquierda">Bienvenido, [Dr(A) Nombre]</h1>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda">Bienvenido, Dr(A) <?php echo $nombres?></h1>
 
 <main class="contenedor main-inicio-sesion">
     <a class="card" href="programacion/programacion_dia.php">Programación del día
