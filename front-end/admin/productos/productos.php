@@ -4,6 +4,7 @@
     $ruta_boton_atras = '../menu_admin.php';
     $texto_card = 'añadir nuevo <br> producto';
     $texto_tabla = 'Lista de productos';
+    $ruta_card = 'anadir_producto.php';
     include '../../includes/templates/pagina_card.php';;
 ?>
 
