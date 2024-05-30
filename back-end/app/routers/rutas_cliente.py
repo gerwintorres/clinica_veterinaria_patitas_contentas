@@ -97,4 +97,4 @@ def obtener_mascotas(id_cliente: int):
         }
         mascotas.append(mascota)
 
-    return JSONResponse(status_code=200, content={"mascotas": mascotas})
+    return JSONResponse(status_code=200, content=mascotas)
