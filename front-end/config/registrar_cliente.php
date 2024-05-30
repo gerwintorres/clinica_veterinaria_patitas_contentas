@@ -28,7 +28,7 @@ function registrarCliente($nombre, $apellidos, $tipoDocumento, $numeroDocumento,
         echo '<script>alert("Añadido con exito");</script>';
     } else {
         // Maneja el error
-        echo '<script>alert("Error en el inicio de sesión");</script>';
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 ?>
