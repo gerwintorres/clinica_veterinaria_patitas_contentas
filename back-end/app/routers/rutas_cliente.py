@@ -8,6 +8,7 @@ from schemas.schemas import ClienteSchema, AdministradorSchema, MedicoSchema, Cr
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
+from fastapi.responses import JSONResponse
 
 key = Fernet.generate_key()
 Fernet(key)
@@ -29,17 +30,15 @@ def registrar_cliente(cliente: ClienteSchema):
 
 @router_cliente.post('/login/client')
 def login_cliente(credenciales: CredencialesSchema):
-    query = text(f"SELECT clave FROM cliente WHERE email = '{credenciales.email}'")
-    result = conn.execute(query).fetchone()
-    print(result)
+    query = text(f"SELECT id_cliente, nombres, clave FROM cliente WHERE email = :email")
+    result = conn.execute(query, {"email": credenciales.email}).fetchone()
+    
     if not result:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     
-    clave = result[0]
-    print(clave)
-    #clave_desencriptada = f.decrypt(clave_encriptada.encode()).decode()
+    id_cliente, nombres, clave = result
+
     if credenciales.clave != clave:
-        
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
 
-    return Response(status_code=200)
+    return JSONResponse(content={"id_cliente": id_cliente, "nombres": nombres}, status_code=200)
