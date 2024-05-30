@@ -186,6 +186,15 @@
     gap: 4rem;
 }
 
+.formulario-datos-procedimiento{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5rem 0;
+    gap: 4rem;
+}
+
+
 .formulario-terminos{
     display: flex;
     gap: 1rem;
@@ -287,3 +296,4 @@
     background-size: cover;
     border-radius: 5rem 0 0 5rem;
 }
+

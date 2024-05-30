@@ -16,7 +16,7 @@
     <div class="form-contenido">
         <form action="">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
-            <div class="formulario-datos">
+            <div class="formulario-datos-procedimiento">
                 <div>
                     <label for="nombre">Nombre del procedimiento</label>
                     <input type="text" id="nombre" name="nombre" required class="inputs">
