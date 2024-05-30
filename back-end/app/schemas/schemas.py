@@ -33,6 +33,13 @@ class MascotaSchema(BaseModel):
     historia_clinica: Optional[str] = None
     id_cliente: int
 
+class MascotaUpdateSchema(BaseModel):
+    nombre: str = None
+    tipo_mascota: str = None
+    raza: str = None
+    edad: int = None
+    peso: float
+
 
 class MedicoSchema(BaseModel):
     id_medico: int

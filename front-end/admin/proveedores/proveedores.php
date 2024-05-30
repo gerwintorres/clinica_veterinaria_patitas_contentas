@@ -4,6 +4,7 @@
     $ruta_boton_atras = '../menu_admin.php';
     $texto_card = 'añadir nuevo <br> proveedor';
     $texto_tabla = 'Lista de proveedores';
+    $ruta_card = 'anadir_proveedor.php';
     include '../../includes/templates/pagina_card.php';
 ?>
     <article class="contenedor contenedor-table">
