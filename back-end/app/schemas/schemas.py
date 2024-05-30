@@ -24,7 +24,7 @@ class ClienteSchema(BaseModel):
 
 
 class MascotaSchema(BaseModel):
-    id_mascota: int
+    #id_mascota: int
     nombre: str
     tipo_mascota: str
     raza: str
