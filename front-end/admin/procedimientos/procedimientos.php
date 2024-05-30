@@ -4,6 +4,7 @@
     $ruta_boton_atras = '../menu_admin.php';
     $texto_card = 'añadir nuevo <br> procedimiento';
     $texto_tabla = 'Lista de procedimientos';
+    $ruta_card = 'anadir_procedimiento.php';
     include '../../includes/templates/pagina_card.php';;
 ?>
 <article class="contenedor contenedor-table">

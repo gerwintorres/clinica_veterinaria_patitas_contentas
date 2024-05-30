@@ -280,3 +280,10 @@
     background-size: cover;
     border-radius: 5rem 0 0 5rem;
 }
+
+.form-imagen-procedimiento{
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0, 0, 0, 0.4)), url('../../../build/img/procedimiento.webp'); /* Ruta de la imagen de fondo */
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5rem 0 0 5rem;
+}
