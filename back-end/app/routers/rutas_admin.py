@@ -4,9 +4,9 @@ from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text, update
 from sqlalchemy.orm import Session
 from database.db import conn
-from models.models import administrador, colaborador
+from models.models import administrador, colaborador, proveedor
 #from models.models import clientes
-from schemas.schemas import CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema
+from schemas.schemas import CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -40,8 +40,12 @@ def login_admin(credenciales: CredencialesSchema):
 def registrar_colaborador(colab: ColaboradorSchema):
     nuevo_colaborador = colab.dict()
     result = conn.execute(colaborador.insert().values(nuevo_colaborador))
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Error al registrar cliente, por favor verifique los datos ingresador")
+    
     conn.commit()
-    print(result)
+
     return JSONResponse(content=nuevo_colaborador, status_code=HTTP_201_CREATED)
 
 @router_admin.put("/update/colaborador/{id_colaborador}")
@@ -79,11 +83,65 @@ def obtener_colaboradores():
             "nombres": row[1],
             "apellidos": row[2],
             "labor": row[3],
-            "telefono": row[5],
+            "telefono": row[4],
         }
         colaboradores.append(colaborador)
 
     return JSONResponse(status_code=200, content=colaboradores)
+
+
+@router_admin.get("/admin/proveedores", response_model=List[ProveedorSchema])
+def obtener_proveedores():
+    query = text("SELECT * FROM proveedor")
+    result = conn.execute(query).fetchall()
+    if not result:
+        raise HTTPException(status_code=404, detail="Error al obtener proveedores")
+
+    proveedores = []
+    for row in result:
+        proveedor = {
+            "id_proveedor": row[0],
+            "nombre": row[1],
+            "ubicacion": row[2],
+            "email": row[3],
+            "telefono": row[4],
+        }
+        proveedores.append(proveedor)
+
+    return JSONResponse(status_code=200, content=proveedores)
+
+@router_admin.post("/register/proveedor")
+def registrar_proveedor(p: ProveedorSchema):
+    nuevo_proveedor = p.dict()
+    result = conn.execute(proveedor.insert().values(nuevo_proveedor))
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Error al registrar proveedor, por favor verifique los datos ingresados")
+    
+    conn.commit()
+    return JSONResponse(content=nuevo_proveedor, status_code=HTTP_201_CREATED)
+
+@router_admin.put("/update/proveedor/{id_proveedor}")
+def actualizar_proveedor(id_proveedor: int, colab: ProveedorUpdateSchema):
+    update_data = {key: value for key, value in colab.dict().items() if value is not None}
+
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Por favor verfica los datos ingresados")
+
+    query = (
+        update(proveedor)
+        .where(proveedor.c.id_proveedor == id_proveedor)
+        .values(**update_data)
+    )
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Proveedor no encontrador")
+
+    return JSONResponse(content={"message": "Proveedor actualizado correctamente"}, status_code=200)
+
+
 
 """@router.post("/registro/administrador")
 def registrar_administrador(administrador: AdministradorSchema, db: Session = Depends(get_db)):

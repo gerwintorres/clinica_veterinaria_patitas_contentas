@@ -113,6 +113,11 @@ class ProveedorSchema(BaseModel):
     email: str
     telefono: str
 
+class ProveedorUpdateSchema(BaseModel):
+    nombre: str
+    ubicacion: str
+    email: str
+    telefono: str
 
 class RegistroProductoSchema(BaseModel):
     id_registro: int
