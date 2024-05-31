@@ -24,7 +24,7 @@ class ClienteSchema(BaseModel):
 
 
 class MascotaSchema(BaseModel):
-    id_mascota: int
+    #id_mascota: int
     nombre: str
     tipo_mascota: str
     raza: str
@@ -83,7 +83,7 @@ class OrdenMedicaSchema(BaseModel):
 
 
 class GuarderiaSchema(BaseModel):
-    id_registro: int
+    #id_registro: int
     hora: str
     fecha: str
     comentarios: Optional[str] = None
