@@ -5,14 +5,13 @@
     $texto_card = 'añadir nueva <br> mascota';
     $texto_tabla = 'Mascotas';
     $ruta_card = 'anadir_mascota.php';
-    require '../../config/obtener_mascotas.php';
+    require '../../config/funciones_mascotas.php';
     include '../../includes/templates/pagina_card.php';
 
     if (isset($_SESSION['id_cliente'])) {
         $id_cliente = $_SESSION['id_cliente'];
         $mascotas = obtenerMascotas($id_cliente);
     }
-    
 ?>
     <article class="contenedor contenedor-table">
         <input type="text" id="search" placeholder="Buscar">
@@ -37,7 +36,7 @@
                             <td><?php echo htmlspecialchars($mascota['raza']); ?></td>
                             <td><?php echo htmlspecialchars($mascota['edad']); ?></td>
                             <td><?php echo htmlspecialchars($mascota['peso']); ?></td>
-                            <td><button class="edit">EDITAR</button></td>
+                            <td><a href="modificar_mascota.php?id_mascota=<?php echo $mascota['id_mascota']?>"><button class="edit">EDITAR</button></a></td>
                             <td><button class="delete">ELIMINAR</button></td>
                         </tr>
                     <?php endforeach; ?>

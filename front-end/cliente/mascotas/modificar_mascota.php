@@ -1,6 +1,33 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_mascotas.php';
+
+    if (isset($_SESSION['id_cliente'])) {
+        $id_cliente = $_SESSION['id_cliente'];
+        $mascotas = obtenerMascotas($id_cliente);
+    }
+
+    $id_mascota = intval($_GET['id_mascota']);
+
+    foreach ($mascotas as $mascota) {
+        if ($mascota['id_mascota'] === $id_mascota) {
+            $nombre = $mascota['nombre'];
+            $tipoMascota = $mascota['tipo_mascota'];
+            $raza = $mascota['raza'];
+            $edad = $mascota['edad'];
+            $peso = $mascota['peso'];
+        }
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nombre = $_POST['nombre'];
+        $tipoMascota = $_POST['tipoMascota'];
+        $raza = $_POST['raza'];
+        $edad = $_POST['edad'];
+        $peso = $_POST['peso'];
+        actualizarMascota($id_mascota,$nombre, $tipoMascota, $raza, $edad, $peso);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -14,37 +41,37 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-mascota"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>
                     <label for="nombre">Nombre de la mascota</label>
-                    <input type="text" id="nombre" name="nombre" required class="inputs">
+                    <input type="text" id="nombre" name="nombre" value="<?php echo $nombre?>" required class="inputs">
                 </div>
                 <div>
                     <label for="tipoMascota">Tipo de mascota</label>
-                    <select name="tipoMascota" id="tipoMascota" required class="inputs">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="canino">Canino</option>
-                        <option value="felino">Felino</option>
-                        <option value="ave">Ave</option>
-                        <option value="roedor">Roedor (hamster, cobaya, conejillo de indias)</option>
-                        <option value="conejo">Conejo</option>
+                    <select name="tipoMascota" id="tipoMascota"  required class="inputs">
+                        <option value="<?php echo $tipoMascota?>" selected><?php echo $tipoMascota?></option>
+                        <option value="Canino">Canino</option>
+                        <option value="Felino">Felino</option>
+                        <option value="Ave">Ave</option>
+                        <option value="Roedor">Roedor (hamster, cobaya, conejillo de indias)</option>
+                        <option value="Conejo">Conejo</option>
                     </select>
                 </div>
                 <div>
                     <label for="raza">Raza</label>
-                    <input type="text" id="raza" name="raza" required class="inputs">
+                    <input type="text" id="raza" name="raza" value="<?php echo $raza?>" required class="inputs">
                 </div>
             </div>
             <div class="formulario-datos">
                 <div>
                     <label for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" required class="inputs">
+                    <input type="number" id="edad" name="edad" value="<?php echo $edad?>" required class="inputs">
                 </div>
                 <div>
                     <label for="peso">Peso (kg)</label>
-                    <input type="number" id="peso" name="peso" required class="inputs">
+                    <input type="number" id="peso" name="peso" value="<?php echo $peso?>" required class="inputs">
                 </div>
             </div>
             <div class="form-botones">
