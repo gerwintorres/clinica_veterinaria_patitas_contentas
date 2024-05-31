@@ -88,9 +88,6 @@
             <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
         </div>
     </div>
-    
-
-
 </main>
 <?php
     include '../../includes/templates/footer.php';
