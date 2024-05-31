@@ -86,3 +86,14 @@ def registrar_mascota_guarderia(mascota: GuarderiaSchema):
         session.commit()
         print(result)
     return JSONResponse(content=nueva_mascota_guarderia, status_code=HTTP_201_CREATED)
+
+@router_mascota.delete("/delete/mascota/{id_mascota}")
+def eliminar_mascota(id_mascota: int):
+    query = mascotas.delete().where(mascotas.c.id_mascota == id_mascota)
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Mascota no encontrada")
+
+    return JSONResponse(content={"message": "Mascota eliminada correctamente"}, status_code=200)
