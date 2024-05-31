@@ -1,9 +1,10 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
-from sqlalchemy import text, update
+from sqlalchemy import text, update, insert
 from sqlalchemy.orm import Session
 from database.db import conn
-from models.models import clientes, mascotas
+from datetime import datetime
+from models.models import clientes, mascotas, guarderia
 from schemas.schemas import MascotaSchema, MascotaUpdateSchema, GuarderiaSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
@@ -73,10 +74,15 @@ def obtener_mascota(id_cliente: int):
 
     return JSONResponse(status_code=200, content=mascotas)
 
+def convert_date_format(date_str):
+    return datetime.strptime(date_str, "%d/%m/%Y").strftime("%Y-%m-%d")
+
 @router_mascota.post("/mascota/guarderia")
 def registrar_mascota_guarderia(mascota: GuarderiaSchema):
     nueva_mascota_guarderia = mascota.dict()
-    result = conn.execute(mascotas.insert().values(nueva_mascota_guarderia))
-    conn.commit()
-    print(result)
+    nueva_mascota_guarderia['fecha'] = convert_date_format(nueva_mascota_guarderia['fecha'])  # Convert date format here
+    with Session(conn) as session:
+        result = session.execute(insert(guarderia).values(nueva_mascota_guarderia))
+        session.commit()
+        print(result)
     return JSONResponse(content=nueva_mascota_guarderia, status_code=HTTP_201_CREATED)
