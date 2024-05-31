@@ -35,11 +35,11 @@
                     <label for="tipoMascota">Tipo de mascota</label>
                     <select name="tipoMascota" id="tipoMascota" required class="inputs">
                         <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="canino">Canino</option>
-                        <option value="felino">Felino</option>
-                        <option value="ave">Ave</option>
-                        <option value="roedor">Roedor (hamster, cobaya, conejillo de indias)</option>
-                        <option value="conejo">Conejo</option>
+                        <option value="Canino">Canino</option>
+                        <option value="Felino">Felino</option>
+                        <option value="Ave">Ave</option>
+                        <option value="Roedor">Roedor (hamster, cobaya, conejillo de indias)</option>
+                        <option value="Conejo">Conejo</option>
                     </select>
                 </div>
                 <div>

@@ -19,6 +19,15 @@
             $peso = $mascota['peso'];
         }
     }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nombre = $_POST['nombre'];
+        $tipoMascota = $_POST['tipoMascota'];
+        $raza = $_POST['raza'];
+        $edad = $_POST['edad'];
+        $peso = $_POST['peso'];
+        actualizarMascota($id_mascota,$nombre, $tipoMascota, $raza, $edad, $peso);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -32,7 +41,7 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-mascota"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>
@@ -43,11 +52,11 @@
                     <label for="tipoMascota">Tipo de mascota</label>
                     <select name="tipoMascota" id="tipoMascota"  required class="inputs">
                         <option value="<?php echo $tipoMascota?>" selected><?php echo $tipoMascota?></option>
-                        <option value="canino">Canino</option>
-                        <option value="felino">Felino</option>
-                        <option value="ave">Ave</option>
-                        <option value="roedor">Roedor (hamster, cobaya, conejillo de indias)</option>
-                        <option value="conejo">Conejo</option>
+                        <option value="Canino">Canino</option>
+                        <option value="Felino">Felino</option>
+                        <option value="Ave">Ave</option>
+                        <option value="Roedor">Roedor (hamster, cobaya, conejillo de indias)</option>
+                        <option value="Conejo">Conejo</option>
                     </select>
                 </div>
                 <div>
