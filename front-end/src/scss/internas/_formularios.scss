@@ -235,7 +235,7 @@
     }
     .show-eye{
         display: none;
-    }
+    }    
 }
 
 .form-imagen-mascota{
@@ -295,5 +295,40 @@
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 5rem 0 0 5rem;
+}
+.form-imagen-restablecer1{
+    background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0, 0, 0, 0.05)), url('../../../build/img/imagenRestablecer1.webp'); /* Ruta de la imagen de fondo */
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 1rem;
+}
+// Restablecer contraseña
+
+.formulario-restablecer{
+    display: grid;
+    grid-template-columns: 1.3fr 2fr;
+    margin-top: 5rem;
+
+    .texto-restablecer{
+        font-family: $fuente_secundaria;
+        font-size: 1.7rem;
+        font-weight: 400;
+        display: block;
+        margin-bottom: 2.5rem;
+
+        a{
+            color: $azul_oscuro;
+            font-weight: 700;
+        }
+    }
+}
+.formulario-datos-restablecer{
+    width: 100%;
+}
+.form-imagen-restablecer2{
+    background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0, 0, 0, 0.05)), url('../../../build/img/imagenRestablecer2.webp'); /* Ruta de la imagen de fondo */
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 1rem;
 }
 
