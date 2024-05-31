@@ -12,6 +12,11 @@
         $id_cliente = $_SESSION['id_cliente'];
         $mascotas = obtenerMascotas($id_cliente);
     }
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_mascota'])) {
+        $id_mascota = $_GET['id_mascota'];
+        eliminarMascota($id_mascota);
+    }
 ?>
     <article class="contenedor contenedor-table">
         <input type="text" id="search" placeholder="Buscar">
@@ -37,7 +42,7 @@
                             <td><?php echo htmlspecialchars($mascota['edad']); ?></td>
                             <td><?php echo htmlspecialchars($mascota['peso']); ?></td>
                             <td><a href="modificar_mascota.php?id_mascota=<?php echo $mascota['id_mascota']?>"><button class="edit">EDITAR</button></a></td>
-                            <td><button class="delete">ELIMINAR</button></td>
+                            <td><a href="mis_mascotas.php?id_mascota=<?php echo $mascota['id_mascota']?>"><button class="delete">ELIMINAR</button></a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
