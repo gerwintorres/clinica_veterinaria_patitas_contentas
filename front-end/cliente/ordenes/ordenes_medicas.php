@@ -29,7 +29,7 @@
                     <td>Nombre de la mascota</td>
                     <td>Servicio</td>
                     <td>Fecha orden</td>
-                    <td><button class="verOrden">Ver orden médica</button></td>
+                    <td><a href="visualizar_orden.php"><button class="verOrden">Ver orden médica</button></a></td>
                 </tr>
                 <!-- Repite las filas según sea necesario -->
             </tbody>
