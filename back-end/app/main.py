@@ -3,12 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers.rutas_medico import router_medico
 from routers.rutas_cliente import router_cliente
 from routers.rutas_admin import router_admin
+from routers.rutas_mascota import router_mascota
 
 app = FastAPI()
 
 app.include_router(router_medico)
 app.include_router(router_cliente)
 app.include_router(router_admin)
+app.include_router(router_mascota)
 
 
 # Configuración de CORS

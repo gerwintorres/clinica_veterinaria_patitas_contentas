@@ -24,7 +24,7 @@ class ClienteSchema(BaseModel):
 
 
 class MascotaSchema(BaseModel):
-    id_mascota: int
+    #id_mascota: int
     nombre: str
     tipo_mascota: str
     raza: str
@@ -48,17 +48,21 @@ class MedicoSchema(BaseModel):
     email: str
     clave: str
     telefono: int
-
-
+    
 class ColaboradorSchema(BaseModel):
     id_colaborador: int
     nombres: str
     apellidos: str
-    cargo: str
-    email: str
+    tipo_documento: str
+    labor: str
     telefono: int
-    id_cargo: int
 
+
+class ColaboradorUpdateSchema(BaseModel):
+    nombres: str
+    apellidos: str
+    labor: str
+    telefono: int
 
 class CitaSchema(BaseModel):
     id_cita: int
@@ -79,7 +83,7 @@ class OrdenMedicaSchema(BaseModel):
 
 
 class GuarderiaSchema(BaseModel):
-    id_registro: int
+    #id_registro: int
     hora: str
     fecha: str
     comentarios: Optional[str] = None

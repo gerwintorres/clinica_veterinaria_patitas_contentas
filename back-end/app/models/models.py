@@ -2,12 +2,12 @@ from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey, Flo
 from database.db import engine, meta_data
 
 
-cargo = Table(
+"""cargo = Table(
     "cargo",
     meta_data,
     Column("id_cargo", Integer, primary_key=True),
     Column("nombre_cargo", String(100), nullable=False)
-)
+)"""
 
 servicio = Table(
     "servicio",
@@ -60,10 +60,10 @@ colaborador = Table(
     Column("id_colaborador", Integer, primary_key=True),
     Column("nombres", String(100), nullable=False),
     Column("apellidos", String(100), nullable=False),
-    Column("cargo", String(50), nullable=False),
-    Column("email", String(100), nullable=False, unique=True),
+    Column("tipo_documento", String(20), nullable=False),    
+    Column("labor", String(50), nullable=False),
     Column("telefono", Integer, nullable=False, unique=True),
-    Column("id_cargo", Integer, ForeignKey("cargo.id_cargo"), nullable=False)
+    #Column("id_cargo", Integer, ForeignKey("cargo.id_cargo"), nullable=False)
 )
 
 citas = Table(
