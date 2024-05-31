@@ -4,7 +4,7 @@ from sqlalchemy import text, update
 from sqlalchemy.orm import Session
 from database.db import conn
 from models.models import clientes, mascotas
-from schemas.schemas import MascotaSchema, MascotaUpdateSchema
+from schemas.schemas import MascotaSchema, MascotaUpdateSchema, GuarderiaSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -74,7 +74,7 @@ def obtener_mascota(id_cliente: int):
     return JSONResponse(status_code=200, content=mascotas)
 
 @router_mascota.post("/mascota/guarderia")
-def registrar_mascota_guarderia(mascota: MascotaSchema):
+def registrar_mascota_guarderia(mascota: GuarderiaSchema):
     nueva_mascota_guarderia = mascota.dict()
     result = conn.execute(mascotas.insert().values(nueva_mascota_guarderia))
     conn.commit()
