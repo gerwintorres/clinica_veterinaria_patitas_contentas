@@ -72,3 +72,11 @@ def obtener_mascota(id_cliente: int):
         mascotas.append(mascota)
 
     return JSONResponse(status_code=200, content=mascotas)
+
+@router_mascota.post("/mascota/guarderia")
+def registrar_mascota_guarderia(mascota: MascotaSchema):
+    nueva_mascota_guarderia = mascota.dict()
+    result = conn.execute(mascotas.insert().values(nueva_mascota_guarderia))
+    conn.commit()
+    print(result)
+    return JSONResponse(content=nueva_mascota_guarderia, status_code=HTTP_201_CREATED)
