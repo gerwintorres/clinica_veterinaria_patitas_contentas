@@ -434,3 +434,17 @@
     background-color: $rojo;
     color: $blanco;
 }
+
+.titulos-formularios-cerrado{
+    margin: 4rem 0 0 0;
+    font-family: $fuente_secundaria;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+}
+.margen-superior-2{
+    margin-top: 2rem;
+}
+
+textarea.input-cerrado{
+    height: 12rem;
+}

@@ -18,6 +18,93 @@
             <span class="segunda_parte">Patitas Contentas</span>
         </div>
 </div>
+
+<main class="formulario-cerrado contenedor">
+    <form action="">
+        <h4 class="titulos-formularios-cerrado">Información básica</h4>
+        <div class="form-grupo-cerrado-2">
+            <div>
+                <label for="nombreMascota">Nombre de la mascota</label>
+                <input type="text" class="input-cerrado" id="nombreMascota" name="nombreMascota" required>
+            </div>
+            <div>
+                <label for="nombreDueno">Nombre del dueño</label>
+                <input type="text" class="input-cerrado" id="nombreDueno" name="nombreDueno" required>
+            </div>
+            <div>
+                <label for="direccion">Dirección</label>
+                <input type="text" class="input-cerrado input-width" id="direccion" name="direccion" required>
+            </div>  
+        </div>
+        <div class="form-grupo-cerrado-2">
+            <div>
+                <label for="telefono">Teléfono</label>
+                <input type="number" class="input-cerrado" id="telefono" name="telefono" required>
+            </div>
+            <div>
+                <label for="raza">Raza</label>
+                <input type="text" class="input-cerrado" id="raza" name="raza" required>
+            </div>
+            <div>
+                <label for="peso">Peso (Kg)</label>
+                <input type="number" class="input-cerrado" id="peso" name="peso" required>
+            </div>
+            <div>
+                <label for="edad">Edad</label>
+                <input type="number" class="input-cerrado" id="edad" name="edad" required>
+            </div>
+        </div>
+        <h4 class="titulos-formularios-cerrado">Constantes vitales</h4>
+        <div class="form-grupo-cerrado-2">
+            <div>
+                <label for="fr">FR</label>
+                <input type="number" class="input-cerrado" id="fr" name="fr" required>
+            </div>
+            <div>
+                <label for="fc">FC</label>
+                <input type="number" class="input-cerrado" id="fc" name="fc" required>
+            </div>
+            <div>
+                <label for="tpc">TPC</label>
+                <input type="number" class="input-cerrado" id="tpc" name="tpc" required>
+            </div>
+            <div>
+                <label for="trc">TRC</label>
+                <input type="number" class="input-cerrado" id="trc" name="trc" required>
+            </div>
+        </div>
+        <div class="form-grupo-cerrado">
+            <div>
+                <label for="t">T°</label>
+                <input type="number" class="input-cerrado" id="t" name="t" required>
+            </div>
+        </div>
+        <h4 class="titulos-formularios-cerrado">Detalles de la consulta</h4>
+        <div class="form-grupo-cerrado">
+            <div>
+                <label for="fecha">Fecha</label>
+                <input type="date" class="input-cerrado" id="fecha" name="fecha" disabled>
+            </div>
+            <div>
+                <label for="hora">Hora</label>
+                <input type="time" class="input-cerrado" id="hora" name="hora" disabled>
+            </div>
+            <div>
+                <label for="medico">Médico</label>
+                <input type="text" class="input-cerrado" id="medico" name="medico" disabled>
+            </div>
+            <div>
+                <label for="codigoHistoria">Código historia</label>
+                <input type="number" class="input-cerrado" id="codigoHistoria" name="codigoHistoria" disabled>
+            </div>
+        </div>
+        <label class="margen-superior-2" for="motivo">Motivo de consulta</label>
+        <textarea class="input-cerrado" id="motivo" name="motivo" required></textarea>
+        <label class="margen-superior-2" for="anotaciones">Anotaciones médicas</label>
+        <textarea class="input-cerrado" id="anotaciones" name="anotaciones" required></textarea>
+        <input class="boton-formulario-azul margen-superior margen-inferior" type="submit" value="INGRESAR INFORMACIÓN"> 
+    </form>
+</main>
 <?php
     include '../../includes/templates/footer.php';
 ?>
