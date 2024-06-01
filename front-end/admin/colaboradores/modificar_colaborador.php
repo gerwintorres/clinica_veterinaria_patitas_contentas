@@ -1,6 +1,31 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_colaboradores.php';
     include '../../includes/templates/header.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $colaboradores = obtenerColaboradores();
+    }
+
+    $id_colaborador = intval($_GET['id_colaborador']);
+
+    foreach ($colaboradores as $colaborador) {
+        if ($colaborador['id_colaborador'] === $colaborador) {
+            $nombre = $colaborador['nombres'];
+            $apellidos = $colaborador['apellidos'];
+            $tipoDocumento = $colaborador['tipo_documento'];
+            $labor = $colaborador['labor'];
+            $telefono = $colaborador['telefono'];
+        }
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nombre = $_POST['nombre'];
+        $apellidos = $_POST['apellidos'];
+        $labor = $_POST['labor'];
+        $telefono = $_POST['telefono'];
+        actualizarColaborador($id_colaborador, $nombre, $apellidos, $labor, $telefono);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -19,34 +44,34 @@
             <div class="formulario-datos">
                 <div>
                     <label for="nombre">Nombre(s)</label>
-                    <input type="text" id="nombre" name="nombre" required class="inputs">
+                    <input type="text" id="nombre" name="nombre" value="<?php echo $nombre?>" required class="inputs">
                 </div>
                 <div>
                     <label for="apellidos">Apellidos</label>
-                    <input type="text" id="apellidos" name="apellidos" required class="inputs">
+                    <input type="text" id="apellidos" name="apellidos" value="<?php echo $apellidos?>" required class="inputs">
                 </div>
                 <div>
                     <label for="tipoDocumento">Tipo de documento</label>
-                    <select name="tipoDocumento" id="tipoDocumento" required class="inputs">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="cedula">Cédula de ciudadanía</option>
-                        <option value="cedulaExtranjeria">Cédula de extranjería</option>
-                        <option value="pasaporte">Pasaporte</option>
+                    <select name="tipoDocumento" id="tipoDocumento" class="inputs" disabled>
+                        <option value="<?php echo $tipoDocumento?>" disabled selected><?php echo $tipoDocumento?></option>
+                        <option value="cedula" disabled>Cédula de ciudadanía</option>
+                        <option value="cedulaExtranjeria" disabled>Cédula de extranjería</option>
+                        <option value="pasaporte" disabled>Pasaporte</option>
                     </select>
                 </div>
             </div>
             <div class="formulario-datos">
                 <div>
                     <label for="numeroDocumento">Número de documento</label>
-                    <input type="number" id="numeroDocumento" name="numeroDocumento" required class="inputs">
+                    <input type="number" id="numeroDocumento" name="numeroDocumento" value="<?php echo $id_colaborador?>" disabled class="inputs">
                 </div>
                 <div>
                     <label for="labor">Labor</label>
-                    <input type="text" id="labor" name="labor" required class="inputs">
+                    <input type="text" id="labor" name="labor" required class="inputs" value="<?php echo $labor?>">
                 </div>
                 <div>
                     <label for="telefono">Teléfono</label>
-                    <input type="number" id="telefono" name="telefono" required class="inputs">
+                    <input type="number" id="telefono" name="telefono" required class="inputs" value="<?php echo $telefono?>">
                 </div>
             </div>
             <div class="form-botones">
