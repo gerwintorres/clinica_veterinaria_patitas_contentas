@@ -104,6 +104,15 @@ class ProductoSchema(BaseModel):
     precio_compra: float
     precio_venta: float
     id_lote: Optional[int] = None
+    
+class ProductoUpdateSchema(BaseModel):
+    nombre: str
+    fecha_vencimiento: str
+    cantidad: int
+    id_proveedor: int
+    precio_compra: float
+    precio_venta: float
+    id_lote: Optional[int] = None
 
 
 class ProveedorSchema(BaseModel):
@@ -120,9 +129,14 @@ class ProveedorUpdateSchema(BaseModel):
     telefono: str
 
 class RegistroProductoSchema(BaseModel):
-    id_registro: int
     id_producto: int
     id_proveedor: int
+    nombre: str
+    fecha_vencimiento: str
+    cantidad: int
+    precio_compra: float
+    precio_venta: float
+    id_lote: Optional[int] = None
 
 
 class AdministradorSchema(BaseModel):
