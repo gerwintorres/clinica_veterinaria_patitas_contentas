@@ -26,7 +26,6 @@ def registrar_cliente(cliente: ClienteSchema):
     #new_client["clave"] = f.encrypt(cliente.clave.encode("utf-8"))
     result = conn.execute(clientes.insert().values(new_client))
     conn.commit()
-    print(result)
     return Response(status_code=HTTP_201_CREATED)
 
 

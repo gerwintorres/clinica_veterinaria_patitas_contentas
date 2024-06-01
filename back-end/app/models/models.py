@@ -123,7 +123,7 @@ proveedor = Table(
 registro_productos = Table(
     "registro_productos",
     meta_data,
-    Column("id_registro", Integer, primary_key=True),
+    Column("id_registro", Integer, autoincrement = True,  primary_key=True),
     Column("id_producto", Integer, ForeignKey("productos.id_producto"), nullable=False),
     Column("id_proveedor", Integer, ForeignKey("proveedor.id_proveedor"), nullable=False)
 )
@@ -133,7 +133,7 @@ lotes = Table(
     meta_data,
     Column("id_lote", Integer, primary_key=True),
     Column("lote", Integer, nullable=False, unique=True),
-    Column("id_producto", Integer, ForeignKey("productos.id_producto"), nullable=False)
+    #Column("id_producto", Integer, ForeignKey("productos.id_producto"), nullable=False)
 )
 
 administrador = Table(
