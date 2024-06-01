@@ -10,7 +10,7 @@
     include '../includes/templates/header.php';
 ?>
 
-<h1 class="contenedor titulo-h1-pagina alineacion-izquierda">Bienvenido, Dr(A) <?php echo $nombres?></h1>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda">Bienvenido(a), Dr(a) <?php echo $nombres?></h1>
 
 <main class="contenedor main-inicio-sesion">
     <a class="card" href="programacion/programacion_dia.php">Programación del día

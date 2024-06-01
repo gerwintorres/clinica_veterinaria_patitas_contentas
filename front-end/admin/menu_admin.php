@@ -6,7 +6,7 @@
     include '../includes/templates/header.php';
 ?>
 
-<h1 class="contenedor titulo-h1-pagina alineacion-izquierda">Bienvenido administrador</h1>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda">Bienvenido(a) administrador(a)</h1>
 
 <main class="contenedor main-inicio-sesion">
     <a class="card" href="colaboradores/colaboradores.php">colaboradores
