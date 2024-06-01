@@ -23,7 +23,7 @@ function registrarColaborador($nombres, $apellidos, $tipo_documento, $id_colabor
     if ($http_code == 201) {
         $result = json_decode($response, true);
         echo '<script>
-            window.location.href = "../mascotas/mis_mascotas.php";
+            window.location.href = "colaboradores.php";
             alert("Registrado con éxito");
         </script>';
     } else {
