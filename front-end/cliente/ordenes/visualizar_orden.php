@@ -9,9 +9,86 @@
     </svg>Ir atrás</a>
 </div>
 
-    
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Orden médica: [Código orden]</h1>
 
+<div class="imagen-formularios-cerrados contenedor">
+        <img src="../../build/img/logo.webp" alt="Logotipo Patitas Contentas">
+        <div class="titulo">
+            <span>Clínica Veterinaria</span>
+            <span class="segunda_parte">Patitas Contentas</span>
+        </div>
+</div>
+
+<main class="formulario-cerrado contenedor">
+    <div class="form-grupo-cerrado">
+        <div>
+            <label for="fecha">Fecha</label>
+            <input type="date" class="input-cerrado" id="fecha" name="fecha" disabled>
+        </div>
+        <div>
+            <label for="hora">Hora</label>
+            <input type="time" class="input-cerrado" id="hora" name="hora" disabled>
+        </div>
+        <div>
+            <label for="codigoHistoria">Código historia</label>
+            <input type="int" class="input-cerrado" id="codigoHistoria" name="codigoHistoria" disabled>
+        </div>  
+    </div>
+    <div class="form-grupo-cerrado-2">
+        <div>
+            <label for="nombreMascota">Nombre de la mascota</label>
+            <input type="text" class="input-cerrado" id="nombreMascota" name="nombreMascota" disabled>
+        </div>
+        <div>
+            <label for="nombreDueno">Nombre del dueño</label>
+            <input type="text" class="input-cerrado" id="nombreDueno" name="nombreDueno" disabled>
+        </div>
+        <div>
+            <label for="direccion">Dirección</label>
+            <input type="text" class="input-cerrado input-width" id="direccion" name="direccion" disabled>
+        </div>
+    </div>
+    <div class="form-grupo-cerrado">
+        <div>
+            <label for="telefono">Teléfono</label>
+            <input type="number" class="input-cerrado" id="telefono" name="telefono" disabled>
+        </div>
+        <div>
+            <label for="raza">Raza</label>
+            <input type="text" class="input-cerrado" id="raza" name="raza" disabled>
+        </div>
+        <div>
+            <label for="peso">Peso (Kg)</label>
+            <input type="number" class="input-cerrado" id="peso" name="peso" disabled>
+        </div>
+        <div>
+            <label for="edad">Edad</label>
+            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
+        </div>
+    </div>
+    <hr class="margen-superior">
+    <div class="form-grupo-cerrado-3">
+        <div>
+            <label for="edad">Código servicio</label>
+            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
+        </div>
+        <div>
+            <label for="edad">Servicio</label>
+            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
+        </div>
+        <div>
+            <label for="edad">Justificación</label>
+            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
+        </div>
+    </div>
+    
+    <div class="form-grupo-cerrado">
+        <div>
+            <label for="edad">Médico solicitante</label>
+            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
+        </div>
+    </div>
+</main>
 <?php
     include '../../includes/templates/footer.php';
 ?>

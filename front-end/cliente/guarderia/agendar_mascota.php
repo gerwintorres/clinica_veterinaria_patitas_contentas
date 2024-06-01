@@ -52,11 +52,9 @@
                     <input type="number" id="peso" name="peso" required class="inputs">
                 </div>
             </div>
-            <div class="formulario-datos">
-                <div>
-                    <label for="comentarios">Comentarios adicionales</label>
-                    <input type="text" id="comentarios" name="comentarios" required class="inputs">
-                </div>
+            <div class="formulario-datos-comentarios">
+                <label for="comentarios">Comentarios adicionales</label>
+                <input type="text" id="comentarios" name="comentarios" required class="inputs">
             </div>
             <div class="contenido-centrado">
                 <input class="boton-formulario-azul margen-superior" type="submit" value="AGENDAR ESTANCIA">

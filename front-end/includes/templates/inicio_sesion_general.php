@@ -71,7 +71,7 @@
             </div> 
         </div>
         <div class="contenedor-olvido-contrasena">
-            <a href="" class="olvidar-clave">Olvidé mi contraseña</a>
+            <a href="../../restablecer_clave.php" class="olvidar-clave">Olvidé mi contraseña</a>
         </div>
         <input class="boton-formulario-azul" type="submit" value="Iniciar Sesión">
         <?php if($usuario == 'cliente'): ?>

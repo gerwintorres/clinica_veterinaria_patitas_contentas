@@ -193,7 +193,11 @@
     margin: 5rem 0;
     gap: 4rem;
 }
-
+.formulario-datos-comentarios{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 5rem 0;
+}
 
 .formulario-terminos{
     display: flex;
@@ -235,7 +239,7 @@
     }
     .show-eye{
         display: none;
-    }
+    }    
 }
 
 .form-imagen-mascota{
@@ -296,4 +300,167 @@
     background-size: cover;
     border-radius: 5rem 0 0 5rem;
 }
+.form-imagen-restablecer1{
+    background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0, 0, 0, 0.05)), url('../../../build/img/imagenRestablecer1.webp'); /* Ruta de la imagen de fondo */
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 1rem;
+}
+// Restablecer contraseña
 
+.formulario-restablecer{
+    display: grid;
+    grid-template-columns: 1.3fr 2fr;
+    margin-top: 5rem;
+
+    .texto-restablecer{
+        font-family: $fuente_secundaria;
+        font-size: 1.7rem;
+        font-weight: 400;
+        display: block;
+        margin-bottom: 2.5rem;
+
+        a{
+            color: $azul_oscuro;
+            font-weight: 700;
+        }
+    }
+}
+.formulario-datos-restablecer{
+    width: 100%;
+}
+.form-imagen-restablecer2{
+    background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0, 0, 0, 0.05)), url('../../../build/img/imagenRestablecer2.webp'); /* Ruta de la imagen de fondo */
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 1rem;
+}
+
+.imagen-formularios-cerrados{
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+
+    img{
+        height: 10rem;
+        width: 10rem;
+    }
+
+    .titulo{
+        color: $azul_oscuro;
+        line-height: 1.1;
+        font-weight: 800;
+        font-family: $fuente_secundaria;
+        font-size: 2.4rem;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-transform: uppercase;
+
+        .segunda_parte{
+            color: $azul_claro;
+        }
+    }
+}
+
+// Visualizar orden
+.form-grupo-cerrado, .form-grupo-cerrado-2, .form-grupo-cerrado-3, .form-grupo-cerrado-4, .form-grupo-cerrado-5{
+    display: grid;
+    input{
+        width: 100%;
+    }
+
+    div{
+        margin-top: 2rem;
+    }
+    
+}
+.form-grupo-cerrado{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+}
+.form-grupo-cerrado-2{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2.1rem;
+
+    .input-width{
+        width: 207.5%;
+    }
+}
+.form-grupo-cerrado-3{
+    gap: 2rem;
+    grid-template-columns: 1fr 1.55fr 1.5fr;  
+}
+.form-grupo-cerrado-4{
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+}
+.form-grupo-cerrado-5{
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.input-cerrado{
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 0.1rem solid $azul_oscuro;
+    background-color: #EAECF0;
+}
+.margen-inferior-config{
+    margin-bottom: 10rem;
+}
+.margen-superior-config{
+    margin-top: 1rem;
+}
+.botones-formulario-config{
+    display: flex;
+    justify-content: flex-end;
+    padding: 2rem 0rem 0 2rem;
+}
+.botones-formulario-config-2{
+    display: flex;
+    justify-content: flex-start;
+    padding: 2rem 2rem 0 0.5rem;
+}
+
+.boton-azul-config, .boton-rojo-config{
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-family: $fuente_secundaria;
+    cursor: pointer; 
+}
+.boton-azul-config{
+    background-color: $azul_oscuro;
+    color: $blanco;
+}
+
+.boton-rojo-config{  
+    background-color: $rojo;
+    color: $blanco;
+}
+
+.titulos-formularios-cerrado{
+    margin: 4rem 0 0 0;
+    font-family: $fuente_secundaria;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+}
+.margen-superior-2{
+    margin-top: 2rem;
+}
+
+textarea.input-cerrado{
+    height: 12rem;
+}
+
+textarea.input-cerrado.descripcion{
+    height: 30rem;
+}
+
+.recibo-guarderia{
+    margin-bottom: 10rem;
+
+    .total-pago{
+        margin-top: 6rem;
+    }
+}
