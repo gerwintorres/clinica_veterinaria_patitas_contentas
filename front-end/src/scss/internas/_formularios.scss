@@ -193,7 +193,11 @@
     margin: 5rem 0;
     gap: 4rem;
 }
-
+.formulario-datos-comentarios{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 5rem 0;
+}
 
 .formulario-terminos{
     display: flex;
