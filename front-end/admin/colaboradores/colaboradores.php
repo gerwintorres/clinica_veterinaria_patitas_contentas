@@ -36,11 +36,12 @@
                     <?php foreach ($colaboradores as $colaborador): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($colaborador['id_colaborador']); ?></td>
+                            <td><?php echo htmlspecialchars($colaborador['tipo_documento']); ?></td>
                             <td><?php echo htmlspecialchars($colaborador['nombres']); ?> <?php echo htmlspecialchars($colaborador['apellidos']); ?></td>
                             <td><?php echo htmlspecialchars($colaborador['labor']); ?></td>
                             <td><?php echo htmlspecialchars($colaborador['telefono']); ?></td>
-                            <td><a href="modificar_colaborador.php?id_mascota=<?php echo $colaborador['id_colaborador']?>"><button class="edit">EDITAR</button></a></td>
-                            <td><a href="colaboradores.php?id_mascota=<?php echo $colaborador['id_colaborador']?>"><button class="delete">ELIMINAR</button></a></td>
+                            <td><a href="modificar_colaborador.php?id_colaborador=<?php echo $colaborador['id_colaborador']?>"><button class="edit">EDITAR</button></a></td>
+                            <td><a href="colaboradores.php?id_colaborador=<?php echo $colaborador['id_colaborador']?>"><button class="delete">ELIMINAR</button></a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

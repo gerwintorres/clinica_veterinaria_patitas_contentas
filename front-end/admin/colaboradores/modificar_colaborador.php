@@ -10,7 +10,7 @@
     $id_colaborador = intval($_GET['id_colaborador']);
 
     foreach ($colaboradores as $colaborador) {
-        if ($colaborador['id_colaborador'] === $colaborador) {
+        if ($colaborador['id_colaborador'] === $id_colaborador) {
             $nombre = $colaborador['nombres'];
             $apellidos = $colaborador['apellidos'];
             $tipoDocumento = $colaborador['tipo_documento'];
@@ -39,7 +39,7 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-colaborador"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>
@@ -54,9 +54,9 @@
                     <label for="tipoDocumento">Tipo de documento</label>
                     <select name="tipoDocumento" id="tipoDocumento" class="inputs" disabled>
                         <option value="<?php echo $tipoDocumento?>" disabled selected><?php echo $tipoDocumento?></option>
-                        <option value="cedula" disabled>Cédula de ciudadanía</option>
-                        <option value="cedulaExtranjeria" disabled>Cédula de extranjería</option>
-                        <option value="pasaporte" disabled>Pasaporte</option>
+                        <option value="Cédula de ciudadanía" disabled>Cédula de ciudadanía</option>
+                        <option value="Cédula de extranjería" disabled>Cédula de extranjería</option>
+                        <option value="Pasaporte" disabled>Pasaporte</option>
                     </select>
                 </div>
             </div>

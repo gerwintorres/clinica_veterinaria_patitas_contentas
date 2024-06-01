@@ -82,8 +82,9 @@ def obtener_colaboradores():
             "id_colaborador": row[0],
             "nombres": row[1],
             "apellidos": row[2],
-            "labor": row[3],
-            "telefono": row[4],
+            "tipo_documento": row[3],
+            "labor": row[4],
+            "telefono": row[5],
         }
         colaboradores.append(colaborador)
 
