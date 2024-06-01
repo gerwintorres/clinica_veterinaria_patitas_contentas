@@ -1,6 +1,17 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_colaboradores.php';
     include '../../includes/templates/header.php';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nombre = $_POST['nombre'];
+        $apellidos = $_POST['apellidos'];
+        $tipoDocumento = $_POST['tipoDocumento'];
+        $numeroDocumento = $_POST['numeroDocumento'];
+        $labor = $_POST['labor'];
+        $telefono = $_POST['telefono'];
+        registrarColaborador($nombre, $apellidos, $tipoDocumento, $numeroDocumento, $labor, $telefono);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
