@@ -1,6 +1,21 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_productos.php';
     include '../../includes/templates/header.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $proveedores = obtenerProveedores();
+    }
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nombre = $_POST['nombre'];
+        $fechaVencimiento = $_POST['fechaVencimiento'];
+        $lote = $_POST['lote'];
+        $unidades = $_POST['unidades'];
+        $proveedor = $_POST['proveedor'];
+        $valorCompra = $_POST['valorCompra'];
+        $valorVenta = $_POST['valorVenta'];
+        registrarProductos($nombre, $fecha_vencimiento, $unidades, $proveedor, $valorCompra, $valorVenta, $lote);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -27,7 +42,7 @@
                 </div>
                 <div>
                     <label for="lote">Lote</label>
-                    <input type="text" id="lote" name="lote" required class="inputs">
+                    <input type="number" id="lote" name="lote" required class="inputs">
                 </div>
             </div>
             <div class="formulario-datos">
@@ -39,8 +54,11 @@
                     <label for="proveedor">Proveedor</label>
                     <select name="proveedor" id="proveedor" required class="inputs">
                         <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="proveedor1">Proveedor 1</option>
-                        <option value="proveedor2">Proveedor 2</option>
+                        <?php foreach ($proveedores as $proveedor): ?>
+                            <option value="<?php echo htmlspecialchars($proveedor['id_proveedor']); ?>">
+                                <?php echo htmlspecialchars($proveedor['nombre']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div>

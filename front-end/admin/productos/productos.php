@@ -10,6 +10,14 @@
 
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
         $productos = obtenerProductos();
+        $proveedores = obtenerProveedores();
+        foreach ($productos as $producto) {
+            foreach ($proveedores as $proveedor) {
+                if ($producto['id_proveedor'] === $proveedor['id_proveedor']) {
+                    $producto['proveedor'] = $proveedor['nombre'];
+                }
+            }
+        }
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_producto'])) {
@@ -40,7 +48,7 @@
                             <td><?php echo htmlspecialchars($producto['id_producto']); ?></td>
                             <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
                             <td><?php echo htmlspecialchars($producto['fecha_vencimiento']); ?></td>
-                            <td><?php echo htmlspecialchars($producto['id_lote']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['lote']); ?></td>
                             <td><?php echo htmlspecialchars($producto['cantidad']); ?></td>
                             <td><?php echo htmlspecialchars($producto['proveedor']); ?></td>
                             <td><a href="modificar_producto.php?id_producto=<?php echo $producto['id_producto']?>"><button class="edit">EDITAR</button></a></td>

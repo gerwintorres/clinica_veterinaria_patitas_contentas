@@ -1,23 +1,13 @@
 <?php
 
 function agendarEstancia($id_mascota, $fecha, $hora, $comentarios){
-
-    $date_format_input = 'Y-m-d';
-    $date = DateTime::createFromFormat($date_format_input, $fecha);
-    if ($date) {
-        $date_format_output = 'd/m/Y';
-        $nueva_fecha = $date->format($date_format_output);
-    }
-
     $data = array(
-        'fecha' => $nueva_fecha,
         'hora' => $hora,
+        'fecha' => $fecha,
         'comentarios' => $comentarios,
         'id_mascota' => $id_mascota
     );
-    echo "<pre>";
-    echo json_encode($data);
-    echo "</pre>";    
+
     $ch = curl_init('http://127.0.0.1:8000/mascota/guarderia');
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -36,9 +26,7 @@ function agendarEstancia($id_mascota, $fecha, $hora, $comentarios){
             alert("Registrado con éxito");
         </script>';
     } else {
-        // Maneja el error
-        echo $http_code;
-        // echo '<script>alert("Error en el registro");</script>';
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 
