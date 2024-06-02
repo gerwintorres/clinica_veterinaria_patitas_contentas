@@ -151,19 +151,23 @@ def obtener_productos():
         raise HTTPException(status_code=404, detail="Error al obtener productos")
 
     productos_lista = []
+    
     for row in result:
+        query = text(f"SELECT id_proveedor FROM registro_productos WHERE id_producto = {row[0]}")
+        id_proveedor = conn.execute(query).fetchone()
+
         producto = {
             "id_producto": row[0],
             "nombre": row[1],
             "fecha_vencimiento": str(row[2]),
             "cantidad": row[3],
+            "id_proveedor": id_proveedor[0],
             "precio_compra": row[4],
             "precio_venta": row[5],
             "lote": row[6],
-            
         }
+    
         productos_lista.append(producto)
-        print(productos_lista)
     return JSONResponse(status_code=200, content = productos_lista)
 
 @router_admin.post("/register/producto")
@@ -226,7 +230,6 @@ def actualizar_producto(id_producto: int, producto: ProductoUpdateSchema):
     
     update_data_product = {key: value for key, value in producto.dict().items() if value is not None}
     
-    print(update_data_product)
     if not update_data_product:
         raise HTTPException(status_code=400, detail="Por favor verifica los datos ingresados")
 

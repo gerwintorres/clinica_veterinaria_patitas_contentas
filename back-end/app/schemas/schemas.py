@@ -95,6 +95,7 @@ class ProductoSchema(BaseModel):
     nombre: str
     fecha_vencimiento: str
     cantidad: int
+    id_proveedor: int
     precio_compra: float
     precio_venta: float
     lote: Optional[int] = None
