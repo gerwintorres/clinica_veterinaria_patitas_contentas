@@ -90,12 +90,6 @@ class GuarderiaSchema(BaseModel):
     id_mascota: int
 
 
-class LoteSchema(BaseModel):
-    id_lote: int
-    lote: int
-    id_producto: int
-
-
 class ProductoSchema(BaseModel):
     id_producto: int
     nombre: str
@@ -103,7 +97,7 @@ class ProductoSchema(BaseModel):
     cantidad: int
     precio_compra: float
     precio_venta: float
-    id_lote: Optional[int] = None
+    lote: Optional[int] = None
     
 class ProductoUpdateSchema(BaseModel):
     nombre: str
@@ -112,7 +106,7 @@ class ProductoUpdateSchema(BaseModel):
     id_proveedor: int
     precio_compra: float
     precio_venta: float
-    id_lote: Optional[int] = None
+    lote: Optional[int] = None
 
 
 class ProveedorSchema(BaseModel):
@@ -129,14 +123,13 @@ class ProveedorUpdateSchema(BaseModel):
     telefono: str
 
 class RegistroProductoSchema(BaseModel):
-    id_producto: int
     id_proveedor: int
     nombre: str
     fecha_vencimiento: str
     cantidad: int
     precio_compra: float
     precio_venta: float
-    id_lote: Optional[int] = None
+    lote: Optional[int] = None
 
 
 class AdministradorSchema(BaseModel):
