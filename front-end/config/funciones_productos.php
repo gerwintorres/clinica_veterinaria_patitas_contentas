@@ -1,4 +1,5 @@
 <?php   
+require 'funciones_proveedores.php';
 
 function obtenerProductos() {
 
@@ -15,6 +16,18 @@ function obtenerProductos() {
 
     if ($http_code == 200) {
         $productos = json_decode($response, true);
+        $proveedores = obtenerProveedores();
+
+        foreach ($productos as &$producto) {
+            foreach ($proveedores as $proveedor) {
+                if ($producto['id_proveedor'] === $proveedor['id_proveedor']) {
+                    $producto['nombre_proveedor']= $proveedor['nombre'];
+                }
+            }
+        }
+
+        // Desvincular el último elemento con referencia para evitar efectos secundarios no deseados
+        unset($producto);
         return $productos;
     }
 }
@@ -26,9 +39,9 @@ function registrarProductos($nombre, $fecha_vencimiento, $cantidad, $id_proveedo
         'cantidad' => $cantidad,
         'precio_compra' => $precio_compra,
         'precio_venta' => $precio_venta,
-        'id_lote' => $lote
+        'lote' => $lote
     );
-
+ 
     $ch = curl_init('http://127.0.0.1:8000/register/producto');
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -53,13 +66,15 @@ function registrarProductos($nombre, $fecha_vencimiento, $cantidad, $id_proveedo
     
 }
 
-function actualizarProductos($id_producto, $nombre, $fecha_vencimiento, $cantidad, $precio_compra, $id_lote){
+function actualizarProductos($id_producto, $nombre, $fecha_vencimiento, $cantidad, $id_proveedor,$precio_compra, $precio_venta, $lote){
     $data = array(
+        'id_proveedor' => $id_proveedor,
         'nombre' => $nombre,
         'fecha_vencimiento' => $fecha_vencimiento,
         'cantidad' => $cantidad,
         'precio_compra' => $precio_compra,
-        'id_lote' => $id_lote
+        'precio_venta' => $precio_venta,
+        'lote' => $lote
     );
 
     $ch = curl_init("http://127.0.0.1:8000/update/producto/$id_producto");

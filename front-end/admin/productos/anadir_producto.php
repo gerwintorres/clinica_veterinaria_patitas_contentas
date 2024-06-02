@@ -4,6 +4,7 @@
     include '../../includes/templates/header.php';
 
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $productos = obtenerProductos();
         $proveedores = obtenerProveedores();
     }
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,7 +15,7 @@
         $proveedor = $_POST['proveedor'];
         $valorCompra = $_POST['valorCompra'];
         $valorVenta = $_POST['valorVenta'];
-        registrarProductos($nombre, $fecha_vencimiento, $unidades, $proveedor, $valorCompra, $valorVenta, $lote);
+        registrarProductos($nombre, $fechaVencimiento, $unidades, $proveedor, $valorCompra, $valorVenta, $lote);
     }
 ?>
 
@@ -29,7 +30,7 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-productos"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>

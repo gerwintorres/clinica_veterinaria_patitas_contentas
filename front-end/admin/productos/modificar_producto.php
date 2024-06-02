@@ -5,28 +5,34 @@
 
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
         $productos = obtenerProductos();
+        $proveedores = obtenerProveedores();
     }
 
     $id_producto = intval($_GET['id_producto']);
 
     foreach ($productos as $producto) {
-        if ($producto['id_proveedor'] === $id_producto) {
+        if ($producto['id_producto'] === $id_producto) {
             $nombre = $producto['nombre'];
             $fecha_vencimiento = $producto['fecha_vencimiento'];
             $lote = $producto['lote'];
             $unidades = $producto['cantidad'];
             $proveedor = $producto['id_proveedor'];
-            $valorCompra = $producto['valor_compra'];
-            $valorVenta = $producto['valor_venta'];
+            $valorCompra = $producto['precio_compra'];
+            $valorVenta = $producto['precio_venta'];
+            $id_proveedor = $producto['id_proveedor'];
+            $nombre_proveedor = $producto['nombre_proveedor'];
         }
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nombre = $_POST['nombre'];
-        $ubicacion = $_POST['ubicacion'];
-        $email = $_POST['email'];
-        $telefono = $_POST['telefono'];
-        actualizarProveedor($id_proveedor, $nombre, $ubicacion, $email, $telefono);
+        $fecha_vencimiento = $_POST['fechaVencimiento'];
+        $lote = $_POST['lote'];
+        $unidades = $_POST['unidades'];
+        $proveedor = $_POST['proveedor'];
+        $valorCompra = $_POST['valorCompra'];
+        $valorVenta = $_POST['valorVenta'];
+        actualizarProductos($id_producto, $nombre, $fecha_vencimiento, $unidades, $proveedor, $valorCompra, $valorVenta, $lote);
     }
 ?>
 
@@ -41,44 +47,47 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-productos"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>
                     <label for="nombre">Nombre del producto</label>
-                    <input type="text" id="nombre" name="nombre" required class="inputs">
+                    <input type="text" id="nombre" name="nombre" value="<?php echo $nombre ?>" required class="inputs">
                 </div>
                 <div>
                     <label for="fechaVencimiento">Fecha de vencimiento</label>
-                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" required class="inputs">
+                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" value="<?php echo $fecha_vencimiento?>" required class="inputs">
                 </div>
                 <div>
                     <label for="lote">Lote</label>
-                    <input type="text" id="lote" name="lote" required class="inputs">
+                    <input type="text" id="lote" name="lote"  value="<?php echo $lote?>" required class="inputs">
                 </div>
             </div>
             <div class="formulario-datos">
                 <div>
                     <label for="unidades">Unidades disponibles</label>
-                    <input type="number" id="unidades" name="unidades" required class="inputs">
+                    <input type="number" id="unidades" name="unidades" value="<?php echo $unidades?>" required class="inputs">
                 </div>
                 <div>
                     <label for="proveedor">Proveedor</label>
-                    <select name="proveedor" id="proveedor" required class="inputs">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="proveedor1">Proveedor 1</option>
-                        <option value="proveedor2">Proveedor 2</option>
+                    <select name="proveedor" id="proveedor" class="inputs">
+                        
+                        <?php foreach ($proveedores as $proveedor): ?>
+                            <option value="<?php echo htmlspecialchars($proveedor['id_proveedor']); ?>" <?php if($proveedor['id_proveedor'] == $id_proveedor): echo "selected"; endif;?> >
+                                <?php echo htmlspecialchars($proveedor['nombre']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div>
                     <label for="valorCompra">Valor de la compra (COP)</label>
-                    <input type="number" id="valorCompra" name="valorCompra" required class="inputs">
+                    <input type="number" id="valorCompra" name="valorCompra" value="<?php echo $valorCompra?>" required class="inputs">
                 </div>
             </div>
             <div class="formulario-datos">
                 <div>
                     <label for="valorVenta">Valor de venta (COP)</label>
-                    <input type="number" id="valorVenta" name="valorVenta" required class="inputs">
+                    <input type="number" id="valorVenta" name="valorVenta" value="<?php echo $valorVenta?>" required class="inputs">
                 </div>
             </div>
             <div class="form-botones">
