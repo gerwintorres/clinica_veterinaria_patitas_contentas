@@ -40,6 +40,11 @@ class MascotaUpdateSchema(BaseModel):
     edad: int = None
     peso: float
 
+class HistoriaSchema(BaseModel):
+    codigo: int
+    id_cliente: int
+    
+    
 
 class MedicoSchema(BaseModel):
     id_medico: int

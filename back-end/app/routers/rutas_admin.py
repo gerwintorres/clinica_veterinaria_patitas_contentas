@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from database.db import conn
 from models.models import administrador, colaborador, proveedor, productos, registro_productos
 #from models.models import clientes
-from schemas.schemas import ProductoUpdateSchema, RegistroProductoSchema, CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema
+from schemas.schemas import ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -155,6 +155,7 @@ def obtener_productos():
     for row in result:
         query = text(f"SELECT id_proveedor FROM registro_productos WHERE id_producto = {row[0]}")
         id_proveedor = conn.execute(query).fetchone()
+        print(type(id_proveedor[0]))
 
         producto = {
             "id_producto": row[0],
@@ -166,7 +167,7 @@ def obtener_productos():
             "precio_venta": row[5],
             "lote": row[6],
         }
-    
+        
         productos_lista.append(producto)
     return JSONResponse(status_code=200, content = productos_lista)
 
@@ -246,6 +247,48 @@ def actualizar_producto(id_producto: int, producto: ProductoUpdateSchema):
 
     return JSONResponse(content={"message": "Producto actualizado correctamente"}, status_code=200)
 
+
+
+@router_admin.get("/admin/historias", response_model=List[HistoriaSchema])
+def obtener_historias():
+    query = text("SELECT * FROM mascotas")
+    result = conn.execute(query).fetchall()
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Error al obtener historias clínicas")
+
+    historias = []
+    
+    for row in result:
+        historia = {
+            "codigo": row[0],
+            "id_cliente": row[7],
+            "nombre": row[1],
+        }
+        historias.append(historia)
+
+    return JSONResponse(status_code=200, content=historias)
+
+@router_admin.get("/admin/clientes", response_model=List[ClienteSchema])
+def obtener_clientes():
+    query = text("SELECT * FROM cliente")
+    result = conn.execute(query).fetchall()
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Error al obtener historias clientes")
+
+    clientes = []
+    
+    for row in result:
+        cliente = {
+            "id_cliente": row[0],
+            "nombres": row[1],
+            "apellidos": row[2],
+            "tipo_documento": row[3],
+        }
+        clientes.append(cliente)
+
+    return JSONResponse(status_code=200, content=clientes)
 
 """@router.post("/registro/administrador")
 def registrar_administrador(administrador: AdministradorSchema, db: Session = Depends(get_db)):
