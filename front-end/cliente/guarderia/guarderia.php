@@ -5,7 +5,14 @@
     $texto_card = 'agendar mascota';
     $texto_tabla = 'Estancias agendadas';
     $ruta_card = 'agendar_mascota.php';
-    include '../../includes/templates/pagina_card.php';;
+    include '../../includes/templates/pagina_card.php';
+    require '../../config/funciones_guarderia.php';
+
+    // if (isset($_SESSION['id_cliente'])) {
+    //     $id_cliente = $_SESSION['id_cliente'];
+    //     $mascotas = obtenerMascotas($id_cliente);
+    // }
+
 ?>
     <article class="contenedor contenedor-table">
         <input type="text" id="search" placeholder="Buscar">

@@ -1,6 +1,20 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_mascotas.php';
+    require '../../config/funciones_guarderia.php';
+
+    if (isset($_SESSION['id_cliente'])) {
+        $id_cliente = $_SESSION['id_cliente'];
+        $mascotas = obtenerMascotas($id_cliente);
+    }
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $fecha = $_POST['fecha'];
+        $hora = $_POST['hora'];
+        $comentarios = $_POST['comentarios'];
+        $id_mascota = $_POST['mascota'];
+        agendarEstancia($id_mascota, $fecha, $hora, $comentarios);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -14,15 +28,18 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-guarderia"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>
                     <label for="mascota">Mascota</label>
                     <select name="mascota" id="mascota" required class="inputs">
-                        <option value="" disabled selected>Seleccione una mascota</option>
-                        <option value="mascota1">Mascota 1</option>
-                        <option value="mascota2">Mascota 2</option>
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <?php foreach ($mascotas as $mascota): ?>
+                            <option value="<?php echo htmlspecialchars($mascota['id_mascota']); ?>">
+                                <?php echo htmlspecialchars($mascota['nombre']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div>
@@ -31,30 +48,12 @@
                 </div>
                 <div>
                     <label for="hora">Hora</label>
-                    <select name="hora" id="hora" required class="inputs">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="hora1">Hora 1</option>
-                        <option value="hora2">Hora 2</option>
-                    </select>
-                </div>
-            </div>
-            <div class="formulario-datos">
-                <div>
-                    <label for="raza">Raza</label>
-                    <input type="text" id="raza" name="raza" required class="inputs">
-                </div>
-                <div>
-                    <label for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" required class="inputs">
-                </div>
-                <div>
-                    <label for="peso">Peso (kg)</label>
-                    <input type="number" id="peso" name="peso" required class="inputs">
+                    <input type="time" id="hora" name="hora" required class="inputs">
                 </div>
             </div>
             <div class="formulario-datos-comentarios">
                 <label for="comentarios">Comentarios adicionales</label>
-                <input type="text" id="comentarios" name="comentarios" required class="inputs">
+                <input type="text" id="comentarios" name="comentarios" class="inputs">
             </div>
             <div class="contenido-centrado">
                 <input class="boton-formulario-azul margen-superior" type="submit" value="AGENDAR ESTANCIA">
