@@ -107,7 +107,7 @@ productos = Table(
     Column("cantidad", Integer, nullable=False),
     Column("precio_compra", Float, nullable=False),
     Column("precio_venta", Float, nullable=False),
-    Column("id_lote", Integer, ForeignKey("lotes.id_lote"), nullable=True)
+    Column("lote", Integer, nullable=True)
 )
 
 proveedor = Table(
@@ -128,13 +128,6 @@ registro_productos = Table(
     Column("id_proveedor", Integer, ForeignKey("proveedor.id_proveedor"), nullable=False)
 )
 
-lotes = Table(
-    "lotes",
-    meta_data,
-    Column("id_lote", Integer, primary_key=True),
-    Column("lote", Integer, nullable=False, unique=True),
-    #Column("id_producto", Integer, ForeignKey("productos.id_producto"), nullable=False)
-)
 
 administrador = Table(
     "administrador",

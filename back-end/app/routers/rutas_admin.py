@@ -143,41 +143,40 @@ def actualizar_proveedor(id_proveedor: int, colab: ProveedorUpdateSchema):
     return JSONResponse(content={"message": "Proveedor actualizado correctamente"}, status_code=200)
 
 
-@router_admin.get("/admin/productos", response_model=List[ProveedorSchema])
+@router_admin.get("/admin/productos", response_model=List[ProductoSchema])
 def obtener_productos():
     query = text("SELECT * FROM productos")
     result = conn.execute(query).fetchall()
-    print(result)
+    
     if not result:
         raise HTTPException(status_code=404, detail="Error al obtener productos")
 
-    productos = []
+    productos_lista = []
     for row in result:
         producto = {
             "id_producto": row[0],
             "nombre": row[1],
-            "fecha_vencimiento": row[2],
+            "fecha_vencimiento": str(row[2]),
             "cantidad": row[3],
             "precio_compra": row[4],
             "precio_venta": row[5],
-            "id_lote": row[6],
+            "lote": row[6],
             
         }
-        productos.append(producto)
-
-    return JSONResponse(status_code=200, content = productos)
+        productos_lista.append(producto)
+        print(productos_lista)
+    return JSONResponse(status_code=200, content = productos_lista)
 
 @router_admin.post("/register/producto")
 def registrar_productos(p: RegistroProductoSchema):
 
     nuevo_producto = {
-        "id_producto": p.id_producto,
         "nombre": p.nombre,
         "fecha_vencimiento": p.fecha_vencimiento,
         "cantidad": p.cantidad,
         "precio_compra": p.precio_compra,
         "precio_venta": p.precio_venta,
-        "id_lote": p.id_lote
+        "lote": p.lote
     }
     result1 = conn.execute(productos.insert().values(nuevo_producto))
     
@@ -185,8 +184,12 @@ def registrar_productos(p: RegistroProductoSchema):
         raise HTTPException(status_code=404, detail="Error al registrar producto, por favor verifique los datos ingresados")
     conn.commit()
     
+    
+    query = conn.execute(text("SELECT COUNT(*) FROM productos"))
+    count = query.scalar()
+    
     registro_producto = {
-        "id_producto": p.id_producto,
+        "id_producto": count,
         "id_proveedor": p.id_proveedor,
     }
     
@@ -218,7 +221,7 @@ def actualizar_producto(id_producto: int, producto: ProductoUpdateSchema):
     conn.commit()
 
     if result1.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Producto no encontrador")
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
     
     producto.id_proveedor = None
     
@@ -237,9 +240,10 @@ def actualizar_producto(id_producto: int, producto: ProductoUpdateSchema):
     conn.commit()
 
     if result2.rowcount == 0:
-        raise HTTPException(status_code=404, detail="Producto no encontrador")
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
 
     return JSONResponse(content={"message": "Producto actualizado correctamente"}, status_code=200)
+
 
 """@router.post("/registro/administrador")
 def registrar_administrador(administrador: AdministradorSchema, db: Session = Depends(get_db)):
