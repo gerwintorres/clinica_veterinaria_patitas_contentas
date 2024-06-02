@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional
 
 class CargoSchema(BaseModel):
@@ -73,6 +73,14 @@ class CitaSchema(BaseModel):
     id_colaborador: int
     id_servicio: int
     id_mascota: int
+
+
+class ContactoSchema(BaseModel):
+    nombres: str
+    apellidos: str
+    email: EmailStr
+    numero_contacto: str
+    mensaje: str
 
 
 class OrdenMedicaSchema(BaseModel):
