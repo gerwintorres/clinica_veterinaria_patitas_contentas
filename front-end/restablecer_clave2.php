@@ -1,6 +1,12 @@
 <?php
     $pagina_actual = '';
+    require 'config/funciones_restablecer_clave.php';
     include 'includes/templates/header.php';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $codigo = $_POST['codigo'];
+        enviarCodigo($_SESSION['correo'], $codigo);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -14,13 +20,13 @@
 <main class="contenedor formulario-restablecer">
     <div class="form-imagen-restablecer2"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario margen-superior">Verificar código</h3>
             <p class="texto-restablecer">Se ha enviado un código de autenticación a tu correo electrónico.</p>
             
             <div class="formulario-datos-restablecer">
                 <label for="codigo">Introduce el código</label>
-                <input class="inputs" type="number" id="codigo" name="codigo" required>
+                <input class="inputs" type="text" id="codigo" name="codigo" required>
             </div>
             <p class="texto-restablecer">No has recibido tu código? <a href="">Reenviar</a></p>
             <div class="contenido-centrado ">

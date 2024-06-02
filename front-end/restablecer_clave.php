@@ -1,6 +1,13 @@
 <?php
     $pagina_actual = '';
+    require 'config/funciones_restablecer_clave.php';
     include 'includes/templates/header.php';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $correo = $_POST['email'];
+        $_SESSION['correo'] = $correo;
+        enviarCorreo($_SESSION['correo']);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -14,7 +21,7 @@
 <main class="contenedor formulario-restablecer">
     <div class="form-imagen-restablecer1"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario margen-superior">¿Olvidaste tu contraseña?</h3>
             <p class="texto-restablecer">No te preocupes, nos pasa a todos. Ingresa tu correo electrónico a continuación para recuperar tu contraseña.</p>
             
