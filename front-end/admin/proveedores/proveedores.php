@@ -45,16 +45,6 @@
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
-                <tr>
-                    <td>ID</td>
-                    <td>Nombre</td>
-                    <td>Ubicación</td>
-                    <td>Email</td>
-                    <td>Télefono</td>
-                    <td><button class="edit">EDITAR</button></td>
-                    <td><button class="delete">ELIMINAR</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
             </tbody>
         </table>
     </article>
