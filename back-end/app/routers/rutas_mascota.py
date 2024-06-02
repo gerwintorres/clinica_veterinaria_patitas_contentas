@@ -74,18 +74,15 @@ def obtener_mascota(id_cliente: int):
 
     return JSONResponse(status_code=200, content=mascotas)
 
-def convert_date_format(date_str):
-    return datetime.strptime(date_str, "%d/%m/%Y").strftime("%Y-%m-%d")
-
 @router_mascota.post("/mascota/guarderia")
 def registrar_mascota_guarderia(mascota: GuarderiaSchema):
     nueva_mascota_guarderia = mascota.dict()
-    nueva_mascota_guarderia['fecha'] = convert_date_format(nueva_mascota_guarderia['fecha'])  # Convert date format here
-    with Session(conn) as session:
-        result = session.execute(insert(guarderia).values(nueva_mascota_guarderia))
-        session.commit()
-        print(result)
+    result = conn.execute(guarderia.insert().values(nueva_mascota_guarderia))
+    conn.commit()
+    print(result)
+
     return JSONResponse(content=nueva_mascota_guarderia, status_code=HTTP_201_CREATED)
+
 
 @router_mascota.delete("/delete/mascota/{id_mascota}")
 def eliminar_mascota(id_mascota: int):
