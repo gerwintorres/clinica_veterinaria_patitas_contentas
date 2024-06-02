@@ -58,6 +58,7 @@ function actualizarProveedor($id_proveedor, $nombre, $ubicacion, $email, $telefo
         'email' => $email,
         'telefono' => $telefono
     );
+    
 
     $ch = curl_init("http://127.0.0.1:8000/update/proveedor/$id_proveedor");
 

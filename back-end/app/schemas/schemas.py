@@ -116,7 +116,7 @@ class ProductoUpdateSchema(BaseModel):
 
 
 class ProveedorSchema(BaseModel):
-    id_proveedor: int
+    #id_proveedor: int
     nombre: str
     ubicacion: str
     email: str

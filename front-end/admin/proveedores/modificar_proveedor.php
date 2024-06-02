@@ -20,10 +20,10 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nombre = $_POST['nombre'];
-        $apellidos = $_POST['apellidos'];
-        $labor = $_POST['labor'];
+        $ubicacion = $_POST['ubicacion'];
+        $email = $_POST['email'];
         $telefono = $_POST['telefono'];
-        actualizarProveedor($id_colaborador, $nombre, $apellidos, $labor, $telefono);
+        actualizarProveedor($id_proveedor, $nombre, $ubicacion, $email, $telefono);
     }
 ?>
  
