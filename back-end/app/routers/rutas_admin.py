@@ -155,7 +155,6 @@ def obtener_productos():
     for row in result:
         query = text(f"SELECT id_proveedor FROM registro_productos WHERE id_producto = {row[0]}")
         id_proveedor = conn.execute(query).fetchone()
-        print(type(id_proveedor[0]))
 
         producto = {
             "id_producto": row[0],
@@ -275,7 +274,7 @@ def obtener_clientes():
     result = conn.execute(query).fetchall()
     
     if not result:
-        raise HTTPException(status_code=404, detail="Error al obtener historias clientes")
+        raise HTTPException(status_code=404, detail="Error al obtener clientes")
 
     clientes = []
     
