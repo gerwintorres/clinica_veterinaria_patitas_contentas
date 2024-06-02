@@ -5,7 +5,17 @@
     $texto_card = 'añadir nuevo <br> producto';
     $texto_tabla = 'Lista de productos';
     $ruta_card = 'anadir_producto.php';
-    include '../../includes/templates/pagina_card.php';;
+    require '../../config/funciones_productos.php';
+    include '../../includes/templates/pagina_card.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $productos = obtenerProductos();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_producto'])) {
+        $id_producto = $_GET['id_producto'];
+        eliminarProducto($id_producto);
+    }
 ?>
 
 <article class="contenedor contenedor-table">
@@ -24,17 +34,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>ID</td>
-                    <td>Nombre</td>
-                    <td>Fecha de vencimiento</td>
-                    <td>Lote</td>
-                    <td>Unidades disponibles</td>
-                    <td>Proveedor</td>
-                    <td><button class="edit">EDITAR</button></td>
-                    <td><button class="delete">ELIMINAR</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($productos) && is_array($productos)):?>
+                    <?php foreach ($productos as $producto): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($producto['id_producto']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['fecha_vencimiento']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['id_lote']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['cantidad']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['proveedor']); ?></td>
+                            <td><a href="modificar_producto.php?id_producto=<?php echo $producto['id_producto']?>"><button class="edit">EDITAR</button></a></td>
+                            <td><a href="producto.php?id_producto=<?php echo $producto['id_producto']?>"><button class="delete">ELIMINAR</button></a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>
