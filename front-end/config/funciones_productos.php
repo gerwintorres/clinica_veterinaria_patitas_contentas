@@ -18,15 +18,15 @@ function obtenerProductos() {
         return $productos;
     }
 }
-
-function registrarProductos($id_producto, $nombre, $fecha_vencimiento, $cantidad, $precio_compra, $id_lote){
+function registrarProductos($nombre, $fecha_vencimiento, $cantidad, $id_proveedor, $precio_compra, $precio_venta, $lote){
     $data = array(
-        'id_producto' => $id_producto,
+        'id_proveedor' => $id_proveedor,
         'nombre' => $nombre,
         'fecha_vencimiento' => $fecha_vencimiento,
         'cantidad' => $cantidad,
         'precio_compra' => $precio_compra,
-        'id_lote' => $id_lote
+        'precio_venta' => $precio_venta,
+        'id_lote' => $lote
     );
 
     $ch = curl_init('http://127.0.0.1:8000/register/producto');
