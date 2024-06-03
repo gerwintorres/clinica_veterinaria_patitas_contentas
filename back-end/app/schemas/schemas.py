@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from datetime import datetime, date, timedelta
 from typing import Optional
 
 class CargoSchema(BaseModel):
@@ -101,6 +102,12 @@ class GuarderiaSchema(BaseModel):
     fecha: str
     comentarios: Optional[str] = None
     id_mascota: int
+
+
+class UpdateGuarderiaSchema(BaseModel):
+    hora: str
+    fecha: str
+    comentarios: Optional[str]
 
 
 class ProductoSchema(BaseModel):

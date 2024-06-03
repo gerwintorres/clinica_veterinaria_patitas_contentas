@@ -345,6 +345,7 @@ def actualizar_procedimiento(id_servicio: int, serv: ServicioSchema):
 
     return JSONResponse(content={"message": "Procedimiento actualizado correctamente"}, status_code=200)
 
+
 @router_admin.delete("/delete/precios/{id_servicio}")
 def eliminar_procedimiento(id_servicio: int):
 
@@ -361,27 +362,3 @@ def eliminar_procedimiento(id_servicio: int):
     return JSONResponse(content={"message": "Procedimiento eliminado correctamente"}, status_code=200)
 
 
-
-"""@router.post("/registro/administrador")
-def registrar_administrador(administrador: AdministradorSchema, db: Session = Depends(get_db)):
-    hashed_password = pwd_context.hash(administrador.clave)
-    administrador.clave = hashed_password
-
-    db_administrador = Administrador(**administrador.dict())
-    db.add(db_administrador)
-    db.commit()
-    db.refresh(db_administrador)
-
-    return administrador
-
-@router.post("/registro/medico")
-def registrar_medico(medico: MedicoSchema, db: Session = Depends(get_db)):
-    hashed_password = pwd_context.hash(medico.clave)
-    medico.clave = hashed_password
-
-    db_medico = Medico(**medico.dict())
-    db.add(db_medico)
-    db.commit()
-    db.refresh(db_medico)
-
-    return medico"""

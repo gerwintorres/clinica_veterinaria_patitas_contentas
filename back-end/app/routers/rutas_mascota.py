@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from database.db import conn
 from datetime import datetime, date, timedelta
 from models.models import clientes, mascotas, guarderia
-from schemas.schemas import MascotaSchema, MascotaUpdateSchema, GuarderiaSchema
+from schemas.schemas import MascotaSchema, MascotaUpdateSchema, GuarderiaSchema, UpdateGuarderiaSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -132,3 +132,25 @@ def listar_estadias_cliente(id_cliente: int):
         estadias.append(estancia)
 
     return JSONResponse(status_code=200, content=estadias)
+
+
+@router_mascota.put("/update/guarderia/{id_registro}")
+def actualizar_estadia_guarderia(id_registro: int, request: UpdateGuarderiaSchema):
+    update_data = {key: value for key, value in request.dict().items() if value is not None}
+
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Por favor verifica los datos ingresados")
+
+    query = (
+        update(guarderia)
+        .where(guarderia.c.id_registro == id_registro)
+        .values(**update_data)
+    )
+    
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Registro de estadia no encontrado")
+
+    return JSONResponse(content={"message": "Estadia actualizada exitosamente"}, status_code=200)
