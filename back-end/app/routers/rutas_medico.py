@@ -17,6 +17,7 @@ f = Fernet(key)
 router_medico = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+#Inicio de sesión de médico
 @router_medico.post('/login/medico')
 def login_medico(credenciales: CredencialesSchema):
     query = text(f"SELECT id_medico, nombres, clave FROM medico WHERE email = :email")
