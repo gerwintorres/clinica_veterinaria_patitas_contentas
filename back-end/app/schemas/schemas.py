@@ -7,7 +7,7 @@ class CargoSchema(BaseModel):
     
 
 class ServicioSchema(BaseModel):
-    id_servicio: int
+    #id_servicio: int
     nombre: str
     precio: int
 
