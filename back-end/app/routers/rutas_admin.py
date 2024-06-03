@@ -1,12 +1,15 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
-from sqlalchemy import text, update
+from sqlalchemy import text, update, delete
 from sqlalchemy.orm import Session
 from database.db import conn
-from models.models import administrador, colaborador, proveedor, productos, registro_productos
+from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio
 #from models.models import clientes
-from schemas.schemas import ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema
+from schemas.schemas import (
+    ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
+    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema)
+
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -289,6 +292,75 @@ def obtener_clientes():
         clientes.append(cliente)
 
     return JSONResponse(status_code=200, content=clientes)
+
+@router_admin.get("/admin/precios", response_model=List[ServicioSchema])
+def obtener_precios():
+    query = text("SELECT * FROM servicio")
+    result = conn.execute(query).fetchall()
+    if not result:
+        raise HTTPException(status_code=404, detail="Error al obtener precios de los servicios")
+
+    servicios = []
+    for row in result:
+        servicio = {
+            "id_servicio": row[0],
+            "nombre": row[1],
+            "precio": row[2],
+        }
+        servicios.append(servicio)
+
+    return JSONResponse(status_code=200, content=servicios)
+
+@router_admin.post("/register/precios")
+def registrar_precios(p: ServicioSchema):
+    
+    nuevo_precio = p.dict()
+    
+    result = conn.execute(servicio.insert().values(nuevo_precio))
+    
+    if not result:
+        raise HTTPException(status_code=404, detail="Error al registrar precio del servicio, por favor verifique los datos ingresados")
+    
+    conn.commit()
+    return JSONResponse(content=nuevo_precio, status_code=HTTP_201_CREATED)
+
+
+@router_admin.put("/update/precios/{id_servicio}")
+def actualizar_procedimiento(id_servicio: int, serv: ServicioSchema):
+    update_data = {key: value for key, value in serv.dict().items() if value is not None}
+
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Por favor verifica los datos ingresados")
+
+    query = (
+        update(servicio)
+        .where(servicio.c.id_servicio == id_servicio)
+        .values(**update_data)
+    )
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Procedimiento no encontrado")
+
+    return JSONResponse(content={"message": "Procedimiento actualizado correctamente"}, status_code=200)
+
+@router_admin.delete("/delete/precios/{id_servicio}")
+def eliminar_procedimiento(id_servicio: int):
+
+    query = (
+        delete(servicio)
+        .where(servicio.c.id_servicio == id_servicio)
+    )
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Procedimiento no encontrado")
+
+    return JSONResponse(content={"message": "Procedimiento eliminado correctamente"}, status_code=200)
+
+
 
 """@router.post("/registro/administrador")
 def registrar_administrador(administrador: AdministradorSchema, db: Session = Depends(get_db)):

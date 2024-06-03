@@ -12,7 +12,7 @@ from database.db import engine, meta_data
 servicio = Table(
     "servicio",
     meta_data,
-    Column("id_servicio", Integer, primary_key=True),
+    Column("id_servicio", Integer, autoincrement = True, primary_key=True),
     Column("nombre", String(100), nullable=False),
     Column("precio", Integer, nullable=False)
 )
@@ -24,7 +24,7 @@ clientes = Table(
     Column("nombres", String(100), nullable=False),
     Column("apellidos", String(100), nullable=False),
     Column("tipo_documento", String(20), nullable=False),
-    Column("telefono", Integer, nullable=False, unique=True),
+    Column("telefono", String(100), nullable=False, unique=True),
     Column("email", String(255), nullable=False, unique=True),
     Column("clave", String(100), nullable=False),
     Column("direccion", String(50), nullable=False)
@@ -37,7 +37,7 @@ mascotas = Table(
     Column("nombre", String(100), nullable=False),
     Column("tipo_mascota", String(100), nullable=False),
     Column("raza", String(50), nullable=False),
-    Column("edad", Integer, nullable=False),
+    Column("edad", String(20), nullable=False),
     Column("peso", Float, nullable=False),
     Column("historia_clinica", Text),
     Column("id_cliente", Integer, ForeignKey("cliente.id_cliente"), nullable=False)
@@ -51,7 +51,7 @@ medico = Table(
     Column("apellidos", String(100), nullable=False),
     Column("email", String(100), nullable=False, unique=True),
     Column("clave", String(255), nullable=False),
-    Column("telefono", Integer, nullable=False, unique=True)
+    Column("telefono", String(100), nullable=False, unique=True)
 )
 
 colaborador = Table(
@@ -62,7 +62,7 @@ colaborador = Table(
     Column("apellidos", String(100), nullable=False),
     Column("tipo_documento", String(20), nullable=False),    
     Column("labor", String(50), nullable=False),
-    Column("telefono", Integer, nullable=False, unique=True),
+    Column("telefono", String(100), nullable=False, unique=True),
     #Column("id_cargo", Integer, ForeignKey("cargo.id_cargo"), nullable=False)
 )
 
