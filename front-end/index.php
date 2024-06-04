@@ -52,11 +52,12 @@
                 
             </div>
             <div class="question-buttons" id="question-buttons">
-                <button onclick="selectQuestion('Pregunta predeterminada 1')">Pregunta predeterminada 1</button>
-                <button onclick="selectQuestion('Pregunta predeterminada 2')">Pregunta predeterminada 2</button>
-                <button onclick="selectQuestion('Pregunta predeterminada 3')">Pregunta predeterminada 3</button>
-                <button onclick="selectQuestion('Pregunta predeterminada 4')">Pregunta predeterminada 4</button>
-                <button onclick="selectQuestion('Pregunta predeterminada 5')">Pregunta predeterminada 5</button>
+                <button onclick="selectQuestion('¿Qué servicios ofrece la Clínica Veterinaria Patitas Contentas?')">¿Qué servicios ofrece la Clínica Veterinaria Patitas Contentas?</button>
+                <button onclick="selectQuestion('¿Cuál es el horario de atención?')">¿Cuál es el horario de atención?</button>
+                <button onclick="selectQuestion('¿Dónde están ubicados?')">¿Dónde están ubicados?</button>
+                <button onclick="selectQuestion('¿Puedo comprar alimentos y suplementos en la Clínica Veterinaria Patitas Contentas?')">¿Puedo comprar alimentos y suplementos en la Clínica Veterinaria Patitas Contentas?</button>
+                <button onclick="selectQuestion('¿Cómo puedo agendar una cita para mi mascota?')">¿Cómo puedo agendar una cita para mi mascota?</button>
+                <button onclick="selectQuestion('¿Qué hago en caso de una emergencia veterinaria?')">¿Qué hago en caso de una emergencia veterinaria?</button>
             </div>
         </div>
     </div>
