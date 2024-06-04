@@ -110,6 +110,15 @@ class UpdateGuarderiaSchema(BaseModel):
     comentarios: Optional[str]
 
 
+# Esquema para la solicitud de recuperación de contraseña
+class SolicitarTokenSchema(BaseModel):
+    email: EmailStr
+
+# Esquema para restablecer la contraseña
+class RestablecerPasswordSchema(BaseModel):
+    token: str
+    new_password: str
+
 class ProductoSchema(BaseModel):
     id_producto: int
     nombre: str

@@ -139,4 +139,14 @@ administrador = Table(
     Column("clave", String(100), nullable=False)
 )
 
+tokens_recuperacion = Table(
+    "tokens_recuperacion",
+    meta_data,
+    Column("id", Integer, primary_key=True),
+    Column("email", String(255), nullable=False),
+    Column("token", String(255), nullable=False),
+    Column("expiration", String(255), nullable=False),
+    Column("created_at", String(255), nullable=False)
+);
+
 meta_data.create_all(engine)

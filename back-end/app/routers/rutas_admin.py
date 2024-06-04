@@ -8,12 +8,13 @@ from models.models import administrador, colaborador, proveedor, productos, regi
 #from models.models import clientes
 from schemas.schemas import (
     ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
-    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema)
+    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, RestablecerPasswordSchema)
 
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
 from typing import List
+from datetime import datetime, timedelta
 
 key = Fernet.generate_key()
 Fernet(key)
@@ -362,3 +363,32 @@ def eliminar_procedimiento(id_servicio: int):
     return JSONResponse(content={"message": "Procedimiento eliminado correctamente"}, status_code=200)
 
 
+# Endpoint para restablecer la contraseña
+@router_admin.post('/admin/password-reset')
+def password_reset(request: RestablecerPasswordSchema):
+    token = request.token
+    new_password = request.new_password
+
+    query = text("SELECT * FROM tokens_recuperacion WHERE token = :token")
+    result = conn.execute(query, {"token": token}).fetchone()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="Token inválido")
+
+    expiration = datetime.strptime(result.expiration, '%Y-%m-%d %H:%M:%S')
+    if datetime.utcnow() > expiration:
+        raise HTTPException(status_code=400, detail="El token ha expirado")
+
+    email = result.email
+    hashed_password = pwd_context.hash(new_password)
+
+    # Actualizar la contraseña del médico
+    update_query = text("UPDATE administrador SET clave = :clave WHERE email = :email")
+    conn.execute(update_query, {"clave": new_password, "email": email})
+
+    # Eliminar el registro de recuperación de contraseña
+    delete_query = text("DELETE FROM tokens_recuperacion WHERE token = :token")
+    conn.execute(delete_query, {"token": token})
+    conn.commit()
+
+    return JSONResponse(content={"message": "Contraseña restablecida exitosamente"}, status_code=200)
