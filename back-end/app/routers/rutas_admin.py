@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
-from sqlalchemy import text, update, delete
+from sqlalchemy import text, update, delete, select
 from sqlalchemy.orm import Session
 from database.db import conn
 from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio
@@ -94,6 +94,21 @@ def obtener_colaboradores():
 
     return JSONResponse(status_code=200, content=colaboradores)
 
+@router_admin.delete("/delete/colaboradores/{id_colaborador}")
+def eliminar_colaborador(id: int):
+
+    query = (
+        delete(colaborador)
+        .where(colaborador.c.id_colaborador == id)
+    )
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Colaborador no encontrado")
+
+    return JSONResponse(content={"message": "Colaborador eliminado correctamente"}, status_code=200)
+
 
 @router_admin.get("/admin/proveedores", response_model=List[ProveedorSchema])
 def obtener_proveedores():
@@ -146,11 +161,62 @@ def actualizar_proveedor(id_proveedor: int, colab: ProveedorUpdateSchema):
 
     return JSONResponse(content={"message": "Proveedor actualizado correctamente"}, status_code=200)
 
+@router_admin.delete("/delete/proveedor/{id_proveedor}")
+def eliminar_proveedor(id_proveedor: int):
+    
+    query1 = (
+        select(registro_productos.c.id_producto)
+        .where(registro_productos.c.id_proveedor == id_proveedor)
+    )
+    
+    result_list = conn.execute(query1)
+    ids = [row[0] for row in result_list.fetchall()]
+    
+    for id_producto in ids:
+        
+        query2 = (
+            delete(registro_productos)
+            .where(registro_productos.c.id_producto == id_producto)
+        )
+        
+        result = conn.execute(query2)
+        conn.commit()
+            
+        query3 = (
+            delete(productos)
+            .where(productos.c.id_producto == id_producto)
+        )
+        
+        result1 = conn.execute(query3)
+        conn.commit()
+        
+    query4 = (
+        delete(proveedor)
+        .where(proveedor.c.id_proveedor == id_proveedor)
+    )
+    
+    result2 = conn.execute(query4)
+    conn.commit()
+
+    if result2.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Proveedor no encontrado")
+    
+
+    
+    return JSONResponse(content={"message": "Proveedor eliminado correctamente"}, status_code=200)
+
+
+
+    
+
 
 @router_admin.get("/admin/productos", response_model=List[ProductoSchema])
 def obtener_productos():
     query = text("SELECT * FROM productos")
     result = conn.execute(query).fetchall()
+    
+    print(result)
+
     
     if not result:
         raise HTTPException(status_code=404, detail="Error al obtener productos")
@@ -193,9 +259,8 @@ def registrar_productos(p: RegistroProductoSchema):
     conn.commit()
     
     
-    query = conn.execute(text("SELECT COUNT(*) FROM productos"))
+    query = conn.execute(text("SELECT id_producto FROM productos ORDER BY id_producto DESC LIMIT 1"))
     count = query.scalar()
-    
     registro_producto = {
         "id_producto": count,
         "id_proveedor": p.id_proveedor,
@@ -251,7 +316,28 @@ def actualizar_producto(id_producto: int, producto: ProductoUpdateSchema):
 
     return JSONResponse(content={"message": "Producto actualizado correctamente"}, status_code=200)
 
+@router_admin.delete("/delete/producto/{id_producto}")
+def eliminar_producto(id_producto: int):
+    
+    query1 = (
+        delete(registro_productos)
+        .where(registro_productos.c.id_producto == id_producto)
+    )
+    
+    result1 = conn.execute(query1)    
+    conn.commit()
+    
+    query2 = (
+        delete(productos)
+        .where(productos.c.id_producto == id_producto)
+    )
+    result2 = conn.execute(query2)
+    conn.commit()
 
+    if result2.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
+
+    return JSONResponse(content={"message": "Producto eliminado correctamente"}, status_code=200)
 
 @router_admin.get("/admin/historias", response_model=List[HistoriaSchema])
 def obtener_historias():

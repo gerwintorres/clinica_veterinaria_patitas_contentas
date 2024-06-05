@@ -20,11 +20,12 @@ const chatContainer = document.getElementById('chat-container');
 const questionButtons = document.getElementById('question-buttons');
 
 const responses = {
-    "Pregunta predeterminada 1": "Esta es la respuesta a la Pregunta predeterminada 1.",
-    "Pregunta predeterminada 2": "Esta es la respuesta a la Pregunta predeterminada 2.",
-    "Pregunta predeterminada 3": "Esta es la respuesta a la Pregunta predeterminada 3.",
-    "Pregunta predeterminada 4": "Esta es la respuesta a la Pregunta predeterminada 4.",
-    "Pregunta predeterminada 5": "Esta es la respuesta a la Pregunta predeterminada 5."
+    "¿Qué servicios ofrece la Clínica Veterinaria Patitas Contentas?": "En Patitas Contentas ofrecemos consultas médicas, vacunación y desparacitación, cirugías, servicios de emergencia, guardería y peluquería. Encuentra más información en nuestra sección de <a href='servicios.php'>Servicios</a>.",
+    "¿Cuál es el horario de atención?": "Tenemos atención de Lunes a Sábado de 8 am a 6 pm, jornada continua. Para emergencias y guardería tenemos atención 24/7.",
+    "¿Dónde están ubicados?": "Estamos ubicados en Calle 19 #12-45, Barrio San Francisco, Pereira, Risaralda, Colombia. Visítanos y obtén la mejor atención.",
+    "¿Puedo comprar alimentos y suplementos en la Clínica Veterinaria Patitas Contentas?": "Claro que sí. Solo es que te comuniques con nosotros o visites nuestro punto físico. Encuentra toda la información en <a href='contactanos.php'>Contáctanos</a>.",
+    "¿Cómo puedo agendar una cita para mi mascota?": "Puedes <a href='registrarse.php'>registrarte</a> o <a href='contactanos.php'>contactarnos</a> para mayor asesoría.",
+    "¿Qué hago en caso de una emergencia veterinaria?": "Si tu mascota tiene una emergencia, comunícate con nosotros al +57 323 303 9679 o acude a nuestra clínica en Calle 19 #12-45, Barrio San Francisco, Pereira, Risaralda, Colombia."
 };
 
 function selectQuestion(question) {
@@ -66,7 +67,7 @@ function addMessageBot(message, className){
     newDivElement.appendChild(icon);
 
     const text = document.createElement('span');
-    text.textContent = message;
+    text.innerHTML = message;
     
     messageElement.appendChild(text);
     newDivElement.appendChild(messageElement);

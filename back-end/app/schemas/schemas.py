@@ -18,7 +18,7 @@ class ClienteSchema(BaseModel):
     nombres: str
     apellidos: str
     tipo_documento: str
-    telefono: int
+    telefono: str
     email: str
     clave: str
     direccion: str
@@ -53,7 +53,7 @@ class MedicoSchema(BaseModel):
     apellidos: str
     email: str
     clave: str
-    telefono: int
+    telefono: str
     
 class ColaboradorSchema(BaseModel):
     id_colaborador: int
@@ -61,14 +61,14 @@ class ColaboradorSchema(BaseModel):
     apellidos: str
     tipo_documento: str
     labor: str
-    telefono: int
+    telefono: str
 
 
 class ColaboradorUpdateSchema(BaseModel):
     nombres: str
     apellidos: str
     labor: str
-    telefono: int
+    telefono: str
 
 class CitaSchema(BaseModel):
     id_cita: int
