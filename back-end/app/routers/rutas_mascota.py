@@ -4,7 +4,7 @@ from sqlalchemy import text, update, insert
 from sqlalchemy.orm import Session
 from database.db import conn
 from datetime import datetime, date, timedelta
-from models.models import clientes, mascotas, guarderia
+from models.models import clientes, mascotas, guarderia, historias_clinicas
 from schemas.schemas import MascotaSchema, MascotaUpdateSchema, GuarderiaSchema, UpdateGuarderiaSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
@@ -24,9 +24,22 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 @router_mascota.post("/register/mascota")
 def registrar_mascota(mascota: MascotaSchema):
     nueva_mascota = mascota.dict()
-    result = conn.execute(mascotas.insert().values(nueva_mascota))
+    
+    result = conn.execute(
+        insert(mascotas).values(nueva_mascota)
+    )
+    
     conn.commit()
-    print(result)
+    id_mascota = result.lastrowid
+    
+    historia = {
+        "id_mascota": id_mascota,
+        "id_cliente": mascota.id_cliente
+    }
+    
+    conn.execute(insert(historias_clinicas).values(historia))
+    conn.commit()
+    
     return JSONResponse(content=nueva_mascota, status_code=HTTP_201_CREATED)
 
 #actualización de los datos de una mascota
@@ -55,7 +68,6 @@ def actualizar_mascota(id_mascota: int, mascota: MascotaUpdateSchema):
 def obtener_mascota(id_cliente: int):
     query = text("SELECT * FROM mascotas WHERE id_cliente = :id_cliente")
     result = conn.execute(query, {"id_cliente": id_cliente}).fetchall()
-
     if not result:
         raise HTTPException(status_code=404, detail="No se encontraron mascotas para el cliente dado")
 
@@ -68,8 +80,7 @@ def obtener_mascota(id_cliente: int):
             "raza": row[3],
             "edad": row[4],
             "peso": row[5],
-            "historia_clinica": row[6],
-            "id_cliente": row[7]
+            "id_cliente": row[6]
         }
         mascotas.append(mascota)
 
