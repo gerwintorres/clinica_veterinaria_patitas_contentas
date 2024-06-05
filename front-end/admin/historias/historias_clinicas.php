@@ -1,6 +1,11 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_historia_clinica.php';
     include '../../includes/templates/header.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $historias = obtenerHistoriasClinicas();
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -17,19 +22,24 @@
             <thead>
                 <tr>
                     <th>Código historia</th>
+                    <th>Documento del cliente</th>
                     <th>Nombre del cliente</th>
                     <th>Nombre de la mascota</th>
                     <th>Historia clínica</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Código historia</td>
-                    <td>Nombre del cliente</td>
-                    <td>Nombre de la mascota</td>
-                    <td><button class="edit">VER HISTORIA CLÍNICA</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($historias) && is_array($historias)):?>
+                    <?php foreach ($historias as $historia): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($historia['id_historia_clinica']); ?></td>
+                            <td><?php echo htmlspecialchars($historia['id_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($historia['nombre_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($historia['nombre_mascota']); ?></td>
+                            <td><a href="visualizar_historia_clinica.php?id_historia_clinica=<?php echo $historia['id_historia_clinica']?>"><button class="edit">VER HISTORIA CLÍNICA</button></a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>
