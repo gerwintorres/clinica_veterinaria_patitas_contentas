@@ -4,6 +4,7 @@
     $ruta_boton_atras = '../menu_admin.php';
     $texto_card = 'añadir nuevo <br> cliente';
     $texto_tabla = 'Lista de clientes';
+    $ruta_card = 'anadir_cliente.php';
     include '../../includes/templates/pagina_card.php';
 ?>
 <article class="contenedor contenedor-table">
@@ -11,7 +12,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Numero de documento</th>
+                    <th>Número de documento</th>
                     <th>Tipo de documento</th>
                     <th>Nombre</th>
                     <th>Apellidos</th>
@@ -21,7 +22,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Numero de documento</td>
+                    <td>Número de documento</td>
                     <td>Tipo de documento</td>
                     <td>Nombre</td>
                     <td>Apellidos</td>
