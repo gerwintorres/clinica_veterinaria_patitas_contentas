@@ -15,7 +15,7 @@
     </svg>Ir atrás</a>
 </div>
 
-<h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Historia clínica, [código historia]</h1>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Historia clínica, código: <?php echo $_GET['id_historia_clinica']?></h1>
 
 <div class="imagen-formularios-cerrados contenedor">
         <img src="../../build/img/logo.webp" alt="Logotipo Patitas Contentas">
