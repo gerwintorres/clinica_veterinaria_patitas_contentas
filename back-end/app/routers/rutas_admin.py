@@ -94,12 +94,9 @@ def obtener_colaboradores():
     return JSONResponse(status_code=200, content=colaboradores)
 
 @router_admin.delete("/delete/colaboradores/{id_colaborador}")
-def eliminar_colaborador(id: int):
+def eliminar_colaborador(id_colaborador: int):
 
-    query = (
-        delete(colaborador)
-        .where(colaborador.c.id_colaborador == id)
-    )
+    query = (colaborador.delete().where(colaborador.c.id_colaborador == id_colaborador))
     result = conn.execute(query)
     conn.commit()
 

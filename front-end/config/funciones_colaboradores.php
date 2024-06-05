@@ -85,7 +85,7 @@ function actualizarColaborador($id_colaborador, $nombres, $apellidos, $labor, $t
 
 function eliminarColaborador($id_colaborador){
 
-    $ch = curl_init("http://127.0.0.1:8000/delete/colaborador/$id_colaborador");
+    $ch = curl_init("http://127.0.0.1:8000/delete/colaboradores/$id_colaborador");
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -93,7 +93,7 @@ function eliminarColaborador($id_colaborador){
 
     $response = curl_exec($ch);
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+    curl_close($ch);    
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
