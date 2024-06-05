@@ -44,7 +44,7 @@
                             <td><?php echo htmlspecialchars($producto['cantidad']); ?></td>
                             <td><?php echo htmlspecialchars($producto['nombre_proveedor']); ?></td>
                             <td><a href="modificar_producto.php?id_producto=<?php echo $producto['id_producto']?>"><button class="edit">EDITAR</button></a></td>
-                            <td><a href="producto.php?id_producto=<?php echo $producto['id_producto']?>"><button class="delete">ELIMINAR</button></a></td>
+                            <td><a href="productos.php?id_producto=<?php echo $producto['id_producto']?>"><button class="delete">ELIMINAR</button></a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

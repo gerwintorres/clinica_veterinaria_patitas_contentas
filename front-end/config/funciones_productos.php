@@ -102,7 +102,7 @@ function actualizarProductos($id_producto, $nombre, $fecha_vencimiento, $cantida
 
 function eliminarProducto($id_producto){
 
-    $ch = curl_init("http://127.0.0.1:8000/delete/producto/$id_producto)");
+    $ch = curl_init("http://127.0.0.1:8000/delete/producto/$id_producto");
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
