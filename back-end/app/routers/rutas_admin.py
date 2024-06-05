@@ -2,13 +2,15 @@ from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text, update, delete, select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from database.db import conn
-from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio
+from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio, historias_clinicas
 #from models.models import clientes
 from schemas.schemas import (
     ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
-    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, RestablecerPasswordSchema)
+    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, 
+    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema)
 
 from passlib.context import CryptContext
 from pydantic import BaseModel
@@ -338,23 +340,109 @@ def eliminar_producto(id_producto: int):
 
 @router_admin.get("/admin/historias", response_model=List[HistoriaSchema])
 def obtener_historias():
-    query = text("SELECT * FROM mascotas")
-    result = conn.execute(query).fetchall()
-    
-    if not result:
-        raise HTTPException(status_code=404, detail="Error al obtener historias clínicas")
+    query = text("""
+        SELECT hc.id_historia_clinica, hc.id_cliente, c.nombres AS nombre_cliente, m.nombre AS nombre_mascota
+        FROM historias_clinicas hc
+        JOIN cliente c ON hc.id_cliente = c.id_cliente
+        JOIN mascotas m ON hc.id_mascota = m.id_mascota
+    """)
+    try:
+        result = conn.execute(query).fetchall()
 
-    historias = []
+        if not result:
+            raise HTTPException(status_code=404, detail="Error al obtener historias clínicas")
+
+        historias = []
+        
+        for row in result:
+            historia = {
+                "id_historia_clinica": row[0],
+                "id_cliente": row[1],
+                "nombre_cliente": row[2],
+                "nombre_mascota": row[3],
+            }
+            historias.append(historia)
+
+        return JSONResponse(status_code=200, content=historias)
+
+    except SQLAlchemyError as e:
+        raise HTTPException(status_code=500, detail=str(e))
     
-    for row in result:
-        historia = {
-            "codigo": row[0],
-            "id_cliente": row[7],
-            "nombre": row[1],
+@router_admin.get("/admin/historias/detalle/{id_historia_clinica}", response_model=VerHistoriaSchema)
+def obtener_historia_detalle(id_historia_clinica: int):
+    query = text("""
+        SELECT 
+            m.nombre AS nombre_mascota, 
+            c.nombres AS nombre_cliente, 
+            c.direccion, 
+            c.telefono, 
+            m.raza, 
+            m.peso, 
+            m.edad, 
+            hc.descripcion
+        FROM 
+            historias_clinicas hc
+        JOIN 
+            cliente c ON hc.id_cliente = c.id_cliente
+        JOIN 
+            mascotas m ON hc.id_mascota = m.id_mascota
+        WHERE 
+            hc.id_historia_clinica = :id_historia_clinica
+    """)
+
+    try:
+        result = conn.execute(query, {"id_historia_clinica": id_historia_clinica}).fetchone()
+
+        if not result:
+            raise HTTPException(status_code=404, detail="Historia clínica no encontrada")
+
+        historia_detalle = {
+            "nombre_mascota": result[0],
+            "nombre_cliente": result[1],
+            "direccion": result[2],
+            "telefono": result[3],
+            "raza": result[4],
+            "peso": result[5],
+            "edad": result[6],
+            "descripcion": result[7]
         }
-        historias.append(historia)
 
-    return JSONResponse(status_code=200, content=historias)
+        return JSONResponse(status_code=200, content=historia_detalle)
+    
+    except SQLAlchemyError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router_admin.put("/admin/historia_clinica/update/{id_historia_clinica}")
+def actualizar_descripcion(id_historia_clinica: int, update_data: UpdateDescripcionSchema):
+    nueva_descripcion = update_data.descripcion
+    fecha_actualizacion = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Consulta para obtener la descripción actual
+    query = text("SELECT descripcion FROM historias_clinicas WHERE id_historia_clinica = :id_historia_clinica")
+    current_desc_result = conn.execute(query, {"id_historia_clinica": id_historia_clinica}).fetchone()
+    
+    if not current_desc_result:
+        raise HTTPException(status_code=404, detail="Historia clínica no encontrada")
+    
+    descripcion_actual = current_desc_result[0]
+    nueva_descripcion_completa = f"{descripcion_actual}\n\n{fecha_actualizacion}\n{nueva_descripcion}"
+    
+    # Consulta para actualizar la descripción
+    update_query = (
+        update(historias_clinicas)
+        .where(historias_clinicas.c.id_historia_clinica == id_historia_clinica)
+        .values(descripcion=nueva_descripcion_completa)
+    )
+    
+    try:
+        conn.execute(update_query)
+        conn.commit()
+        return JSONResponse(status_code=200, content={"message": "Descripción actualizada correctamente"})
+    
+    except SQLAlchemyError as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @router_admin.get("/admin/clientes", response_model=List[ClienteSchema])
 def obtener_clientes():

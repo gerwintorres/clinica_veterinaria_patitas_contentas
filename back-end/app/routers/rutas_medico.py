@@ -81,6 +81,11 @@ def login_medico(credenciales: CredencialesSchema):
 
     return JSONResponse(content={"id_medico": id_medico, "nombres": nombres}, status_code=200)
 
+
+
+
+
+
 # Endpoint para iniciar el proceso de recuperación de contraseña
 @router_medico.post('/password-recovery')
 def tokens_recuperacion(request: SolicitarTokenSchema):
