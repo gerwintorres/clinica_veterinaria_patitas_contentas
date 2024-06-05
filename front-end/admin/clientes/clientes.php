@@ -5,7 +5,12 @@
     $texto_card = 'añadir nuevo <br> cliente';
     $texto_tabla = 'Lista de clientes';
     $ruta_card = 'anadir_cliente.php';
+    require '../../config/funciones_clientes.php';
     include '../../includes/templates/pagina_card.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $clientes = obtenerClientes();
+    }
 ?>
 <article class="contenedor contenedor-table">
         <input type="text" id="search" placeholder="Buscar">
@@ -21,15 +26,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Número de documento</td>
-                    <td>Tipo de documento</td>
-                    <td>Nombre</td>
-                    <td>Apellidos</td>
-                    <td><button class="edit">VER PERFIL</button></td>
-                    <td><button class="delete">ELIMINAR</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($clientes) && is_array($clientes)):?>
+                    <?php foreach ($clientes as $cliente): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($cliente['id_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($cliente['tipo_documento']); ?></td>
+                            <td><?php echo htmlspecialchars($cliente['nombres']); ?></td>
+                            <td><?php echo htmlspecialchars($cliente['apellidos']); ?></td>
+                            <td><a href=""><button class="edit">VER PERFIL</button></a></td>
+                            <td><a href=""><button class="delete">ELIMINAR</button></a></td>      
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>
