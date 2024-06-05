@@ -85,7 +85,7 @@ function actualizarProveedor($id_proveedor, $nombre, $ubicacion, $email, $telefo
 
 function eliminarProveedor($id_proveedor){
 
-    $ch = curl_init("http://127.0.0.1:8000/delete/colaborador/$id_proveedor)");
+    $ch = curl_init("http://127.0.0.1:8000/delete/proveedor/$id_proveedor");
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
