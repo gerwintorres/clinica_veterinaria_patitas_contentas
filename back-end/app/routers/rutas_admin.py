@@ -8,12 +8,13 @@ from models.models import administrador, colaborador, proveedor, productos, regi
 #from models.models import clientes
 from schemas.schemas import (
     ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
-    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema)
+    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, RestablecerPasswordSchema)
 
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
 from typing import List
+from datetime import datetime, timedelta
 
 key = Fernet.generate_key()
 Fernet(key)
@@ -428,6 +429,7 @@ def actualizar_procedimiento(id_servicio: int, serv: ServicioSchema):
 
     return JSONResponse(content={"message": "Procedimiento actualizado correctamente"}, status_code=200)
 
+
 @router_admin.delete("/delete/precios/{id_servicio}")
 def eliminar_procedimiento(id_servicio: int):
 
@@ -444,27 +446,32 @@ def eliminar_procedimiento(id_servicio: int):
     return JSONResponse(content={"message": "Procedimiento eliminado correctamente"}, status_code=200)
 
 
+# Endpoint para restablecer la contraseña
+@router_admin.post('/admin/password-reset')
+def password_reset(request: RestablecerPasswordSchema):
+    token = request.token
+    new_password = request.new_password
 
-"""@router.post("/registro/administrador")
-def registrar_administrador(administrador: AdministradorSchema, db: Session = Depends(get_db)):
-    hashed_password = pwd_context.hash(administrador.clave)
-    administrador.clave = hashed_password
+    query = text("SELECT * FROM tokens_recuperacion WHERE token = :token")
+    result = conn.execute(query, {"token": token}).fetchone()
 
-    db_administrador = Administrador(**administrador.dict())
-    db.add(db_administrador)
-    db.commit()
-    db.refresh(db_administrador)
+    if not result:
+        raise HTTPException(status_code=404, detail="Token inválido")
 
-    return administrador
+    expiration = datetime.strptime(result.expiration, '%Y-%m-%d %H:%M:%S')
+    if datetime.utcnow() > expiration:
+        raise HTTPException(status_code=400, detail="El token ha expirado")
 
-@router.post("/registro/medico")
-def registrar_medico(medico: MedicoSchema, db: Session = Depends(get_db)):
-    hashed_password = pwd_context.hash(medico.clave)
-    medico.clave = hashed_password
+    email = result.email
+    hashed_password = pwd_context.hash(new_password)
 
-    db_medico = Medico(**medico.dict())
-    db.add(db_medico)
-    db.commit()
-    db.refresh(db_medico)
+    # Actualizar la contraseña del médico
+    update_query = text("UPDATE administrador SET clave = :clave WHERE email = :email")
+    conn.execute(update_query, {"clave": new_password, "email": email})
 
-    return medico"""
+    # Eliminar el registro de recuperación de contraseña
+    delete_query = text("DELETE FROM tokens_recuperacion WHERE token = :token")
+    conn.execute(delete_query, {"token": token})
+    conn.commit()
+
+    return JSONResponse(content={"message": "Contraseña restablecida exitosamente"}, status_code=200)

@@ -2,7 +2,7 @@
 
 function obtenerMascotas($id_cliente) {
 
-    $url = "http://127.0.0.1:8000/mascota/$id_cliente";
+    $url = "http://127.0.0.1:8000/mascota/lista/$id_cliente";
 
     $ch = curl_init();
 

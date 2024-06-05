@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from datetime import datetime, date, timedelta
 from typing import Optional
 
 class CargoSchema(BaseModel):
@@ -102,6 +103,21 @@ class GuarderiaSchema(BaseModel):
     comentarios: Optional[str] = None
     id_mascota: int
 
+
+class UpdateGuarderiaSchema(BaseModel):
+    hora: str
+    fecha: str
+    comentarios: Optional[str]
+
+
+# Esquema para la solicitud de recuperación de contraseña
+class SolicitarTokenSchema(BaseModel):
+    email: EmailStr
+
+# Esquema para restablecer la contraseña
+class RestablecerPasswordSchema(BaseModel):
+    token: str
+    new_password: str
 
 class ProductoSchema(BaseModel):
     id_producto: int
