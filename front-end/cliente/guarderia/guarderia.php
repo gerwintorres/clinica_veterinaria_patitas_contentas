@@ -8,10 +8,9 @@
     include '../../includes/templates/pagina_card.php';
     require '../../config/funciones_guarderia.php';
 
-    // if (isset($_SESSION['id_cliente'])) {
-    //     $id_cliente = $_SESSION['id_cliente'];
-    //     $mascotas = obtenerMascotas($id_cliente);
-    // }
+    if (isset($_SESSION['id_cliente'])){
+        $estadias = obtenerEstadias($_SESSION['id_cliente']);
+    }
 
 ?>
     <article class="contenedor contenedor-table">
@@ -29,16 +28,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Nombre mascota</td>
-                    <td>Tipo de mascota</td>
-                    <td>Fecha</td>
-                    <td>Hora</td>
-                    <td>Peso(Kg)</td>
-                    <td><button class="edit">EDITAR</button></td>
-                    <td><button class="delete">ELIMINAR</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($estadias) && is_array($estadias)):?>
+                    <?php foreach ($estadias as $estadia): ?>   
+                        <tr>
+                            <td><?php echo htmlspecialchars($estadia['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($estadia['tipo_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($estadia['fecha']); ?></td>
+                            <td><?php echo htmlspecialchars($estadia['hora']); ?></td>
+                            <td><?php echo htmlspecialchars($estadia['peso']); ?></td>
+                            <td><a href="modificar_mascota.php?id_mascota=<?php echo $estadia['id_mascota']?>"><button class="edit">EDITAR</button></a></td>
+                            <td><a href="mis_mascotas.php?id_mascota=<?php echo $estadia['id_mascota']?>"><button class="delete">ELIMINAR</button></a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>

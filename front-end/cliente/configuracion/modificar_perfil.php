@@ -1,6 +1,20 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_clientes.php';
     include '../../includes/templates/header.php';
+
+    if (isset($_SESSION['id_cliente'])){
+        $cliente = obtenerInformacionCliente($_SESSION['id_cliente']);
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nombre = $_POST['nombre'];
+        $apellidos = $_POST['apellidos'];
+        $telefono = $_POST['telefono'];
+        $correo = $_POST['correo'];
+        $password = $_POST['password'];
+        $direccion = $_POST['direccion'];
+        actualizarCliente($_SESSION['id_cliente'], $nombre, $apellidos, $telefono, $correo, $password, $direccion);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -19,40 +33,38 @@
             <div class="formulario-datos">
                 <div>
                     <label for="nombre">Nombre(s)</label>
-                    <input type="text" id="nombre" name="nombre" required class="inputs">
+                    <input type="text" id="nombre" name="nombre" value="<?php echo $cliente['nombres']?>" disabled class="inputs">
                 </div>
                 <div>
                     <label for="apellidos">Apellidos</label>
-                    <input type="text" id="apellidos" name="apellidos" required class="inputs">
+                    <input type="text" id="apellidos" name="apellidos" value="<?php echo $cliente['apellidos']?>" disabled  class="inputs">
                 </div>
                 <div>
                     <label for="tipoDocumento">Tipo de documento</label>
-                    <select name="tipoDocumento" id="tipoDocumento" required class="inputs">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="cedula">Cédula de ciudadanía</option>
-                        <option value="cedulaExtranjeria">Cédula de extranjería</option>
-                        <option value="pasaporte">Pasaporte</option>
+                    <select name="tipoDocumento" id="tipoDocumento" disabled class="inputs">
+                        <option value="<?php echo $cliente['tipo_documento']?>" disabled selected><?php echo $cliente['tipo_documento']?></option>
+                        
                     </select>
                 </div>
             </div>
             <div class="formulario-datos">
                 <div>
                     <label for="numeroDocumento">Número de documento</label>
-                    <input type="number" id="numeroDocumento" name="numeroDocumento" required class="inputs">
+                    <input type="number" id="numeroDocumento" name="numeroDocumento" value="<?php echo $cliente['id_cliente']?>" disabled class="inputs">
                 </div>
                 <div>
                     <label for="telefono">Teléfono</label>
-                    <input type="number" id="telefono" name="telefono" required class="inputs">
+                    <input type="number" id="telefono" name="telefono" required value="<?php echo $cliente['telefono']?>" class="inputs">
                 </div>
                 <div>
                     <label for="correo">Correo electrónico</label>
-                    <input type="email" id="correo" name="correo" required class="inputs">
+                    <input type="email" id="correo" name="correo" required value="<?php echo $cliente['email']?>" class="inputs">
                 </div>
             </div>
             <div class="formulario-datos">
                 <div class="input-password">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="clave" name="password" required class="inputs">
+                    <input type="password" id="clave" name="password" value="<?php echo $cliente['clave']?>" required class="inputs">
                     <div class="toggle-password" id="toggle-password" onclick="cambiarIconoClave()">
                         <span id="show-eye" class="show-eye">
                             <svg width="23" height="23" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -80,7 +92,7 @@
                 </div>
                 <div>
                     <label for="direccion">Dirección</label>
-                    <input type="text" id="direccion" name="direccion" required class="inputs">
+                    <input type="text" id="direccion" name="direccion" required value="<?php echo $cliente['direccion']?>" class="inputs">
                 </div>
             </div>
             <div class="form-botones">

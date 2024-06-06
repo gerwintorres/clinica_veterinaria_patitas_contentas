@@ -3,13 +3,27 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    if (isset($_SESSION['id_cliente']) && isset($_SESSION['nombres'])) {
+    if($_SESSION['administrador']){
+        $_SESSION['administrador'] = TRUE;
+    }
+    elseif(isset($_SESSION['loggedin']) && $_SESSION['usuario'] == 'admin'){
+        $_SESSION['administrador'] = TRUE;
+        $_SESSION['nombre_cliente'] = $_GET['nombre_cliente'];
+        $_SESSION['id_cliente'] = $_GET['id_cliente'];
+    }
+    elseif(isset($_SESSION['id_cliente']) && isset($_SESSION['nombres'])) {
         $id_cliente = $_SESSION['id_cliente'];
         $nombres = $_SESSION['nombres'];
+        $_SESSION['administrador'] = FALSE;
+
     }
     include '../includes/templates/header.php';
 ?>
+<?php if($_SESSION['administrador']): ?>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda" id="mensaje-bienvenida">PERFIL <?php echo $_SESSION['nombre_cliente'] . " - ". $_SESSION['id_cliente']?></h1>
+<?php else: ?>
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda" id="mensaje-bienvenida">BIENVENIDO(A), <?php echo $nombres?></h1>
+<?php endif; ?>
 <main class="contenedor main-inicio-sesion">
     <a class="card" href="mascotas/mis_mascotas.php">mis mascotas
         <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

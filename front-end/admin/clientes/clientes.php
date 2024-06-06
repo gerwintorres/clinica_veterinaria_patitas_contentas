@@ -33,7 +33,7 @@
                             <td><?php echo htmlspecialchars($cliente['tipo_documento']); ?></td>
                             <td><?php echo htmlspecialchars($cliente['nombres']); ?></td>
                             <td><?php echo htmlspecialchars($cliente['apellidos']); ?></td>
-                            <td><a href=""><button class="edit">VER PERFIL</button></a></td>
+                            <td><a href="../../cliente/menu_cliente.php?id_cliente=<?php echo $cliente['id_cliente']?>&nombre_cliente=<?php echo urlencode($cliente['nombres']); ?>"><button class="edit">VER PERFIL</button></a></td>
                             <td><a href=""><button class="delete">ELIMINAR</button></a></td>      
                         </tr>
                     <?php endforeach; ?>
