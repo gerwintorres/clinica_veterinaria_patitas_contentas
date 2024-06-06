@@ -24,6 +24,15 @@ class ClienteSchema(BaseModel):
     direccion: str
 
 
+class ClienteUpdateSchema(BaseModel):
+    nombres: str
+    apellidos: str
+    telefono: str
+    email: str
+    clave: str
+    direccion: str
+
+
 class MascotaSchema(BaseModel):
     #id_mascota: int
     nombre: str
