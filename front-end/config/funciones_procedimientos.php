@@ -53,7 +53,7 @@ function actualizarProcedimiento($id_servicio, $nombre, $precio){
         'precio' => $precio
     );
     
-    $ch = curl_init("http://127.0.0.1:8000//update/precios/$id_servicio");
+    $ch = curl_init("http://127.0.0.1:8000/update/precios/$id_servicio");
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -77,7 +77,7 @@ function actualizarProcedimiento($id_servicio, $nombre, $precio){
 }
 
 function eliminarProcedimiento($id_servicio){
-    $ch = curl_init("http://127.0.0.1:8000//delete/precios/$id_servicio");
+    $ch = curl_init("http://127.0.0.1:8000/delete/precios/$id_servicio");
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
