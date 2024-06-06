@@ -23,7 +23,7 @@ clientes = Table(
     Column("id_cliente", Integer, primary_key=True),
     Column("nombres", String(100), nullable=False),
     Column("apellidos", String(100), nullable=False),
-    Column("tipo_documento", String(20), nullable=False),
+    Column("tipo_documento", String(50), nullable=False),
     Column("telefono", String(100), nullable=False, unique=True),
     Column("email", String(255), nullable=False, unique=True),
     Column("clave", String(100), nullable=False),
