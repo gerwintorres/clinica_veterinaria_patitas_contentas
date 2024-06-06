@@ -4,7 +4,7 @@ from sqlalchemy import text, update
 from sqlalchemy.orm import Session
 from database.db import conn
 from models.models import clientes, mascotas
-from schemas.schemas import ClienteSchema, CredencialesSchema, ContactoSchema
+from schemas.schemas import ClienteSchema, CredencialesSchema, ContactoSchema, RestablecerPasswordSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from typing import List
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from datetime import datetime, timedelta
 import smtplib
 import os
 from dotenv import load_dotenv
@@ -75,6 +76,7 @@ def send_email(subject: str, body: str, to_email: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al enviar el correo: {e}")
 
+
 @router_cliente.post("/contacto")
 def enviar_contacto(formulario: ContactoSchema):
     subject = f"Mensaje de {formulario.nombres} {formulario.apellidos}"
@@ -90,3 +92,34 @@ def enviar_contacto(formulario: ContactoSchema):
     send_email(subject, body, os.getenv("EMAIL_TO"))
 
     return JSONResponse(content={"message": "Mensaje enviado correctamente"}, status_code=200)
+
+
+# Endpoint para restablecer la contraseña
+@router_cliente.post('/cliente/password-reset')
+def password_reset(request: RestablecerPasswordSchema):
+    token = request.token
+    new_password = request.new_password
+
+    query = text("SELECT * FROM tokens_recuperacion WHERE token = :token")
+    result = conn.execute(query, {"token": token}).fetchone()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="Token inválido")
+
+    expiration = datetime.strptime(result.expiration, '%Y-%m-%d %H:%M:%S')
+    if datetime.utcnow() > expiration:
+        raise HTTPException(status_code=400, detail="El token ha expirado")
+
+    email = result.email
+    hashed_password = pwd_context.hash(new_password)
+
+    # Actualizar la contraseña del médico
+    update_query = text("UPDATE cliente SET clave = :clave WHERE email = :email")
+    conn.execute(update_query, {"clave": new_password, "email": email})
+
+    # Eliminar el registro de recuperación de contraseña
+    delete_query = text("DELETE FROM tokens_recuperacion WHERE token = :token")
+    conn.execute(delete_query, {"token": token})
+    conn.commit()
+
+    return JSONResponse(content={"message": "Contraseña restablecida exitosamente"}, status_code=200)

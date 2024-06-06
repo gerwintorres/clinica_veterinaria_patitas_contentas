@@ -2,18 +2,21 @@ from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text, update, delete, select
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from database.db import conn
-from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio
+from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio, historias_clinicas
 #from models.models import clientes
 from schemas.schemas import (
     ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
-    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema)
+    CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, 
+    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema)
 
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
 from typing import List
+from datetime import datetime, timedelta
 
 key = Fernet.generate_key()
 Fernet(key)
@@ -337,23 +340,109 @@ def eliminar_producto(id_producto: int):
 
 @router_admin.get("/admin/historias", response_model=List[HistoriaSchema])
 def obtener_historias():
-    query = text("SELECT * FROM mascotas")
-    result = conn.execute(query).fetchall()
-    
-    if not result:
-        raise HTTPException(status_code=404, detail="Error al obtener historias clínicas")
+    query = text("""
+        SELECT hc.id_historia_clinica, hc.id_cliente, c.nombres AS nombre_cliente, m.nombre AS nombre_mascota
+        FROM historias_clinicas hc
+        JOIN cliente c ON hc.id_cliente = c.id_cliente
+        JOIN mascotas m ON hc.id_mascota = m.id_mascota
+    """)
+    try:
+        result = conn.execute(query).fetchall()
 
-    historias = []
+        if not result:
+            raise HTTPException(status_code=404, detail="Error al obtener historias clínicas")
+
+        historias = []
+        
+        for row in result:
+            historia = {
+                "id_historia_clinica": row[0],
+                "id_cliente": row[1],
+                "nombre_cliente": row[2],
+                "nombre_mascota": row[3],
+            }
+            historias.append(historia)
+
+        return JSONResponse(status_code=200, content=historias)
+
+    except SQLAlchemyError as e:
+        raise HTTPException(status_code=500, detail=str(e))
     
-    for row in result:
-        historia = {
-            "codigo": row[0],
-            "id_cliente": row[7],
-            "nombre": row[1],
+@router_admin.get("/admin/historias/detalle/{id_historia_clinica}", response_model=VerHistoriaSchema)
+def obtener_historia_detalle(id_historia_clinica: int):
+    query = text("""
+        SELECT 
+            m.nombre AS nombre_mascota, 
+            c.nombres AS nombre_cliente, 
+            c.direccion, 
+            c.telefono, 
+            m.raza, 
+            m.peso, 
+            m.edad, 
+            hc.descripcion
+        FROM 
+            historias_clinicas hc
+        JOIN 
+            cliente c ON hc.id_cliente = c.id_cliente
+        JOIN 
+            mascotas m ON hc.id_mascota = m.id_mascota
+        WHERE 
+            hc.id_historia_clinica = :id_historia_clinica
+    """)
+
+    try:
+        result = conn.execute(query, {"id_historia_clinica": id_historia_clinica}).fetchone()
+
+        if not result:
+            raise HTTPException(status_code=404, detail="Historia clínica no encontrada")
+
+        historia_detalle = {
+            "nombre_mascota": result[0],
+            "nombre_cliente": result[1],
+            "direccion": result[2],
+            "telefono": result[3],
+            "raza": result[4],
+            "peso": result[5],
+            "edad": result[6],
+            "descripcion": result[7]
         }
-        historias.append(historia)
 
-    return JSONResponse(status_code=200, content=historias)
+        return JSONResponse(status_code=200, content=historia_detalle)
+    
+    except SQLAlchemyError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router_admin.put("/admin/historia_clinica/update/{id_historia_clinica}")
+def actualizar_descripcion(id_historia_clinica: int, update_data: UpdateDescripcionSchema):
+    nueva_descripcion = update_data.descripcion
+    fecha_actualizacion = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Consulta para obtener la descripción actual
+    query = text("SELECT descripcion FROM historias_clinicas WHERE id_historia_clinica = :id_historia_clinica")
+    current_desc_result = conn.execute(query, {"id_historia_clinica": id_historia_clinica}).fetchone()
+    
+    if not current_desc_result:
+        raise HTTPException(status_code=404, detail="Historia clínica no encontrada")
+    
+    descripcion_actual = current_desc_result[0]
+    nueva_descripcion_completa = f"{descripcion_actual}\n\n{fecha_actualizacion}\n{nueva_descripcion}"
+    
+    # Consulta para actualizar la descripción
+    update_query = (
+        update(historias_clinicas)
+        .where(historias_clinicas.c.id_historia_clinica == id_historia_clinica)
+        .values(descripcion=nueva_descripcion_completa)
+    )
+    
+    try:
+        conn.execute(update_query)
+        conn.commit()
+        return JSONResponse(status_code=200, content={"message": "Descripción actualizada correctamente"})
+    
+    except SQLAlchemyError as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @router_admin.get("/admin/clientes", response_model=List[ClienteSchema])
 def obtener_clientes():
@@ -428,6 +517,7 @@ def actualizar_procedimiento(id_servicio: int, serv: ServicioSchema):
 
     return JSONResponse(content={"message": "Procedimiento actualizado correctamente"}, status_code=200)
 
+
 @router_admin.delete("/delete/precios/{id_servicio}")
 def eliminar_procedimiento(id_servicio: int):
 
@@ -444,27 +534,32 @@ def eliminar_procedimiento(id_servicio: int):
     return JSONResponse(content={"message": "Procedimiento eliminado correctamente"}, status_code=200)
 
 
+# Endpoint para restablecer la contraseña
+@router_admin.post('/admin/password-reset')
+def password_reset(request: RestablecerPasswordSchema):
+    token = request.token
+    new_password = request.new_password
 
-"""@router.post("/registro/administrador")
-def registrar_administrador(administrador: AdministradorSchema, db: Session = Depends(get_db)):
-    hashed_password = pwd_context.hash(administrador.clave)
-    administrador.clave = hashed_password
+    query = text("SELECT * FROM tokens_recuperacion WHERE token = :token")
+    result = conn.execute(query, {"token": token}).fetchone()
 
-    db_administrador = Administrador(**administrador.dict())
-    db.add(db_administrador)
-    db.commit()
-    db.refresh(db_administrador)
+    if not result:
+        raise HTTPException(status_code=404, detail="Token inválido")
 
-    return administrador
+    expiration = datetime.strptime(result.expiration, '%Y-%m-%d %H:%M:%S')
+    if datetime.utcnow() > expiration:
+        raise HTTPException(status_code=400, detail="El token ha expirado")
 
-@router.post("/registro/medico")
-def registrar_medico(medico: MedicoSchema, db: Session = Depends(get_db)):
-    hashed_password = pwd_context.hash(medico.clave)
-    medico.clave = hashed_password
+    email = result.email
+    hashed_password = pwd_context.hash(new_password)
 
-    db_medico = Medico(**medico.dict())
-    db.add(db_medico)
-    db.commit()
-    db.refresh(db_medico)
+    # Actualizar la contraseña del médico
+    update_query = text("UPDATE administrador SET clave = :clave WHERE email = :email")
+    conn.execute(update_query, {"clave": new_password, "email": email})
 
-    return medico"""
+    # Eliminar el registro de recuperación de contraseña
+    delete_query = text("DELETE FROM tokens_recuperacion WHERE token = :token")
+    conn.execute(delete_query, {"token": token})
+    conn.commit()
+
+    return JSONResponse(content={"message": "Contraseña restablecida exitosamente"}, status_code=200)

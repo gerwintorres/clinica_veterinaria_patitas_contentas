@@ -39,8 +39,16 @@ mascotas = Table(
     Column("raza", String(50), nullable=False),
     Column("edad", String(20), nullable=False),
     Column("peso", Float, nullable=False),
-    Column("historia_clinica", Text),
     Column("id_cliente", Integer, ForeignKey("cliente.id_cliente"), nullable=False)
+)
+
+historias_clinicas = Table(
+    "historias_clinicas",
+    meta_data,
+    Column("id_historia_clinica", Integer, autoincrement = True, primary_key=True),
+    Column("descripcion", Text),
+    Column("id_cliente", Integer, ForeignKey("cliente.id_cliente"), nullable=False),
+    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota"), nullable=False)
 )
 
 medico = Table(

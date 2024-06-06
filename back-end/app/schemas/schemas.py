@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from datetime import datetime, date, timedelta
 from typing import Optional
 
 class CargoSchema(BaseModel):
@@ -30,7 +31,6 @@ class MascotaSchema(BaseModel):
     raza: str
     edad: int
     peso: float
-    historia_clinica: Optional[str] = None
     id_cliente: int
 
 class MascotaUpdateSchema(BaseModel):
@@ -41,9 +41,23 @@ class MascotaUpdateSchema(BaseModel):
     peso: float
 
 class HistoriaSchema(BaseModel):
-    codigo: int
+    id_historia_clinica: int
     id_cliente: int
+    nombre_cliente: str
+    nombre_mascota: str
     
+class UpdateDescripcionSchema(BaseModel):
+    descripcion: str
+
+class VerHistoriaSchema(BaseModel):
+    nombre_mascota: str
+    nombre_cliente: str
+    direccion: str
+    telefono: str
+    raza: str
+    peso: float 
+    edad: int
+    descripcion: str
     
 
 class MedicoSchema(BaseModel):
@@ -102,6 +116,21 @@ class GuarderiaSchema(BaseModel):
     comentarios: Optional[str] = None
     id_mascota: int
 
+
+class UpdateGuarderiaSchema(BaseModel):
+    hora: str
+    fecha: str
+    comentarios: Optional[str]
+
+
+# Esquema para la solicitud de recuperación de contraseña
+class SolicitarTokenSchema(BaseModel):
+    email: EmailStr
+
+# Esquema para restablecer la contraseña
+class RestablecerPasswordSchema(BaseModel):
+    token: str
+    new_password: str
 
 class ProductoSchema(BaseModel):
     id_producto: int
