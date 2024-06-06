@@ -25,8 +25,8 @@ class ClienteSchema(BaseModel):
 
 
 class ClienteUpdateSchema(BaseModel):
-    nombres: str
-    apellidos: str
+    # nombres: str
+    # apellidos: str
     telefono: str
     email: str
     clave: str
