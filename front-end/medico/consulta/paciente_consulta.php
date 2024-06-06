@@ -12,28 +12,35 @@
     
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Pacientes</h1>
     <article class="contenedor contenedor-table">
-        <input type="text" id="search" placeholder="Buscar">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Buscar">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <table>
             <thead>
                 <tr>
                     <th>Documento dueño</th>
                     <th>Mascota</th>
-                    <th>Dueño</th>
+                    <!-- <th>Dueño</th> -->
                     <th>Tipo de mascota</th>
-                    <th>Raza</th>
+                    <!-- <th>Raza</th> -->
                     <th>Historia clínica</th>
                     <th>Nueva consulta</th>
+                    <th>Generar orden</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Documento dueño</td>
                     <td>Mascota</td>
-                    <td>Dueño</td>
+                    <!-- <td>Dueño</td> -->
                     <td>Tipo de mascota</td>
-                    <td>Raza</td>
+                    <!-- <td>Raza</td> -->
                     <td><button class="edit">VER HISTORIA CLÍNICA</button></td>
                     <td><button class="edit">NUEVA CONSULTA</button></td>
+                    <td><button class="edit">GENERAR ORDEN</button></td>
                 </tr>
                 <!-- Repite las filas según sea necesario -->
             </tbody>
