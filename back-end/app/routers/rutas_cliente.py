@@ -4,7 +4,7 @@ from sqlalchemy import text, update
 from sqlalchemy.orm import Session
 from database.db import conn
 from models.models import clientes, mascotas
-from schemas.schemas import ClienteSchema, CredencialesSchema, ContactoSchema, RestablecerPasswordSchema
+from schemas.schemas import ClienteSchema, CredencialesSchema, ContactoSchema, RestablecerPasswordSchema, ClienteUpdateSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -17,6 +17,7 @@ import smtplib
 import os
 from dotenv import load_dotenv
 
+#Carga de variables de entorno
 load_dotenv()
 
 key = Fernet.generate_key()
@@ -77,6 +78,44 @@ def send_email(subject: str, body: str, to_email: str):
         raise HTTPException(status_code=500, detail=f"Error al enviar el correo: {e}")
 
 
+#Endpoint para obtener la información detallada de un cliente
+@router_cliente.get("/cliente/{id_cliente}", response_model=ClienteSchema)
+def obtener_cliente(id_cliente: int):
+    query = text("SELECT * FROM cliente WHERE id_cliente = :id_cliente")
+    result = conn.execute(query, {"id_cliente": id_cliente}).fetchone()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+
+    return result
+
+
+#Endpoint para actualizar la información de un cliente
+@router_cliente.put("/update/cliente/{id_cliente}")
+def actualizar_cliente(id_cliente: int, cliente: ClienteUpdateSchema):
+    # Convert the schema to a dictionary and filter out None values
+    update_data = {key: value for key, value in cliente.dict().items() if value is not None}
+
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No se proporcionaron datos para actualizar")
+
+    # Create the update query
+    query = (
+        update(clientes)
+        .where(clientes.c.id_cliente == id_cliente)
+        .values(**update_data)
+    )
+
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Cliente no encontrado")
+
+    return JSONResponse(content={"message": "Cliente actualizado correctamente"}, status_code=200)
+
+
+#Endpoint para la sección de contacto
 @router_cliente.post("/contacto")
 def enviar_contacto(formulario: ContactoSchema):
     subject = f"Mensaje de {formulario.nombres} {formulario.apellidos}"
