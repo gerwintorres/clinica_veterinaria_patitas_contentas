@@ -11,6 +11,11 @@
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] == 'admin'){
         $procedimientos = obtenerProcedimientos();
     }
+
+    if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_servicio'])){
+        $id_servicio = $_GET['id_servicio'];
+        eliminarProcedimiento($id_servicio);
+    }
 ?>
 
 <article class="contenedor contenedor-table">
@@ -32,8 +37,8 @@
                         <td><?php echo htmlspecialchars($procedimiento['id_servicio']); ?></td>
                         <td><?php echo htmlspecialchars($procedimiento['nombre']); ?></td>
                         <td><?php echo htmlspecialchars($procedimiento['precio']); ?></td>
-                        <td><a href=""><button class="edit">EDITAR</button></a></td>
-                        <td><a href=""><button class="delete">ELIMINAR</button></a></td>
+                        <td><a href="modificar_procedimiento.php?id_servicio=<?php echo $procedimiento['id_servicio']?>"><button class="edit">EDITAR</button></a></td>
+                        <td><a href="procedimientos.php?id_servicio=<?php echo $procedimiento['id_servicio']?>"><button class="delete">ELIMINAR</button></a></td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>

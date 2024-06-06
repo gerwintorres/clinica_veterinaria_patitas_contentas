@@ -1,6 +1,13 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_procedimientos.php';
     include '../../includes/templates/header.php';
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $nombre = $_POST['nombre'];
+        $precio = $_POST['precio'];
+        registrarProcedimiento($nombre, $precio);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -14,7 +21,7 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-procedimiento"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos-procedimiento">
                 <div>
