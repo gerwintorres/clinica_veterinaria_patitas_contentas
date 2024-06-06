@@ -1,6 +1,11 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_productos.php';
     include '../../includes/templates/header.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $productos = obtenerProductos();
+    }
 ?>
 <div class="contenedor contenedor-boton-atras">
     <a href="../menu_admin.php" class="boton-atras"> <svg width="11" height="20" viewBox="0 0 11 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,14 +28,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>ID</td>
-                    <td>Nombre del medicamento</td>
-                    <td>Unidades disponibles</td>
-                    <td>Proveedor</td>
-                    <td>Valor de venta(COP)</td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($productos) && is_array($productos)):?>
+                    <?php foreach ($productos as $producto): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($producto['id_producto']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['cantidad']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['nombre_proveedor']); ?></td>
+                            <td><?php echo htmlspecialchars($producto['precio_venta']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>

@@ -1,6 +1,12 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_historia_clinica.php'; 
+    
     include '../../includes/templates/header.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $historia = visualizarHistoria($_GET['id_historia_clinica']);   
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -9,7 +15,7 @@
     </svg>Ir atrás</a>
 </div>
 
-<h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Historia clínica [código historia]</h1>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Historia clínica, código: <?php echo $_GET['id_historia_clinica']?></h1>
 
 <div class="imagen-formularios-cerrados contenedor">
         <img src="../../build/img/logo.webp" alt="Logotipo Patitas Contentas">
@@ -23,38 +29,38 @@
     <div class="form-grupo-cerrado-2">
         <div>
             <label for="nombreMascota">Nombre de la mascota</label>
-            <input type="text" class="input-cerrado" id="nombreMascota" name="nombreMascota" disabled>
+            <input type="text" class="input-cerrado" id="nombreMascota" name="nombreMascota" disabled value="<?php echo $historia['nombre_mascota']?>">
         </div>
         <div>
             <label for="nombreDueno">Nombre del dueño</label>
-            <input type="text" class="input-cerrado" id="nombreDueno" name="nombreDueno" disabled>
+            <input type="text" class="input-cerrado" id="nombreDueno" name="nombreDueno" disabled value="<?php echo $historia['nombre_cliente']?>">
         </div>
         <div>
             <label for="direccion">Dirección</label>
-            <input type="text" class="input-cerrado input-width" id="direccion" name="direccion" disabled>
+            <input type="text" class="input-cerrado input-width" id="direccion" name="direccion" disabled value="<?php echo $historia['direccion']?>">
         </div>
     </div>
     <div class="form-grupo-cerrado">
         <div>
             <label for="telefono">Teléfono</label>
-            <input type="number" class="input-cerrado" id="telefono" name="telefono" disabled>
+            <input type="number" class="input-cerrado" id="telefono" name="telefono" disabled value="<?php echo $historia['telefono']?>">
         </div>
         <div>
             <label for="raza">Raza</label>
-            <input type="text" class="input-cerrado" id="raza" name="raza" disabled>
+            <input type="text" class="input-cerrado" id="raza" name="raza" disabled value="<?php echo $historia['raza']?>">
         </div>
         <div>
             <label for="peso">Peso (Kg)</label>
-            <input type="number" class="input-cerrado" id="peso" name="peso" disabled>
+            <input type="number" class="input-cerrado" id="peso" name="peso" disabled value="<?php echo $historia['peso']?>">
         </div>
         <div>
             <label for="edad">Edad</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
+            <input type="number" class="input-cerrado" id="edad" name="edad" disabled value="<?php echo $historia['edad']?>">
         </div>
     </div>
     <div>
         <label class="margen-superior-2" for="descripcion">Descripción</label>
-        <textarea class="input-cerrado descripcion" id="descripcion" name="descripcion" disabled></textarea>
+        <textarea class="input-cerrado descripcion" id="descripcion" name="descripcion" disabled value="<?php echo $historia['descripcion']?>"></textarea>
     </div>
     
 </main>
