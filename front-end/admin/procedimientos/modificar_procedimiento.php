@@ -1,6 +1,26 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_procedimientos.php';
     include '../../includes/templates/header.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] == 'admin'){
+        $procedimientos = obtenerProcedimientos();
+    }
+
+    $id_servicio = intval($_GET['id_servicio']);
+
+    foreach($procedimientos as $procedimiento){
+        if($procedimiento['id_servicio'] == $id_servicio){
+            $nombre = $procedimiento['nombre'];
+            $precio = $procedimiento['precio'];
+        }
+    }
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $nombre = $_POST['nombre'];
+        $precio = $_POST['precio'];
+        actualizarProcedimiento($id_servicio, $nombre, $precio);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -14,16 +34,16 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-procedimiento"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos-procedimiento">
                 <div>
                     <label for="nombre">Nombre del procedimiento</label>
-                    <input type="text" id="nombre" name="nombre" required class="inputs">
+                    <input value="<?php echo $nombre ?>" type="text" id="nombre" name="nombre" required class="inputs">
                 </div>
                 <div>
                     <label for="precio">Precio (COP)</label>
-                    <input type="number" id="precio" name="precio" required class="inputs">
+                    <input value="<?php echo $precio ?>" type="number" id="precio" name="precio" required class="inputs">
                 </div>
             </div>
             <div class="form-botones">
