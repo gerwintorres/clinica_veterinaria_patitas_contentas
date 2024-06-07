@@ -65,7 +65,7 @@ def send_email(subject: str, body: str, to_email: str):
         msg['To'] = to_email
         msg['Subject'] = subject
         
-        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(body.encode('utf-8'), 'plain', 'utf-8'))
         
         # Conectar al servidor SMTP de Gmail
         server = smtplib.SMTP('smtp.gmail.com', 587)
