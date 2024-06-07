@@ -21,7 +21,7 @@
         <table>
             <thead>
                 <tr>
-                    <th><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <th class="contenido-centrado icono-checkbox"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0.5" y="0.5" width="19" height="19" rx="5.5" fill="#F7FAFF"/>
                         <rect x="0.5" y="0.5" width="19" height="19" rx="5.5" stroke="#231F57"/>
                         <path d="M5.91602 10H14.0827" stroke="#231F57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -36,7 +36,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="checkbox"></td>
+                    <td class="container-checkbox">
+                        <input type="checkbox" id="check">
+                    </td>
                     <td>Hora inicio</td>
                     <td>Hora fin</td>
                     <td>Mascota</td>
