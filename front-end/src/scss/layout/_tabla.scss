@@ -83,3 +83,44 @@ tbody tr:nth-child(even) {
     color: $blanco;
     padding: 0.4rem 2.3rem;
 }
+
+.icono-checkbox{
+    margin-top: 0.5rem;
+}
+
+.container-checkbox{
+
+    input[type="checkbox"] {
+        appearance: none;
+        height: 20px;
+        width: 20px;
+        background-color: #afafaf;
+        border-radius: 0.6rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+        margin: 0 auto;
+    }
+
+    input[type="checkbox"]:after {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00c";
+        color: $blanco;
+        display: none;
+    }
+
+    input[type="checkbox"]:hover {
+        background-color: #a5a5a5;
+    }
+
+    input[type="checkbox"]:checked {
+        background-color: $azul_oscuro;
+    }
+
+    input[type="checkbox"]:checked:after{
+        display: block;
+    }
+}
