@@ -5,19 +5,22 @@ function enviarCorreo($email){
         'email' => $email
     );
 
-    $ch = curl_init("http://127.0.0.1:8000/ruta_para_enviar_el_correo/$email");
+    $url = curl_init("http://127.0.0.1:8000/password-recovery"); 
+    
+    curl_setopt($url, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($url, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($url, CURLOPT_POST, true);
+    curl_setopt($url, CURLOPT_POSTFIELDS, json_encode($data));
 
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    $response = curl_exec($url);
+    $http_code = curl_getinfo($url, CURLINFO_HTTP_CODE);
+    curl_close($url);
 
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    if ($http_code == 201) {
+    if ($http_code == 200) {
+        $response = json_decode($response, true);
         echo '<script>
-            window.location.href = ../restablecer_clave2.php";
+            window.location.href = "restablecer_clave2.php";
+            alert("Se ha enviado un código de verificación a tu correo electrónico.");
         </script>';
     } else {
         // Maneja el error
@@ -25,55 +28,37 @@ function enviarCorreo($email){
     }
 }
 
-function enviarCodigo($email, $codigo){
+function enviarCodigo($codigo, $clave, $user) {
     $data = array(
-        'email' => $email,
-        'codigo' => $codigo
+        'token' => $codigo,
+        'new_password' => $clave
     );
 
-    $ch = curl_init("http://127.0.0.1:8000/ruta_para_enviar_el_codigo/$email");
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    if ($http_code == 201) {
-        echo '<script>
-            window.location.href = ../restablecer_clave3.php";
-        </script>';
-    } else {
-        // Maneja el error
-        echo '<script>alert("Correo invalido");</script>';
+    if ($user === 'cliente') {
+        $url = "http://127.0.0.1:8000/cliente/password-reset";
+    } elseif ($user === 'medico') {
+        $url = "http://127.0.0.1:8000/medico/password-reset";
+    } elseif ($user === 'admin') {
+        $url = "http://127.0.0.1:8000/admin/password-reset";
     }
-}
 
-function cambiarClave($email, $clave){
-    $data = array(
-        'clave' => $clave
-    );
-
-    $ch = curl_init("http://127.0.0.1:8000/ruta_para_enviar_la_nueva_clave/$email");
-
+    $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
+    $response = curl_exec($ch);
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    if ($http_code == 201) {
-        unset($_SESSION['correo']);
+    if ($http_code == 200) {
         echo '<script>
-            window.location.href = ../iniciar_sesion.php";
+            alert("Tu contraseña ha sido restablecida con éxito. Inicia sesión con tu nueva contraseña.");
+            window.location.href = "iniciar_sesion.php";
         </script>';
     } else {
-        // Maneja el error
-        echo '<script>alert("Correo invalido");</script>';
-    }  
+        echo '<script>alert("Token inválido");</script>';
+    }
 }
 ?>
