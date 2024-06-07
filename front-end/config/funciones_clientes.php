@@ -72,4 +72,37 @@ function actualizarCliente($id_cliente, $nombre, $apellidos, $telefono, $correo,
     }        
 }
 
+function eliminarCliente($id_cliente){
+
+        $ch = curl_init("http://127.0.0.1:8000/cliente/delete/$id_cliente");
+    
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+    
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);    
+    
+        if ($http_code == 200) { // Verificar el código de estado HTTP correcto
+            $result = json_decode($response, true);
+            if($_SESSION['usuario'] == 'admin'){
+                echo '<script>
+                    window.location.href = "clientes.php";
+                    alert("Eliminado con éxito");
+                </script>';
+            }else{
+                session_unset();
+                session_destroy();
+                echo '<script>
+                    window.location.href = "../../index.php";
+                    alert("Eliminado con éxito");
+                </script>';
+            }
+        } else {
+            // Maneja el error
+            echo '<script>alert("Error en la eliminación");</script>';
+        }
+    }
+
 ?>

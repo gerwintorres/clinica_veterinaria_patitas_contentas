@@ -2,9 +2,12 @@
     $pagina_actual = '';
     require '../../config/funciones_clientes.php';
     include '../../includes/templates/header.php';
-
     if (isset($_SESSION['id_cliente'])){
         $cliente = obtenerInformacionCliente($_SESSION['id_cliente']);
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_cliente'])) {
+        eliminarCliente($_GET['id_cliente']);
     }
 
 ?>
@@ -51,12 +54,19 @@
             <label for="email">Correo electrónico</label>
             <input type="email" class="input-cerrado" id="email" name="email" value="<?php echo $cliente['email']?>" disabled>
         </div>
-        <div class="botones-formulario-config">
-            <a class="boton-azul-config" href="modificar_perfil.php">MODIFICAR INFORMACIÓN</a>
-        </div>
-        <div class="botones-formulario-config-2">
-            <a class="boton-rojo-config">ELIMINAR PERFIL</a>
-        </div>
+        <?php if($_SESSION['administrador']): ?>
+            <div></div>
+            <div class="botones-formulario-config">
+                <a class="boton-azul-config" href="modificar_perfil.php">MODIFICAR INFORMACIÓN</a>
+            </div>
+        <?php else: ?>
+            <div class="botones-formulario-config">
+                <a class="boton-azul-config" href="modificar_perfil.php">MODIFICAR INFORMACIÓN</a>
+            </div>
+            <div class="botones-formulario-config-2">
+                <a class="boton-rojo-config" href="configuracion.php?id_cliente=<?php echo $cliente['id_cliente']?>">ELIMINAR PERFIL</a>
+            </div>
+        <?php endif; ?>
     </div>
 </main>
 
