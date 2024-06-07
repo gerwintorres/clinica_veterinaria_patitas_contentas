@@ -5,7 +5,12 @@
     $texto_card = 'agendar nuevo <br> procedimiento';
     $texto_tabla = 'Citas agendadas';
     $ruta_card = 'agendar_cita.php';
+    require '../../config/funciones_citas.php';
     include '../../includes/templates/pagina_card.php';
+
+    if (isset($_SESSION['id_cliente'])) {
+        $citas = obtenerCitas($_SESSION['id_cliente']);
+    }
 ?>
     <article class="contenedor contenedor-table">
         <div class="search-container">
@@ -27,6 +32,24 @@
                 </tr>
             </thead>
             <tbody>
+                <?php if (isset($citas) && is_array($citas)):?>
+                    <?php foreach ($citas as $cita): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($cita['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['tipo_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['fecha']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['hora']); ?></td>
+                            <?php if($cita['id_medico'] == ""): ?>
+                                <td><?php echo htmlspecialchars($cita['nombre_colaborador']); ?></td>
+                            <?php else: ?>
+                                <td><?php echo htmlspecialchars($cita['nombre_medico']); ?></td>
+                            <?php endif; ?>
+                            <td><?php echo htmlspecialchars($cita['procedimiento']); ?></td>
+                            <td><a href="modificar_mascota.php?id_mascota=<?php echo $cita['id_mascota']?>"><button class="edit">EDITAR</button></a></td>
+                            <td><a href="mis_mascotas.php?id_mascota=<?php echo $cita['id_mascota']?>"><button class="delete">ELIMINAR</button></a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 <tr>
                     <td>Nombre mascota</td>
                     <td>Tipo de mascota</td>
