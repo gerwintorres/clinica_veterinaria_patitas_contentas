@@ -183,7 +183,7 @@ def password_reset(request: RestablecerPasswordSchema):
 
 # Función para obtener el nombre del servicio basado en id_servicio
 def get_servicio_procedimiento(id_servicio: int) -> str:
-    stmt = select(servicio.c.nombre).where(servicio.c.id == id_servicio)
+    stmt = select(servicio.c.nombre).where(servicio.c.id_servicio == id_servicio)
     result = conn.execute(stmt).scalar_one_or_none()
     if not result:
         raise HTTPException(status_code=404, detail="Servicio no encontrado")

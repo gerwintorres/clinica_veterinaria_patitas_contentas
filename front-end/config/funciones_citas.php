@@ -3,10 +3,10 @@ function agendarCita($id_mascota, $tipoProcedimiento, $fecha , $hora){
     $data = array(
         'hora' => $hora,
         'fecha' => $fecha,
-        'procedimiento' => 'Cita',
+        'procedimiento' => ' ',
         'id_medico' => 0,
         'id_colaborador' => 0,
-        'id_procedimiento' => $tipoProcedimiento,
+        'id_servicio' => $tipoProcedimiento,
         'id_mascota' => $id_mascota,
     );
 
