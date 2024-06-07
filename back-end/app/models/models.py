@@ -39,7 +39,7 @@ mascotas = Table(
     Column("raza", String(50), nullable=False),
     Column("edad", String(20), nullable=False),
     Column("peso", Float, nullable=False),
-    Column("id_cliente", Integer, ForeignKey("cliente.id_cliente"), nullable=False)
+    Column("id_cliente", Integer, ForeignKey("cliente.id_cliente",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 historias_clinicas = Table(
@@ -47,8 +47,8 @@ historias_clinicas = Table(
     meta_data,
     Column("id_historia_clinica", Integer, autoincrement = True, primary_key=True),
     Column("descripcion", Text),
-    Column("id_cliente", Integer, ForeignKey("cliente.id_cliente"), nullable=False),
-    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota"), nullable=False)
+    Column("id_cliente", Integer, ForeignKey("cliente.id_cliente",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
+    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 medico = Table(
@@ -81,10 +81,10 @@ citas = Table(
     Column("hora", Time, nullable=False),
     Column("fecha", Date, nullable=False),
     Column("procedimiento", String(100), nullable=False),
-    Column("id_medico", Integer, ForeignKey("medico.id_medico"), nullable=False),
-    Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador"), nullable=False),
-    Column("id_servicio", Integer, ForeignKey("servicio.id_servicio"), nullable=False),
-    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota"), nullable=False)
+    Column("id_medico", Integer, ForeignKey("medico.id_medico", ondelete="CASCADE", onupdate="CASCADE"), nullable= False),
+    Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador"), nullable = True),
+    Column("id_servicio", Integer, ForeignKey("servicio.id_servicio",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
+    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 orden_medica = Table(
@@ -93,7 +93,7 @@ orden_medica = Table(
     Column("id_orden", Integer, primary_key=True),
     Column("descripcion", Text, nullable=False),
     Column("id_cita", Integer, ForeignKey("citas.id_cita"), nullable=False),
-    Column("id_servicio", Integer, ForeignKey("servicio.id_servicio"), nullable=False)
+    Column("id_servicio", Integer, ForeignKey("servicio.id_servicio",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 guarderia = Table(
@@ -103,7 +103,7 @@ guarderia = Table(
     Column("hora", Time, nullable=False),
     Column("fecha", Date, nullable=False),
     Column("comentarios", Text),
-    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota"), nullable=False)
+    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 productos = Table(

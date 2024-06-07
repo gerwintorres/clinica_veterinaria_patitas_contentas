@@ -5,12 +5,12 @@ from sqlalchemy import text, update, delete, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from database.db import conn
-from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio, historias_clinicas
+from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio, historias_clinicas, clientes, citas
 #from models.models import clientes
 from schemas.schemas import (
     ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
     CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, 
-    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema)
+    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema, CitaSchema)
 
 from passlib.context import CryptContext
 from pydantic import BaseModel
@@ -465,6 +465,21 @@ def obtener_clientes():
 
     return JSONResponse(status_code=200, content=clientes)
 
+@router_admin.delete("/clinete/delete/{id_cliente}")
+def eliminar_cliente(id_cliente: int):
+
+    query = (
+        delete(clientes)
+        .where(clientes.c.id_cliente == id_cliente)
+    )
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="cliente no encontrado")
+
+    return JSONResponse(content={"message": "cliente eliminado correctamente"}, status_code=200)
+
 @router_admin.get("/admin/precios", response_model=List[ServicioSchema])
 def obtener_precios():
     query = text("SELECT * FROM servicio")
@@ -532,6 +547,68 @@ def eliminar_procedimiento(id_servicio: int):
         raise HTTPException(status_code=404, detail="Procedimiento no encontrado")
 
     return JSONResponse(content={"message": "Procedimiento eliminado correctamente"}, status_code=200)
+
+@router_admin.get("/admin/citas/{id_cliente}", response_model=List[CitaSchema])
+def obtener_citas(id_cliente: int):
+    query = text("""
+        SELECT 
+            citas.id_cita,
+            citas.hora,
+            citas.fecha,
+            citas.procedimiento,
+            mascotas.nombre AS nombre_mascota,
+            mascotas.tipo_mascota,
+            CONCAT(medico.nombres, ' ', medico.apellidos) AS nombre_medico,
+            CONCAT(colaborador.nombres, ' ', colaborador.apellidos) AS nombre_colaborador
+        FROM 
+            citas
+        JOIN 
+            mascotas ON citas.id_mascota = mascotas.id_mascota
+        JOIN 
+            medico ON citas.id_medico = medico.id_medico
+        JOIN 
+            colaborador ON citas.id_colaborador = colaborador.id_colaborador
+        WHERE
+            mascotas.id_cliente = :id_cliente
+    """)
+    result = conn.execute(query, {"id_cliente": id_cliente}).fetchall()
+    print(result)
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No se encontraron citas para el cliente especificado")
+
+    citas = []
+    
+    for row in result:
+        cita = {
+            "id_cita": row[0],
+            "hora": str(row[1]), 
+            "fecha": str(row[2]), 
+            "procedimiento": row[3],
+            "nombre_mascota": row[4],
+            "tipo_mascota": row[5],
+            "nombre_medico": row[6],
+            "nombre_colaborador": row[7]
+        }
+        citas.append(cita)
+
+    return JSONResponse(status_code=200, content=citas)
+
+
+@router_admin.delete("/delete/citas/{id_cita}")
+def eliminar_cita(id_cita: int):
+
+    query = (
+        delete(citas)
+        .where(citas.c.id_cita == id_cita)
+    )
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Cita no encontrada")
+
+    return JSONResponse(content={"message": "Cita eliminada correctamente"}, status_code=200)
 
 
 # Endpoint para restablecer la contraseña
