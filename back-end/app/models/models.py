@@ -81,8 +81,8 @@ citas = Table(
     Column("hora", Time, nullable=False),
     Column("fecha", Date, nullable=False),
     Column("procedimiento", String(100), nullable=False),
-    Column("id_medico", Integer, ForeignKey("medico.id_medico"), nullable=False),
-    Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador"), nullable=False),
+    Column("id_medico", Integer, ForeignKey("medico.id_medico"), nullable=True),
+    Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador"), nullable=True),
     Column("id_servicio", Integer, ForeignKey("servicio.id_servicio"), nullable=False),
     Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota"), nullable=False)
 )
