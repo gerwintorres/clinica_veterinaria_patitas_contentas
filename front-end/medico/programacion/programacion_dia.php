@@ -1,6 +1,7 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    date_default_timezone_set('America/Bogota');
 ?>
 
 <div class="contenedor contenedor-boton-atras">

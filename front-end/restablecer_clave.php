@@ -3,10 +3,25 @@
     require 'config/funciones_restablecer_clave.php';
     include 'includes/templates/header.php';
 
+    $urlAnterior = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+    $urlCliente = "iniciar_sesion_cliente.php";
+    $urlMedico = "iniciar_sesion_medico.php";
+    $urlAdmin = "iniciar_sesion_admin.php"; 
+
+    $parsedUrl = parse_url($urlAnterior, PHP_URL_PATH);
+    $filename = basename($parsedUrl);
+
+    if ($filename === $urlCliente){
+        $_SESSION['user'] = 'cliente';
+    } elseif($filename === $urlMedico){
+        $_SESSION['user'] = 'medico';
+    } elseif($filename === $urlAdmin){
+        $_SESSION['user'] = 'admin';
+    }
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $correo = $_POST['email'];
-        $_SESSION['correo'] = $correo;
-        enviarCorreo($_SESSION['correo']);
+        enviarCorreo($correo);
     }
 ?>
 
@@ -37,6 +52,5 @@
 </main>
 
 <?php
-    $pagina_actual = '';
     include 'includes/templates/footer.php';
 ?>
