@@ -132,6 +132,16 @@ class UpdateGuarderiaSchema(BaseModel):
     comentarios: Optional[str]
 
 
+class CitaSchema(BaseModel):
+    hora: str
+    fecha: date
+    procedimiento: str
+    id_medico: Optional[int] = None
+    id_colaborador: Optional[int] = None
+    id_servicio: int
+    id_mascota: int
+
+
 # Esquema para la solicitud de recuperación de contraseña
 class SolicitarTokenSchema(BaseModel):
     email: EmailStr
