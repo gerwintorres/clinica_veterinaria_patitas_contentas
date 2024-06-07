@@ -24,6 +24,15 @@ class ClienteSchema(BaseModel):
     direccion: str
 
 
+class ClienteUpdateSchema(BaseModel):
+    # nombres: str
+    # apellidos: str
+    telefono: str
+    email: str
+    clave: str
+    direccion: str
+
+
 class MascotaSchema(BaseModel):
     #id_mascota: int
     nombre: str
@@ -121,6 +130,16 @@ class UpdateGuarderiaSchema(BaseModel):
     hora: str
     fecha: str
     comentarios: Optional[str]
+
+
+class CitaSchema(BaseModel):
+    hora: str
+    fecha: date
+    procedimiento: str
+    id_medico: Optional[int] = None
+    id_colaborador: Optional[int] = None
+    id_servicio: int
+    id_mascota: int
 
 
 # Esquema para la solicitud de recuperación de contraseña

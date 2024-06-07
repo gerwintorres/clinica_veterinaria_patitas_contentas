@@ -23,7 +23,7 @@ clientes = Table(
     Column("id_cliente", Integer, primary_key=True),
     Column("nombres", String(100), nullable=False),
     Column("apellidos", String(100), nullable=False),
-    Column("tipo_documento", String(20), nullable=False),
+    Column("tipo_documento", String(50), nullable=False),
     Column("telefono", String(100), nullable=False, unique=True),
     Column("email", String(255), nullable=False, unique=True),
     Column("clave", String(100), nullable=False),
@@ -81,7 +81,7 @@ citas = Table(
     Column("hora", Time, nullable=False),
     Column("fecha", Date, nullable=False),
     Column("procedimiento", String(100), nullable=False),
-    Column("id_medico", Integer, ForeignKey("medico.id_medico", ondelete="CASCADE", onupdate="CASCADE"), nullable= False),
+    Column("id_medico", Integer, ForeignKey("medico.id_medico", ondelete="CASCADE", onupdate="CASCADE"), nullable= True),
     Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador"), nullable = True),
     Column("id_servicio", Integer, ForeignKey("servicio.id_servicio",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
     Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
@@ -146,5 +146,15 @@ administrador = Table(
     Column("email", String(255), nullable=False, unique=True),
     Column("clave", String(100), nullable=False)
 )
+
+tokens_recuperacion = Table(
+    "tokens_recuperacion",
+    meta_data,
+    Column("id", Integer, primary_key=True),
+    Column("email", String(255), nullable=False),
+    Column("token", String(255), nullable=False),
+    Column("expiration", String(255), nullable=False),
+    Column("created_at", String(255), nullable=False)
+);
 
 meta_data.create_all(engine)

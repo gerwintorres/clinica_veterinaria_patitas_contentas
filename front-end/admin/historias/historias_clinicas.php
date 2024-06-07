@@ -1,6 +1,11 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_historia_clinica.php';
     include '../../includes/templates/header.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $historias = obtenerHistoriasClinicas();
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -12,24 +17,34 @@
     
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Historias clínicas</h1>
     <article class="contenedor contenedor-table">
-        <input type="text" id="search" placeholder="Buscar">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Buscar">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <table>
             <thead>
                 <tr>
                     <th>Código historia</th>
+                    <th>Documento del cliente</th>
                     <th>Nombre del cliente</th>
                     <th>Nombre de la mascota</th>
                     <th>Historia clínica</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Código historia</td>
-                    <td>Nombre del cliente</td>
-                    <td>Nombre de la mascota</td>
-                    <td><button class="edit">VER HISTORIA CLÍNICA</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($historias) && is_array($historias)):?>
+                    <?php foreach ($historias as $historia): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($historia['id_historia_clinica']); ?></td>
+                            <td><?php echo htmlspecialchars($historia['id_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($historia['nombre_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($historia['nombre_mascota']); ?></td>
+                            <td><a href="visualizar_historia_clinica.php?id_historia_clinica=<?php echo $historia['id_historia_clinica']?>"><button class="edit">VER HISTORIA CLÍNICA</button></a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>
