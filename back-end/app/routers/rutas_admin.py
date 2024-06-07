@@ -465,7 +465,7 @@ def obtener_clientes():
 
     return JSONResponse(status_code=200, content=clientes)
 
-@router_admin.delete("/clinete/delete/{id_cliente}")
+@router_admin.delete("/cliente/delete/{id_cliente}")
 def eliminar_cliente(id_cliente: int):
 
     query = (

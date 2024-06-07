@@ -11,6 +11,10 @@
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
         $clientes = obtenerClientes();
     }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_cliente'])) {
+        eliminarCliente($_GET['id_cliente']);
+    }
 ?>
 <article class="contenedor contenedor-table">
         <div class="search-container">
@@ -39,7 +43,7 @@
                             <td><?php echo htmlspecialchars($cliente['nombres']); ?></td>
                             <td><?php echo htmlspecialchars($cliente['apellidos']); ?></td>
                             <td><a href="../../cliente/menu_cliente.php?id_cliente=<?php echo $cliente['id_cliente']?>&nombre_cliente=<?php echo urlencode($cliente['nombres']); ?>"><button class="edit">VER PERFIL</button></a></td>
-                            <td><a href=""><button class="delete">ELIMINAR</button></a></td>      
+                            <td><a href="clientes.php?id_cliente=<?php echo $cliente['id_cliente']?>"><button class="delete">ELIMINAR</button></a></td>      
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
