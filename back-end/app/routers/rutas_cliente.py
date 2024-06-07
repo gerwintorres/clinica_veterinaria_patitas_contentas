@@ -3,7 +3,7 @@ from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text, update, select, insert
 from sqlalchemy.orm import Session
 from database.db import conn
-from models.models import clientes, mascotas, medico, colaborador, citas
+from models.models import clientes, mascotas, medico, colaborador, citas, servicio
 from schemas.schemas import ClienteSchema, CredencialesSchema, ContactoSchema, RestablecerPasswordSchema, ClienteUpdateSchema, CitaSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
@@ -181,9 +181,20 @@ def password_reset(request: RestablecerPasswordSchema):
     return JSONResponse(content={"message": "Contraseña restablecida exitosamente"}, status_code=200)
 
 
+# Función para obtener el nombre del servicio basado en id_servicio
+def get_servicio_procedimiento(id_servicio: int) -> str:
+    stmt = select(servicio.c.nombre).where(servicio.c.id == id_servicio)
+    result = conn.execute(stmt).scalar_one_or_none()
+    if not result:
+        raise HTTPException(status_code=404, detail="Servicio no encontrado")
+    return result
+
 #Endpoint para el agendamiento de cita medica 
 @router_cliente.post("/cliente/agendar_cita")
 def agendar_cita(cita: CitaSchema):
+    # Obtener el nombre del servicio basado en id_servicio
+    cita.procedimiento = get_servicio_procedimiento(cita.id_servicio)
+    
     if cita.procedimiento.lower() == "cita":
         cita.id_medico = get_random_medico()
         if not cita.id_medico:
@@ -214,4 +225,4 @@ def agendar_cita(cita: CitaSchema):
     conn.execute(query)
     conn.commit()
 
-    return {"message": "Cita agendada correctamente"}
+    return JSONResponse(content={"message": "Cita agendada correctamente"}, status_code=200)
