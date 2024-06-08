@@ -1,6 +1,12 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_medico.php';
+    date_default_timezone_set('America/Bogota');
+
+    if (isset($_SESSION['id_medico']) && $_SESSION['loggedin'] == true) {
+        $programacion = obtenerProgramacion($_SESSION['id_medico']);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -12,30 +18,39 @@
     
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Pacientes</h1>
     <article class="contenedor contenedor-table">
-        <input type="text" id="search" placeholder="Buscar">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Buscar">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <table>
             <thead>
                 <tr>
-                    <th>Documento dueño</th>
+                    <th>Documento cliente</th>
+                    <th>Nombre cliente</th>
                     <th>Mascota</th>
-                    <th>Dueño</th>
                     <th>Tipo de mascota</th>
-                    <th>Raza</th>
+                    <!-- <th>Raza</th> -->
                     <th>Historia clínica</th>
                     <th>Nueva consulta</th>
+                    <th>Generar orden</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Documento dueño</td>
-                    <td>Mascota</td>
-                    <td>Dueño</td>
-                    <td>Tipo de mascota</td>
-                    <td>Raza</td>
-                    <td><button class="edit">VER HISTORIA CLÍNICA</button></td>
-                    <td><button class="edit">NUEVA CONSULTA</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($programacion) && is_array($programacion)):?>
+                    <?php foreach ($programacion as $cita):?>
+                        <tr>    
+                            <td><?php echo htmlspecialchars($cita['id_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['nombre_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['tipo_mascota']); ?></td>
+                            <td><a href="visualizar_historia_clinica.php?id_historia_clinica=<?php echo $cita['id_mascota']?>"><button class="edit">VER</button></a></td>
+                            <td><a href="ficha_consulta.php?ic=<?php echo $cita['id_cliente']?>&im=<?php echo $cita['id_mascota']?>"><button class="edit">NUEVA</button></a></td>
+                            <td><a href="orden_medica.php?ici=<?php echo $cita['id_cita']?>"><button class="edit">GENERAR</button></td></a>  
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>

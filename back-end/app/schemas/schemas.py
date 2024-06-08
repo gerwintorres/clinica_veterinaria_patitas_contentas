@@ -24,6 +24,15 @@ class ClienteSchema(BaseModel):
     direccion: str
 
 
+class ClienteUpdateSchema(BaseModel):
+    # nombres: str
+    # apellidos: str
+    telefono: str
+    email: str
+    clave: str
+    direccion: str
+
+
 class MascotaSchema(BaseModel):
     #id_mascota: int
     nombre: str
@@ -83,15 +92,15 @@ class ColaboradorUpdateSchema(BaseModel):
     labor: str
     telefono: str
 
-class CitaSchema(BaseModel):
-    id_cita: int
-    hora: str
-    fecha: str
-    procedimiento: str
-    id_medico: int
-    id_colaborador: int
-    id_servicio: int
-    id_mascota: int
+# class CitaSchema(BaseModel):
+#     id_cita: int
+#     hora: str
+#     fecha: str
+#     procedimiento: str
+#     id_medico: int
+#     id_colaborador: int
+#     id_servicio: int
+#     id_mascota: int
 
 class CitaUpdateSchema(BaseModel):
     hora: str
@@ -107,7 +116,7 @@ class ContactoSchema(BaseModel):
 
 
 class OrdenMedicaSchema(BaseModel):
-    id_orden: int
+    #id_orden: int
     descripcion: str
     id_cita: int
     id_servicio: int
@@ -125,6 +134,16 @@ class UpdateGuarderiaSchema(BaseModel):
     hora: str
     fecha: str
     comentarios: Optional[str]
+
+
+class CitaSchema(BaseModel):
+    hora: str
+    fecha: date
+    procedimiento: str
+    id_medico: Optional[int] = None
+    id_colaborador: Optional[int] = None
+    id_servicio: int
+    id_mascota: int
 
 
 # Esquema para la solicitud de recuperación de contraseña
@@ -190,3 +209,16 @@ class AdministradorSchema(BaseModel):
 class CredencialesSchema(BaseModel):
     email: str
     clave: str
+
+
+class CheckinSchema(BaseModel):
+    #id_cobro: int
+    #total: Optional[float] = None
+    id_registro: int
+    hora_entrada: str
+    #hora_salida: Optional[str] = None
+
+class CheckoutSchema(BaseModel):
+    id_cobro: int
+    hora_salida: str
+    total: Optional[float] = None

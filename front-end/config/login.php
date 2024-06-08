@@ -1,4 +1,5 @@
 <?php 
+require 'funciones_alertas.php';
 
 function login($email, $clave, $usuario) {
     $data = array(
@@ -44,9 +45,10 @@ function login($email, $clave, $usuario) {
             $_SESSION['nombres'] = 'Administrador';
             $_SESSION['usuario'] = 'admin';
         }
-        header("Location: ../../../$usuario/menu_$usuario.php");  
+        $_SESSION['exito'] = true;
+        header("Location: ../../../$usuario/menu_$usuario.php");
     } else {
-        echo '<script>alert("Error en el inicio de sesión");</script>';
+        alertaError();
     }
 }
 ?>

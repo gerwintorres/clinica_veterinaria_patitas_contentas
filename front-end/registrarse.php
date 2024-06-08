@@ -55,9 +55,9 @@
                     <label for="tipoDocumento">Tipo de documento</label>
                     <select name="tipoDocumento" id="tipoDocumento" required class="inputs">
                         <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="cedula">Cédula de ciudadanía</option>
-                        <option value="cedulaExtranjeria">Cédula de extranjería</option>
-                        <option value="pasaporte">Pasaporte</option>
+                        <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                        <option value="Cédula de extranjería">Cédula de extranjería</option>
+                        <option value="Pasaporte">Pasaporte</option>
                     </select>
                 </div>
             </div>

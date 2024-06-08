@@ -1,6 +1,24 @@
 <?php
     $pagina_actual = '';
+    require '../../config/funciones_mascotas.php';
+    require '../../config/funciones_citas.php';
+    require '../../config/funciones_procedimientos.php';
     include '../../includes/templates/header.php';
+
+    if (isset($_SESSION['id_cliente'])) {
+        $id_cliente = $_SESSION['id_cliente'];
+        $mascotas = obtenerMascotas($id_cliente);
+        $procedimientos = obtenerProcedimientos();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $mascota = $_POST['mascota'];
+        $tipoProcedimiento = $_POST['tipoProcedimiento'];
+        $fecha = $_POST['fecha'];
+        $hora = $_POST['hora'];
+        agendarCita($mascota, $tipoProcedimiento, $fecha , $hora);
+    }
+
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -14,23 +32,29 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-cita"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>
                     <label for="mascota">Mascota</label>
                     <select name="mascota" id="mascota" required class="inputs">
                         <option value="" disabled selected>Seleccione una mascota</option>
-                        <option value="mascota1">Mascota 1</option>
-                        <option value="mascota2">Mascota 2</option>
+                        <?php foreach ($mascotas as $mascota): ?>
+                            <option value="<?php echo htmlspecialchars($mascota['id_mascota']); ?>">
+                                <?php echo htmlspecialchars($mascota['nombre']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div>
                     <label for="tipoProcedimiento">Tipo de procedimiento</label>
                     <select name="tipoProcedimiento" id="tipoProcedimiento" required class="inputs">
                         <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="procedimiento1">Procedimiento 1</option>
-                        <option value="procedimiento2">Procedimiento 2</option>
+                        <?php foreach ($procedimientos as $procedimiento): ?>
+                            <option value="<?php echo htmlspecialchars($procedimiento['id_servicio']); ?>">
+                                <?php echo htmlspecialchars($procedimiento['nombre']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div>
@@ -41,25 +65,7 @@
             <div class="formulario-datos">
                 <div>
                     <label for="hora">Hora</label>
-                    <select name="hora" id="hora" required class="inputs">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="hora1">Hora 1</option>
-                        <option value="hora2">Hora 2</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" required class="inputs">
-                </div>
-                <div>
-                    <label for="peso">Peso (kg)</label>
-                    <input type="number" id="peso" name="peso" required class="inputs">
-                </div>
-            </div>
-            <div class="formulario-datos">
-                <div>
-                    <label for="raza">Raza</label>
-                    <input type="text" id="raza" name="raza" required class="inputs">
+                    <input type="time" id="hora" name="hora" required class="inputs">
                 </div>
             </div>
             <div class="contenido-centrado">

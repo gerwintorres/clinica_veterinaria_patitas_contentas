@@ -5,18 +5,19 @@ from sqlalchemy import text, update, delete, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 from database.db import conn
-from models.models import administrador, colaborador, proveedor, productos, registro_productos, servicio, historias_clinicas, clientes, citas
+from models.models import (administrador, colaborador, proveedor, productos, registro_productos, servicio, historias_clinicas, clientes, citas,
+                            registro_guarderia)
 #from models.models import clientes
 from schemas.schemas import (
     ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
     CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, 
-    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema, CitaSchema, CitaUpdateSchema)
+    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema, CheckinSchema, CheckoutSchema, CitaUpdateSchema)
 
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
 from typing import List
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 key = Fernet.generate_key()
 Fernet(key)
@@ -203,10 +204,6 @@ def eliminar_proveedor(id_proveedor: int):
 
     
     return JSONResponse(content={"message": "Proveedor eliminado correctamente"}, status_code=200)
-
-
-
-    
 
 
 @router_admin.get("/admin/productos", response_model=List[ProductoSchema])
@@ -465,7 +462,7 @@ def obtener_clientes():
 
     return JSONResponse(status_code=200, content=clientes)
 
-@router_admin.delete("/clinete/delete/{id_cliente}")
+@router_admin.delete("/cliente/delete/{id_cliente}")
 def eliminar_cliente(id_cliente: int):
 
     query = (
@@ -548,7 +545,8 @@ def eliminar_procedimiento(id_servicio: int):
 
     return JSONResponse(content={"message": "Procedimiento eliminado correctamente"}, status_code=200)
 
-@router_admin.get("/admin/citas/{id_cliente}", response_model=List[CitaSchema])
+
+@router_admin.get("/admin/citas/{id_cliente}", response_model=List[dict])
 def obtener_citas(id_cliente: int):
     query = text("""
         SELECT 
@@ -564,15 +562,14 @@ def obtener_citas(id_cliente: int):
             citas
         JOIN 
             mascotas ON citas.id_mascota = mascotas.id_mascota
-        JOIN 
+        LEFT JOIN 
             medico ON citas.id_medico = medico.id_medico
-        JOIN 
+        LEFT JOIN 
             colaborador ON citas.id_colaborador = colaborador.id_colaborador
         WHERE
             mascotas.id_cliente = :id_cliente
     """)
     result = conn.execute(query, {"id_cliente": id_cliente}).fetchall()
-    print(result)
 
     if not result:
         raise HTTPException(status_code=404, detail="No se encontraron citas para el cliente especificado")
@@ -662,3 +659,66 @@ def password_reset(request: RestablecerPasswordSchema):
     conn.commit()
 
     return JSONResponse(content={"message": "Contraseña restablecida exitosamente"}, status_code=200)
+
+
+#endpoint para obtener la lista de la programación general de la guardería 
+@router_admin.get("/admin/programacion_guarderia", response_model=List[dict])
+def obtener_programacion_guarderia():
+    query = text("""
+        SELECT 
+            m.nombre AS nombre_mascota,
+            c.nombres AS nombre_cliente,
+            g.fecha,
+            g.id_registro
+        FROM 
+            guarderia g
+        JOIN 
+            mascotas m ON g.id_mascota = m.id_mascota
+        JOIN 
+            cliente c ON m.id_cliente = c.id_cliente
+    """)
+    
+    result = conn.execute(query).fetchall()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No se encontró ninguna programación en la guardería")
+
+    programacion_guarderia = []
+    for row in result:
+        programacion = {
+            "nombre_mascota": row[0],
+            "nombre_cliente": row[1],
+            "fecha_reserva": row[2].isoformat() if isinstance(row[2], (date, datetime)) else row[2],
+            "id_registro": row[3]
+        }
+        programacion_guarderia.append(programacion)
+
+    return programacion_guarderia
+
+
+#endpoint para el checkin de la mascota
+@router_admin.post("/admin/checkin_guarderia") 
+def checkin_guarderia(checkin: CheckinSchema):
+    nuevo_checkin = checkin.dict()
+    result = conn.execute(registro_guarderia.insert().values(nuevo_checkin))
+    conn.commit()
+    id_cobro = result.inserted_primary_key[0]
+    nuevo_checkin['id_cobro'] = id_cobro
+    return JSONResponse(content=nuevo_checkin, status_code=201)
+
+#endpoint para el checkout de la mascota
+@router_admin.post("/admin/checkout_guarderia")
+def checkout_guarderia(checkout: CheckoutSchema):
+    update_values = {
+        "hora_salida": checkout.hora_salida,
+        "total": checkout.total
+    }
+    result = conn.execute(
+        registro_guarderia.update()
+        .where(registro_guarderia.c.id_cobro == checkout.id_cobro)
+        .values(update_values)
+    )
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Registro no encontrado")
+    conn.commit()
+    return JSONResponse(content={"id_cobro": checkout.id_cobro, **update_values}, status_code=200)
