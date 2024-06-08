@@ -12,6 +12,10 @@
         $estadias = obtenerEstadias($_SESSION['id_cliente']);
     }
 
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_registro'])) {
+        eliminarEstancia($_GET['id_registro']);
+    }
+
 ?>
     <article class="contenedor contenedor-table">
         <div class="search-container">
@@ -41,8 +45,8 @@
                             <td><?php echo htmlspecialchars($estadia['fecha']); ?></td>
                             <td><?php echo htmlspecialchars($estadia['hora']); ?></td>
                             <td><?php echo htmlspecialchars($estadia['peso']); ?></td>
-                            <td><a href="modificar_mascota.php?id_mascota=<?php echo $estadia['id_mascota']?>"><button class="edit">EDITAR</button></a></td>
-                            <td><a href="mis_mascotas.php?id_mascota=<?php echo $estadia['id_mascota']?>"><button class="delete">ELIMINAR</button></a></td>
+                            <td><a href="modificar_agendamiento.php?id_registro=<?php echo $estadia['id_registro']?>"><button class="edit">EDITAR</button></a></td>
+                            <td><a href="guarderia.php?id_registro=<?php echo $estadia['id_registro']?>"><button class="delete">ELIMINAR</button></a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

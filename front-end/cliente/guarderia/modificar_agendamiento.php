@@ -1,6 +1,36 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_guarderia.php';
+
+    if (isset($_SESSION['id_cliente'])){
+        $estadias = obtenerEstadias($_SESSION['id_cliente']);
+    }
+    $id_registro = $_GET['id_registro'];
+
+    foreach ($estadias as $estadia) {
+        if ($estadia['id_registro'] == $id_registro) {
+            $mascota = $estadia['nombre_mascota'];
+            $fecha = $estadia['fecha'];
+            $hora = $estadia['hora'];
+            $comentarios = $estadia['comentarios'];
+
+            $timeParts = explode(':', $hora);
+            $hours = sprintf('%02d', $timeParts[0]); // Añade el 0 a la izquierda si es necesario
+            $minutes = sprintf('%02d', $timeParts[1]);
+            $seconds = sprintf('%02d', $timeParts[2]);
+
+            $hora_formateada = "$hours:$minutes:$seconds";
+            break;
+        }
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $fecha = $_POST['fecha'];
+        $hora = $_POST['hora'];
+        $comentarios = $_POST['comentarios'];
+        actualizarEstancia($id_registro, $fecha, $hora, $comentarios);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -14,49 +44,27 @@
 <main class="contenedor formulario-general">
     <div class="form-imagen-guarderia"></div>
     <div class="form-contenido">
-        <form action="">
+        <form action="" method="POST">
             <h3 class="titulo-formulario">Clínica Veterinaria Patitas Contentas requiere la siguiente información</h3>
             <div class="formulario-datos">
                 <div>
                     <label for="mascota">Mascota</label>
-                    <select name="mascota" id="mascota" required class="inputs">
-                        <option value="" disabled selected>Seleccione una mascota</option>
-                        <option value="mascota1">Mascota 1</option>
-                        <option value="mascota2">Mascota 2</option>
+                    <select name="mascota" id="mascota" disabled class="inputs">
+                        <option value="" disabled selected><?php echo $mascota?></option>
                     </select>
                 </div>
                 <div>
                     <label for="fecha">Fecha</label>
-                    <input type="date" id="fecha" name="fecha" required class="inputs">
+                    <input type="date" id="fecha" name="fecha" value="<?php echo $fecha?>" required class="inputs">
                 </div>
                 <div>
                     <label for="hora">Hora</label>
-                    <select name="hora" id="hora" required class="inputs">
-                        <option value="" disabled selected>Seleccione una opción</option>
-                        <option value="hora1">Hora 1</option>
-                        <option value="hora2">Hora 2</option>
-                    </select>
+                    <input type="time" id="hora" name="hora" value="<?php echo $hora_formateada?>" required class="inputs">
                 </div>
             </div>
-            <div class="formulario-datos">
-                <div>
-                    <label for="raza">Raza</label>
-                    <input type="text" id="raza" name="raza" required class="inputs">
-                </div>
-                <div>
-                    <label for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" required class="inputs">
-                </div>
-                <div>
-                    <label for="peso">Peso (kg)</label>
-                    <input type="number" id="peso" name="peso" required class="inputs">
-                </div>
-            </div>
-            <div class="formulario-datos">
-                <div>
-                    <label for="comentarios">Comentarios adicionales</label>
-                    <input type="text" id="comentarios" name="comentarios" required class="inputs">
-                </div>
+            <div class="formulario-datos-comentarios">
+                <label for="comentarios">Comentarios adicionales</label>
+                <input type="text" id="comentarios" name="comentarios" value="<?php echo $comentarios?>" class="inputs">
             </div>
             <div class="form-botones">
                 <input class="boton-formulario-azul margen-superior" type="submit" value="MODIFICAR ESTANCIA">
