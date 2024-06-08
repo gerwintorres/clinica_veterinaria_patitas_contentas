@@ -155,6 +155,18 @@ tokens_recuperacion = Table(
     Column("token", String(255), nullable=False),
     Column("expiration", String(255), nullable=False),
     Column("created_at", String(255), nullable=False)
-);
+)
 
-meta_data.create_all(engine)
+registro_guarderia = Table(
+    "registro_guarderia",
+    meta_data,
+    Column("id_cobro", Integer, primary_key=True),
+    Column("total", Float, nullable=True),
+    Column("id_registro", Integer, ForeignKey("guarderia.id_registro", ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
+    Column("hora_entrada", Time, nullable=False),
+    Column("hora_salida", Time, nullable=True)
+)
+
+
+
+meta_data.create_all(engine);
