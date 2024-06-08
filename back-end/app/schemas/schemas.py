@@ -93,7 +93,11 @@ class CitaSchema(BaseModel):
     id_servicio: int
     id_mascota: int
 
-
+class CitaUpdateSchema(BaseModel):
+    hora: str
+    fecha: str
+    procedimiento: str
+    id_servicio: int
 class ContactoSchema(BaseModel):
     nombres: str
     apellidos: str
