@@ -45,9 +45,9 @@
                             <td><?php echo htmlspecialchars($cita['nombre_cliente']); ?></td>
                             <td><?php echo htmlspecialchars($cita['nombre_mascota']); ?></td>
                             <td><?php echo htmlspecialchars($cita['tipo_mascota']); ?></td>
-                            <td><a href="../../admin/historias/visualizar_historia_clinica.php?id_mascota=<?php echo $cita['id_mascota']?>"><button class="edit">VER</button></a></td>
+                            <td><a href="visualizar_historia_clinica.php?id_historia_clinica=<?php echo $cita['id_mascota']?>"><button class="edit">VER</button></a></td>
                             <td><a href="ficha_consulta.php?ic=<?php echo $cita['id_cliente']?>&im=<?php echo $cita['id_mascota']?>"><button class="edit">NUEVA</button></a></td>
-                            <td><button class="edit">GENERAR</button></td>  
+                            <td><a href="orden_medica.php?ici=<?php echo $cita['id_cita']?>"><button class="edit">GENERAR</button></td></a>  
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

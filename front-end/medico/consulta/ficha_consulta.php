@@ -19,14 +19,14 @@
             $raza = $mascota['raza'];
             $edad = $mascota['edad'];
             $peso = $mascota['peso'];
+            break;
         }
     }
 
     foreach ($programacion as $cita) {
         if ($cita['id_mascota'] == $id_mascota) {
-            $fecha = $cita['fecha'];
             $hora = $cita['hora_inicio'];
-            $medico = $cita['nombre_medico'];
+            break;
         }
     }
 ?>
@@ -70,7 +70,7 @@
             </div>
             <div>
                 <label for="raza">Raza</label>
-                <input type="text" class="input-cerrado" id="raza" value="<?php echo $raza ?>" name="raza" required>
+                <input type="text" class="input-cerrado" id="raza" value="<?php echo $raza ?>" name="raza" disabled>
             </div>
             <div>
                 <label for="peso">Peso (Kg)</label>
@@ -110,7 +110,7 @@
         <div class="form-grupo-cerrado">
             <div>
                 <label for="fecha">Fecha</label>
-                <input type="date" class="input-cerrado" id="fecha" name="fecha" disabled>
+                <input type="date" class="input-cerrado" id="fecha" value="<?php echo date('Y-m-d')?>" name="fecha" disabled>
             </div>
             <div>
                 <label for="hora">Hora</label>
@@ -118,7 +118,7 @@
             </div>
             <div>
                 <label for="medico">Médico</label>
-                <input type="text" class="input-cerrado" id="medico" name="medico" disabled>
+                <input type="text" class="input-cerrado" id="medico" value="<?php echo $_SESSION['nombres'];?>" name="medico" disabled>
             </div>
             <div>
                 <label for="codigoHistoria">Código historia</label>
