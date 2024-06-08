@@ -70,3 +70,4 @@
     <p>Copyright &copy; <?php echo date('Y'); ?> Clínica Veterinaria Patitas Contentas | Desarrollado por V-Minds Company</p>
 </footer>
 <script src="../../build/js/bundle.min.js"></script>
+<script src="../../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>

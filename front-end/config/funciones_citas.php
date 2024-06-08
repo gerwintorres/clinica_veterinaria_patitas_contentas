@@ -31,6 +31,48 @@ function agendarCita($id_mascota, $tipoProcedimiento, $fecha , $hora){
         // Maneja el error
         echo '<script>alert("Error en el registro");</script>';
     }
+}
+
+function obtenerCitas($id_cliente){
     
+    $url = "http://127.0.0.1:8000/admin/citas/$id_cliente";
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code == 200) {
+        $citas = json_decode($response, true);
+        return $citas;
+    }
+}
+
+function eliminarCita($id_cita){
+
+    $ch = curl_init("http://127.0.0.1:8000/delete/citas/$id_cita");
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code == 200) { // Verificar el código de estado HTTP correcto
+        $result = json_decode($response, true);
+        echo '<script>
+            window.location.href = "citas_medicas.php";
+            alert("Eliminado con éxito");
+        </script>';
+    } else {
+        // Maneja el error
+        echo '<script>alert("Error en la eliminación");</script>';
+    }
 }
 ?>

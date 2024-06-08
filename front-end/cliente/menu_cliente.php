@@ -18,6 +18,11 @@
 
     }
     include '../includes/templates/header.php';
+    require '../config/funciones_alertas.php';
+    if(isset($_SESSION['exito'])){
+        alertaExitoso('INICIO DE SESIÓN EXITOSO');
+        unset($_SESSION['exito']);
+    }
 ?>
 <?php if($_SESSION['administrador']): ?>
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda" id="mensaje-bienvenida">PERFIL <?php echo $_SESSION['nombre_cliente'] . " - ". $_SESSION['id_cliente']?></h1>
