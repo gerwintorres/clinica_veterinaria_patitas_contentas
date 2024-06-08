@@ -113,6 +113,7 @@ def eliminar_mascota(id_mascota: int):
 def listar_estadias_cliente(id_cliente: int):
     query = text("""
         SELECT 
+            g.id_registro,
             m.nombre AS nombre_mascota,
             m.tipo_mascota,
             g.fecha,
@@ -134,11 +135,12 @@ def listar_estadias_cliente(id_cliente: int):
     estadias = []
     for row in result:
         estancia = {
-            "nombre_mascota": row[0],
-            "tipo_mascota": row[1],
-            "fecha": row[2].isoformat() if isinstance(row[2], (date, datetime)) else row[2],
-            "hora": str(row[3]) if isinstance(row[3], timedelta) else row[3].isoformat() if isinstance(row[3], (date, datetime)) else row[3],
-            "peso": row[4]
+            "id_registro": row[0],
+            "nombre_mascota": row[1],
+            "tipo_mascota": row[2],
+            "fecha": row[3].isoformat() if isinstance(row[3], (date, datetime)) else row[3],
+            "hora": str(row[4]) if isinstance(row[4], timedelta) else row[4].isoformat() if isinstance(row[4], (date, datetime)) else row[4],
+            "peso": row[5]
         }
         estadias.append(estancia)
 
