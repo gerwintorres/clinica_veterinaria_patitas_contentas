@@ -205,10 +205,6 @@ def eliminar_proveedor(id_proveedor: int):
     return JSONResponse(content={"message": "Proveedor eliminado correctamente"}, status_code=200)
 
 
-
-    
-
-
 @router_admin.get("/admin/productos", response_model=List[ProductoSchema])
 def obtener_productos():
     query = text("SELECT * FROM productos")
@@ -548,6 +544,7 @@ def eliminar_procedimiento(id_servicio: int):
 
     return JSONResponse(content={"message": "Procedimiento eliminado correctamente"}, status_code=200)
 
+
 @router_admin.get("/admin/citas/{id_cliente}", response_model=List[CitaSchema])
 def obtener_citas(id_cliente: int):
     query = text("""
@@ -564,9 +561,9 @@ def obtener_citas(id_cliente: int):
             citas
         JOIN 
             mascotas ON citas.id_mascota = mascotas.id_mascota
-        JOIN 
+        LEFT JOIN 
             medico ON citas.id_medico = medico.id_medico
-        JOIN 
+        LEFT JOIN 
             colaborador ON citas.id_colaborador = colaborador.id_colaborador
         WHERE
             mascotas.id_cliente = :id_cliente

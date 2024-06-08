@@ -83,9 +83,6 @@ def login_medico(credenciales: CredencialesSchema):
 
 
 
-
-
-
 # Endpoint para iniciar el proceso de recuperación de contraseña
 @router_medico.post('/password-recovery')
 def tokens_recuperacion(request: SolicitarTokenSchema):
@@ -141,3 +138,52 @@ def password_reset(request: RestablecerPasswordSchema):
     conn.commit()
 
     return JSONResponse(content={"message": "Contraseña restablecida exitosamente"}, status_code=200)
+
+
+#Endpoint para obtener la programación del día de un medico
+@router_medico.get("/medico/programacion_del_dia/{id_medico}/{fecha}")
+def obtener_programacion_del_dia(id_medico: int, fecha: str):
+    # Definir la consulta
+    query = text("""
+        SELECT 
+            citas.hora,
+            mascotas.nombre AS nombre_mascota,
+            cliente.nombres AS nombre_cliente,
+            mascotas.tipo_mascota,
+            mascotas.id_cliente
+        FROM 
+            citas
+        JOIN 
+            mascotas ON citas.id_mascota = mascotas.id_mascota
+        JOIN 
+            cliente ON mascotas.id_cliente = cliente.id_cliente
+        WHERE
+            citas.id_medico = :id_medico AND citas.fecha = :fecha
+    """)
+
+    # Ejecutar la consulta
+    result = conn.execute(query, {"id_medico": id_medico, "fecha": fecha}).fetchall()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No se encontraron citas para el médico en la fecha especificada")
+
+    # Formatear el resultado en una lista de diccionarios
+    programacion = []
+    for row in result:
+        if isinstance(row.hora, timedelta):
+            hora_inicio = (datetime.min + row.hora).time()
+        else:
+            hora_inicio = row.hora
+
+        hora_fin = (datetime.combine(datetime.today(), hora_inicio) + timedelta(minutes=30)).time()
+        programacion.append({
+            "hora_inicio": hora_inicio.strftime('%H:%M:%S'),
+            "hora_fin": hora_fin.strftime('%H:%M:%S'),
+            "nombre_mascota": row.nombre_mascota,
+            "nombre_cliente": row.nombre_cliente,
+            "tipo_mascota": row.tipo_mascota,
+            "id_cliente": row.id_cliente,
+        })
+
+    return JSONResponse(status_code=200, content=programacion)
+    
