@@ -274,9 +274,11 @@ def obtener_info_orden_medica(id_orden: int):
     query = text("""
         SELECT 
             c.fecha AS fecha_cita,
+            c.hora AS hora_cita,
             s.nombre AS nombre_servicio,
             m.nombres AS nombre_medico,
-            om.descripcion
+            om.descripcion,
+            ma.nombre AS nombre_mascota
         FROM 
             orden_medica om
         JOIN 
@@ -285,6 +287,8 @@ def obtener_info_orden_medica(id_orden: int):
             servicio s ON om.id_servicio = s.id_servicio
         LEFT JOIN 
             medico m ON c.id_medico = m.id_medico
+        JOIN
+            mascotas ma ON c.id_mascota = ma.id_mascota
         WHERE 
             om.id_orden = :id_orden
     """)
@@ -296,9 +300,11 @@ def obtener_info_orden_medica(id_orden: int):
 
     info_orden_medica = {
         "fecha_cita": result[0].isoformat() if isinstance(result[0], (date, datetime)) else result[0],
-        "nombre_servicio": result[1],
-        "nombre_medico": result[2],
-        "descripcion": result[3]
+        "hora_cita": str(result[1]) if isinstance(result[1], timedelta) else result[1].isoformat() if isinstance(result[1], (date, datetime)) else result[1],
+        "nombre_servicio": result[2],
+        "nombre_medico": result[3],
+        "descripcion": result[4],
+        "nombre_mascota": result[5]
     }
 
     return JSONResponse(status_code=200, content=info_orden_medica)

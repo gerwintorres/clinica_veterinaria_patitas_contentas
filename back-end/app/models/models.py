@@ -163,7 +163,9 @@ registro_guarderia = Table(
     Column("id_cobro", Integer, primary_key=True),
     Column("total", Float, nullable=True),
     Column("id_registro", Integer, ForeignKey("guarderia.id_registro", ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
+    Column("fecha_entrada", Date, nullable=False),
     Column("hora_entrada", Time, nullable=False),
+    Column("fecha_salida", Date, nullable=True),
     Column("hora_salida", Time, nullable=True)
 )
 
