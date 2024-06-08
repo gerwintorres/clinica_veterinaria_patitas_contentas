@@ -92,15 +92,15 @@ class ColaboradorUpdateSchema(BaseModel):
     labor: str
     telefono: str
 
-class CitaSchema(BaseModel):
-    id_cita: int
-    hora: str
-    fecha: str
-    procedimiento: str
-    id_medico: int
-    id_colaborador: int
-    id_servicio: int
-    id_mascota: int
+# class CitaSchema(BaseModel):
+#     id_cita: int
+#     hora: str
+#     fecha: str
+#     procedimiento: str
+#     id_medico: int
+#     id_colaborador: int
+#     id_servicio: int
+#     id_mascota: int
 
 
 class ContactoSchema(BaseModel):
@@ -205,3 +205,16 @@ class AdministradorSchema(BaseModel):
 class CredencialesSchema(BaseModel):
     email: str
     clave: str
+
+
+class CheckinSchema(BaseModel):
+    #id_cobro: int
+    #total: Optional[float] = None
+    id_registro: int
+    hora_entrada: str
+    #hora_salida: Optional[str] = None
+
+class CheckoutSchema(BaseModel):
+    id_cobro: int
+    hora_salida: str
+    total: Optional[float] = None
