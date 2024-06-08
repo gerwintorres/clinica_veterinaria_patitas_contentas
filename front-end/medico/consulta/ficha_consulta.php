@@ -29,6 +29,22 @@
             break;
         }
     }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $fr = $_POST['fr'];
+        $fc = $_POST['fc'];
+        $tpc = $_POST['tpc'];
+        $trc = $_POST['trc'];
+        $t = $_POST['t'];
+        $motivo = $_POST['motivo'];
+        $anotaciones = $_POST['anotaciones'];
+        $fecha = date('Y-m-d');
+        $hora = $_POST['hora'];
+        $nombre_medico = $_POST['medico'];
+
+        $descripcion = "DETALLES DE CONSULTA\nFecha: $fecha\t Hora: $hora\tMédico: $nombre_medico\n\nCONSTANTES VITALES\nFR: $fr\t FC: $fc\t TPC: $tpc\t TRC: $trc\t T°: $t\n\nMOTIVO DE CONSULTA:\n$motivo\n\nANOTACIONES MÉDICAS:\n$anotaciones\n\n--------------------------------------------------------------------------------\n";
+        insertarConsulta($id_mascota, $descripcion);
+    }
 ?>
 <div class="contenedor contenedor-boton-atras">
     <a href="paciente_consulta.php" class="boton-atras"> <svg width="11" height="20" viewBox="0 0 11 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,16 +63,16 @@
 </div>
 
 <main class="formulario-cerrado contenedor">
-    <form action="">
+    <form action="" method="POST">
         <h4 class="titulos-formularios-cerrado">Información básica</h4>
         <div class="form-grupo-cerrado-2">
             <div>
                 <label for="nombreMascota">Nombre de la mascota</label>
-                <input type="text" class="input-cerrado" id="nombreMascota" value="<?php echo $nombre?>" name="nombreMascota" disabled>
+                <input type="text" class="input-cerrado" id="nombreMascota" value="<?php echo $nombre?>" name="nombreMascota" readonly>
             </div>
             <div>
                 <label for="nombreDueno">Nombre del cliente</label>
-                <input type="text" class="input-cerrado" id="nombreDueno" value="<?php echo $cliente['nombres'] . " " . $cliente['apellidos'];?>" name="nombreDueno" disabled>
+                <input type="text" class="input-cerrado" id="nombreDueno" value="<?php echo $cliente['nombres'] . " " . $cliente['apellidos'];?>" name="nombreDueno" readonly>
             </div>
             <div>
                 <label for="direccion">Dirección</label>
@@ -70,7 +86,7 @@
             </div>
             <div>
                 <label for="raza">Raza</label>
-                <input type="text" class="input-cerrado" id="raza" value="<?php echo $raza ?>" name="raza" disabled>
+                <input type="text" class="input-cerrado" id="raza" value="<?php echo $raza ?>" name="raza" readonly>
             </div>
             <div>
                 <label for="peso">Peso (Kg)</label>
@@ -114,15 +130,15 @@
             </div>
             <div>
                 <label for="hora">Hora</label>
-                <input type="time" class="input-cerrado" id="hora" value="<?php echo $hora?>" name="hora" disabled>
+                <input type="time" class="input-cerrado" id="hora" value="<?php echo $hora?>" name="hora" readonly>
             </div>
             <div>
                 <label for="medico">Médico</label>
-                <input type="text" class="input-cerrado" id="medico" value="<?php echo $_SESSION['nombres'];?>" name="medico" disabled>
+                <input type="text" class="input-cerrado" id="medico" value="<?php echo $_SESSION['nombres'];?>" name="medico" readonly>
             </div>
             <div>
                 <label for="codigoHistoria">Código historia</label>
-                <input type="number" class="input-cerrado" id="codigoHistoria" value="<?php echo $id_mascota?>" name="codigoHistoria" disabled>
+                <input type="number" class="input-cerrado" id="codigoHistoria" value="<?php echo $id_mascota?>" name="codigoHistoria" readonly>
             </div>
         </div>
         <label class="margen-superior-2" for="motivo">Motivo de consulta</label>

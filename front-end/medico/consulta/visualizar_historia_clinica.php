@@ -5,7 +5,7 @@
     include '../../includes/templates/header.php';
 
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'medico'){
-        $historia = visualizarHistoria($_GET['id_historia_clinica']);   
+        $historia = visualizarHistoria($_GET['id_historia_clinica']); 
     }
 ?>
 
@@ -60,7 +60,7 @@
     </div>
     <div>
         <label class="margen-superior-2" for="descripcion">Descripción</label>
-        <textarea class="input-cerrado descripcion" id="descripcion" name="descripcion" disabled value="<?php echo $historia['descripcion']?>"></textarea>
+        <textarea class="input-cerrado descripcion" id="descripcion" name="descripcion" disabled ><?php echo $historia['descripcion']?></textarea>
     </div>
     
 </main>
