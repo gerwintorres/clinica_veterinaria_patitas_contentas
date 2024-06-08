@@ -42,7 +42,7 @@
                             <td><?php echo htmlspecialchars($orden['nombre_mascota']); ?></td>
                             <td><?php echo htmlspecialchars($orden['procedimiento']); ?></td>
                             <td><?php echo htmlspecialchars($orden['fecha_cita']); ?></td>
-                            <td><a href="modificar_mascota.php?id_mascota=<?php echo $mascota['id_mascota']?>"><button class="edit">Ver orden médica</button></a></td>
+                            <td><a href="visualizar_orden.php?id_orden=<?php echo $orden['id_orden']?>"><button class="edit">Ver orden médica</button></a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
