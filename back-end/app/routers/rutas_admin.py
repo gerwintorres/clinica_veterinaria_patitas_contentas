@@ -564,9 +564,9 @@ def obtener_citas(id_cliente: int):
             citas
         JOIN 
             mascotas ON citas.id_mascota = mascotas.id_mascota
-        JOIN 
+        LEFT JOIN 
             medico ON citas.id_medico = medico.id_medico
-        JOIN 
+        LEFT JOIN 
             colaborador ON citas.id_colaborador = colaborador.id_colaborador
         WHERE
             mascotas.id_cliente = :id_cliente

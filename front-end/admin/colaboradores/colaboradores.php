@@ -5,8 +5,9 @@
     $texto_card = 'añadir nuevo <br> colaborador';
     $texto_tabla = 'Lista de colaboradores';
     $ruta_card = 'anadir_colaborador.php';
-    require '../../config/funciones_colaboradores.php';
     include '../../includes/templates/pagina_card.php';
+    require '../../config/funciones_colaboradores.php';
+
 
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
         $colaboradores = obtenerColaboradores();
@@ -15,6 +16,16 @@
     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_colaborador'])) {
         $id_colaborador = $_GET['id_colaborador'];
         eliminarColaborador($id_colaborador);
+    }
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Colaborador registrado exitosamente');
+        unset($_SESSION['registro']);
+    }elseif(isset($_SESSION['actualizado'])){
+        alertaActualizado('Colaborador actualizado exitosamente');
+        unset($_SESSION['actualizado']);
+    }elseif(isset($_SESSION['eliminado'])){
+        alertaEliminado('Colaborador eliminado exitosamente');
+        unset($_SESSION['eliminado']);
     }
 ?>
     <article class="contenedor contenedor-table">

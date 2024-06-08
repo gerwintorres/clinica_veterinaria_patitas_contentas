@@ -33,13 +33,13 @@
             </thead>
             <tbody>
                 <?php if (isset($citas) && is_array($citas)):?>
-                    <?php foreach ($citas as $cita): ?>
+                    <?php foreach ($citas as $cita):?>
                         <tr>
                             <td><?php echo htmlspecialchars($cita['nombre_mascota']); ?></td>
                             <td><?php echo htmlspecialchars($cita['tipo_mascota']); ?></td>
                             <td><?php echo htmlspecialchars($cita['fecha']); ?></td>
                             <td><?php echo htmlspecialchars($cita['hora']); ?></td>
-                            <?php if($cita['id_medico'] == ""): ?>
+                            <?php if($cita['nombre_medico'] == null): ?>
                                 <td><?php echo htmlspecialchars($cita['nombre_colaborador']); ?></td>
                             <?php else: ?>
                                 <td><?php echo htmlspecialchars($cita['nombre_medico']); ?></td>
