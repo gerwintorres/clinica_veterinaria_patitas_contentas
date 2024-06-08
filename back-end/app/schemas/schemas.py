@@ -112,7 +112,7 @@ class ContactoSchema(BaseModel):
 
 
 class OrdenMedicaSchema(BaseModel):
-    id_orden: int
+    #id_orden: int
     descripcion: str
     id_cita: int
     id_servicio: int

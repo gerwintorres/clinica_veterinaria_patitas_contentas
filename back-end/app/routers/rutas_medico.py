@@ -3,8 +3,8 @@ from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text, update, insert
 from sqlalchemy.orm import Session
 from database.db import conn
-#from models.models import clientes
-from schemas.schemas import CredencialesSchema, SolicitarTokenSchema, RestablecerPasswordSchema
+from models.models import clientes, orden_medica
+from schemas.schemas import CredencialesSchema, SolicitarTokenSchema, RestablecerPasswordSchema, OrdenMedicaSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -147,6 +147,8 @@ def obtener_programacion_del_dia(id_medico: int, fecha: str):
     query = text("""
         SELECT 
             citas.hora,
+            citas.id_mascota,
+            citas.id_cita,
             mascotas.nombre AS nombre_mascota,
             cliente.nombres AS nombre_cliente,
             mascotas.tipo_mascota,
@@ -183,7 +185,20 @@ def obtener_programacion_del_dia(id_medico: int, fecha: str):
             "nombre_cliente": row.nombre_cliente,
             "tipo_mascota": row.tipo_mascota,
             "id_cliente": row.id_cliente,
+            "id_mascota": row.id_mascota,
+            "id_cita": row.id_cita
         })
 
     return JSONResponse(status_code=200, content=programacion)
+
+
+#endpoint para crear ordenes medicas
+@router_medico.post("/medico/orden_medica")
+def crear_orden_medica(orden: OrdenMedicaSchema):
+    nueva_orden = orden.dict()
+    result = conn.execute(orden_medica.insert().values(nueva_orden))
+    conn.commit()
+    print(result)
+
+    return JSONResponse(content=nueva_orden, status_code=HTTP_201_CREATED)
     
