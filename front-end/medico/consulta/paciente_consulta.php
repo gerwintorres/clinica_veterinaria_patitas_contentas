@@ -1,6 +1,12 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_medico.php';
+    date_default_timezone_set('America/Bogota');
+
+    if (isset($_SESSION['id_medico']) && $_SESSION['loggedin'] == true) {
+        $programacion = obtenerProgramacion($_SESSION['id_medico']);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -21,9 +27,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Documento dueño</th>
+                    <th>Documento cliente</th>
+                    <th>Nombre cliente</th>
                     <th>Mascota</th>
-                    <!-- <th>Dueño</th> -->
                     <th>Tipo de mascota</th>
                     <!-- <th>Raza</th> -->
                     <th>Historia clínica</th>
@@ -32,17 +38,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Documento dueño</td>
-                    <td>Mascota</td>
-                    <!-- <td>Dueño</td> -->
-                    <td>Tipo de mascota</td>
-                    <!-- <td>Raza</td> -->
-                    <td><button class="edit">VER HISTORIA CLÍNICA</button></td>
-                    <td><button class="edit">NUEVA CONSULTA</button></td>
-                    <td><button class="edit">GENERAR ORDEN</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($programacion) && is_array($programacion)):?>
+                    <?php foreach ($programacion as $cita):?>
+                        <tr>    
+                            <td><?php echo htmlspecialchars($cita['id_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['nombre_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['tipo_mascota']); ?></td>
+                            <td><a href="visualizar_historia_clinica.php?id_historia_clinica=<?php echo $cita['id_mascota']?>"><button class="edit">VER</button></a></td>
+                            <td><a href="ficha_consulta.php?ic=<?php echo $cita['id_cliente']?>&im=<?php echo $cita['id_mascota']?>"><button class="edit">NUEVA</button></a></td>
+                            <td><a href="orden_medica.php?ici=<?php echo $cita['id_cita']?>"><button class="edit">GENERAR</button></td></a>  
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>

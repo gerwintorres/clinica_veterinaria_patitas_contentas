@@ -4,7 +4,7 @@
         session_start();
     }
     if (isset($_SESSION['id_medico']) && isset($_SESSION['nombres'])) {
-        $id_cliente = $_SESSION['id_medico'];
+        $id_medico = $_SESSION['id_medico'];
         $nombres = $_SESSION['nombres'];
     }
     include '../includes/templates/header.php';
@@ -35,17 +35,6 @@
             </defs>
         </svg>
     </a>
-    <!-- <a class="card" href="orden/orden_medica.php">Orden médica
-        <svg width="91" height="90" viewBox="0 0 91 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <rect x="0.5" width="90" height="90" fill="url(#pattern0_151_1223)"/>
-            <defs>
-            <pattern id="pattern0_151_1223" patternContentUnits="objectBoundingBox" width="1" height="1">
-            <use xlink:href="#image0_151_1223" transform="scale(0.0111111)"/>
-            </pattern>
-            <image id="image0_151_1223" width="90" height="90" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFUUlEQVR4nO2dz4scVRDHH4K/bnqJP3a2qudVDwsBiclixIMavUQP4qmrJiYgeAj482g2p+helQQRifonCP5CNHjyZuIhGn/l5j/gJptAAu4a3UjtLP5Kz2zPTHdX95tX8GBhZrrrfba63nvfV93tXLRo0aLVZ2n6xK0E/LIHPuORrxLK9TY3j3zVg5wmkJd27sxucU2wXiebI5Bz1nCoKujA3y7M9+9tQCSHC5n+jnA5axrZHvqvWEOguhr0XzQDTSDfmAPAmqIa5LQZaI9yZWZAo1wxA23deaq5RdAYQZtHIcWIFnNwMXWgPdSYozGCNo84ihFtD4li6hBzgMHlaA+y7oFftVTD9Nwe5Ij6EjLoI64h5lGWggUNcPAe1xBTX4IFbS6g/3/DIlTQerm6hhghHw17MERZsozsQSTz0aAHw7Y3F0FLBG0dhRQjWszBxdSB9lBjjsYI2jziKEa0PSSKqUPMAQYtky4UkCurkFVnVib1I+TKKmXVmZNJYYRcWaWsOnMyaW+EXFml+DRzMimNkCurlFVnRibtFZArq5BVo0yKzW/Oyqw7ThG0PRSKES1Naxt65xUhv5civ9BL+BE/d6Dn/aEdejMU4rO3dbv9u5IkW4ipA8cH7IG/UrDp3MGOa7q1D67oLOaDbocfcG2yNmodrbQ2ax1Bg26S1hE06CZpHTfcao38GCEve5CPPfB5Ql71wL8PUhuvepSf9TNCfp1Q9ulvXGNTR4O0DjWCbNGjvE8gl8ceXEEu6ZSQgPe4qq2NWoeawvHAX44Nd6iffKqH2f2uKivLUSqt8fIofzud7HZCfotQ/ij73B7lGoGc0AVO2KCBv3Du2E3DfNWVHaH8UL0fck5XlkGC9si/ADxz5zA/e0n/QY9yoUZ/VrrdbG9woCnh/dtArv0pDHrO0mCbA8bN6Pl0VLqoM5LzIruUNGIOGWR9WEd0UPIg31n7qOOCDsLBah00mF1YQ97qBx8PUusg4D1VTOEmBo1yLUl4V3Bahy9xMVJaA/k8KK2DIFusJUpB1vSKQ8zu1lagzGwjxf7uYLQOr9pFHZBRnhy7zAzk3SC0jnTwwMPLFpCLlZnx6kQPKqzjEqXcSOe38/zx0H+8Ysjr6Tw/NYyHBsR2x9DN3xaBlufz/eFli0ges8zstdaATpPs0Tx/PPAnVpD1c/3etscD/qg1oKmTpUNAny8AbT1ntrBWC+RB2vupNaC9P7RjSIcvTLhoygVVNuQt0CutAZ0O2a8rcruERnFuXxLeT8C/FR348n5TCDTIWmtALy4evrls0P8GVxXk1oFGfPqOiVPHNougzVRQcrpobepAlGSKwXDbvFsV5IkHQ6vnR6dTTu+KpIYy08V/GvCH44MGPmMBuovZc7kgBsUtxSJrzMieNpL/OS8fGxu0vj7DArQHeScftOwb8ziFYJcFeeIluAokgyLumkGjnB0hKl0qE3aZkAnl4sRvvxhsSdUNm/8cOh/WMq3yZM8yIatMetJNY/pf0tdneJCvaxsgQQ6P2Ma6PiHsJZU6tenfpUJG2ai0bMzCPPCpeq+wQlfhZy40853svs1aOHO4JW3ONtkI5ERzQPMbLlTDzQKa+mdENzTg76cuoGm6eb1fEHnFLJJBfk3nhdwsWLeb7TUrcmzbbXbTmnZYo6tG0BcJs4fcLJqfO9Cr492LOi7MTLrYZoA8XsXUT4/pQd6s5NaKtlqS8C6thdPVWgmQN3QxonN363411lLs79YyLa0gmigPg5wMblntKjTValS+1OIWrbvQXRDdFtsqTdCyNN0i+1FFe/1Od14enuYdtH8Bv+CsyNXOY0sAAAAASUVORK5CYII="/>
-            </defs>
-        </svg>
-    </a> -->
 </main>
 <?php
     include '../includes/templates/footer.php';
