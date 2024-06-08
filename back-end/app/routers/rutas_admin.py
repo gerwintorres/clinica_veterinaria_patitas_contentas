@@ -693,7 +693,7 @@ def obtener_programacion_guarderia():
         }
         programacion_guarderia.append(programacion)
 
-    return programacion_guarderia
+    return JSONResponse(content = programacion_guarderia, status_code=200)
 
 
 #endpoint para el checkin de la mascota
@@ -709,16 +709,112 @@ def checkin_guarderia(checkin: CheckinSchema):
 #endpoint para el checkout de la mascota
 @router_admin.post("/admin/checkout_guarderia")
 def checkout_guarderia(checkout: CheckoutSchema):
-    update_values = {
-        "hora_salida": checkout.hora_salida,
-        "total": checkout.total
-    }
-    result = conn.execute(
-        registro_guarderia.update()
-        .where(registro_guarderia.c.id_cobro == checkout.id_cobro)
-        .values(update_values)
-    )
-    if result.rowcount == 0:
+    # Obtener todos los datos necesarios en una sola consulta
+    query = text("""
+        SELECT 
+            rg.fecha_entrada,
+            rg.hora_entrada,
+            g.id_mascota,
+            m.peso
+        FROM 
+            registro_guarderia rg
+        JOIN 
+            guarderia g ON rg.id_registro = g.id_registro
+        JOIN 
+            mascotas m ON g.id_mascota = m.id_mascota
+        WHERE 
+            rg.id_cobro = :id_cobro
+    """)
+    result = conn.execute(query, {"id_cobro": checkout.id_cobro}).fetchone()
+    if not result:
         raise HTTPException(status_code=404, detail="Registro no encontrado")
+
+    fecha_entrada = result[0]
+    hora_entrada = result[1]
+    peso_mascota = result[3]
+
+    # Convertir fechas y horas a objetos datetime
+    entrada = datetime.combine(fecha_entrada, datetime.strptime(str(hora_entrada), "%H:%M:%S").time())
+    salida = datetime.combine(datetime.strptime(checkout.fecha_salida, "%Y-%m-%d").date(), datetime.strptime(checkout.hora_salida, "%H:%M:%S").time())
+
+    # Calcular la duración en horas
+    duracion = (salida - entrada).total_seconds() / 3600
+
+    # Precios base para calcular el total
+    tarifa_base = 3000
+    tarifa_por_peso = 300
+    costo_total = (tarifa_base*duracion) + (tarifa_por_peso*peso_mascota)
+
+    # Actualizar el registro con la fecha y hora de salida y el total calculado
+    update_values = {
+        "fecha_salida": checkout.fecha_salida,
+        "hora_salida": checkout.hora_salida,
+        "total": costo_total
+    }
+    update_query = registro_guarderia.update().where(registro_guarderia.c.id_cobro == checkout.id_cobro).values(update_values)
+    update_result = conn.execute(update_query)
+    if update_result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Error al actualizar el registro")
+
     conn.commit()
-    return JSONResponse(content={"id_cobro": checkout.id_cobro, **update_values}, status_code=200)
+    registro = {
+        "id_cobro": checkout.id_cobro,
+        "fecha_salida": checkout.fecha_salida,
+        "hora_salida": checkout.hora_salida,
+        "total": costo_total
+    }
+
+    return JSONResponse(content=registro, status_code=200)
+
+
+#endpoint para obtener los datos del recibo de pago
+@router_admin.get("/admin/facturacion/{id_cobro}")
+def obtener_datos_facturacion(id_cobro: int):
+    query = text("""
+        SELECT 
+            ma.nombre AS nombre_mascota,
+            c.nombres,
+            c.apellidos,
+            c.direccion,
+            c.telefono,
+            ma.raza,
+            ma.peso,
+            ma.edad,
+            rg.fecha_entrada,
+            rg.hora_entrada,
+            rg.fecha_salida,
+            rg.hora_salida,
+            rg.total
+        FROM 
+            registro_guarderia rg
+        JOIN 
+            guarderia g ON rg.id_registro = g.id_registro
+        JOIN 
+            mascotas ma ON g.id_mascota = ma.id_mascota
+        JOIN 
+            cliente c ON ma.id_cliente = c.id_cliente
+        WHERE 
+            rg.id_cobro = :id_cobro
+    """)
+
+    result = conn.execute(query, {"id_cobro": id_cobro}).fetchone()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No se encontró el registro de cobro con el ID especificado")
+
+    datos_facturacion = {
+        "nombre_mascota": result[0],
+        "nombre_duenio": f"{result[1]} {result[2]}",
+        "direccion": result[3],
+        "telefono": result[4],
+        "raza": result[5],
+        "peso": result[6],
+        "edad": result[7],
+        "fecha_entrada": result[8].isoformat() if isinstance(result[8], (date, datetime)) else result[8],
+        "hora_entrada": str(result[9]) if isinstance(result[9], timedelta) else result[9].isoformat() if isinstance(result[9], (date, datetime)) else result[9],
+        "fecha_salida": result[10].isoformat() if isinstance(result[10], (date, datetime)) else result[10],
+        "hora_salida": str(result[11]) if isinstance(result[11], timedelta) else result[11].isoformat() if isinstance(result[11], (date, datetime)) else result[11],
+        "total_a_pagar": result[12]
+    }
+
+    return JSONResponse(status_code=200, content=datos_facturacion)
