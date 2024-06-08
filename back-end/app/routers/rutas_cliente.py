@@ -12,7 +12,7 @@ from fastapi.responses import JSONResponse
 from typing import List
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import smtplib
 import os
 from dotenv import load_dotenv
@@ -226,3 +226,79 @@ def agendar_cita(cita: CitaSchema):
     conn.commit()
 
     return JSONResponse(content={"message": "Cita agendada correctamente"}, status_code=200)
+
+
+#endpoint para obtener las ordenes medicas asociadas a un cliente
+@router_cliente.get("/cliente/ordenes/{id_cliente}", response_model=List[dict])
+def listar_ordenes_medicas_cliente(id_cliente: int):
+    query = text("""
+        SELECT 
+            om.id_orden AS id_orden,
+            m.nombre AS nombre_mascota,
+            c.fecha AS fecha_cita,
+
+            c.procedimiento AS procedimiento
+        FROM 
+            orden_medica om
+        JOIN 
+            citas c ON om.id_cita = c.id_cita
+        JOIN 
+            mascotas m ON c.id_mascota = m.id_mascota
+        JOIN 
+            cliente cl ON m.id_cliente = cl.id_cliente
+        WHERE 
+            cl.id_cliente = :id_cliente
+    """)
+
+    result = conn.execute(query, {"id_cliente": id_cliente}).fetchall()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No se encontraron órdenes médicas para el cliente dado")
+
+    ordenes_medicas = []
+    for row in result:
+        orden_medica = {
+            "id_orden": row[0],
+            "nombre_mascota": row[1],
+            "fecha_cita": row[2].isoformat() if isinstance(row[2], (date, datetime)) else row[2],
+            "procedimiento": row[3]
+        }
+        ordenes_medicas.append(orden_medica)
+
+    return JSONResponse(status_code=200, content=ordenes_medicas)
+
+
+#endpoint para visualizar detalladamente una orden medica
+@router_cliente.get("/cliente/orden/{id_orden}")
+def obtener_info_orden_medica(id_orden: int):
+    query = text("""
+        SELECT 
+            c.fecha AS fecha_cita,
+            s.nombre AS nombre_servicio,
+            m.nombres AS nombre_medico,
+            om.descripcion
+        FROM 
+            orden_medica om
+        JOIN 
+            citas c ON om.id_cita = c.id_cita
+        JOIN 
+            servicio s ON om.id_servicio = s.id_servicio
+        LEFT JOIN 
+            medico m ON c.id_medico = m.id_medico
+        WHERE 
+            om.id_orden = :id_orden
+    """)
+
+    result = conn.execute(query, {"id_orden": id_orden}).fetchone()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No se encontró la orden médica con el ID especificado")
+
+    info_orden_medica = {
+        "fecha_cita": result[0].isoformat() if isinstance(result[0], (date, datetime)) else result[0],
+        "nombre_servicio": result[1],
+        "nombre_medico": result[2],
+        "descripcion": result[3]
+    }
+
+    return JSONResponse(status_code=200, content=info_orden_medica)
