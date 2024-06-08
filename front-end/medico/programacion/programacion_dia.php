@@ -1,7 +1,12 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_medico.php';
     date_default_timezone_set('America/Bogota');
+
+    if (isset($_SESSION['id_medico']) && $_SESSION['loggedin'] == true) {
+        $programacion = obtenerProgramacion($_SESSION['id_medico']);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -31,22 +36,27 @@
                     <th>Hora inicio</th>
                     <th>Hora fin</th>
                     <th>Mascota</th>
-                    <th>Cliente</th>
-                    <th>Motivo de consulta</th>
+                    <th>Tipo de mascota</th>
+                    <th>Documento del cliente</th>
+                    <th>Nombre del cliente</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="container-checkbox">
-                        <input type="checkbox" id="check">
-                    </td>
-                    <td>Hora inicio</td>
-                    <td>Hora fin</td>
-                    <td>Mascota</td>
-                    <td>Cliente</td>
-                    <td>Motivo de consulta</td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+            <?php if (isset($programacion) && is_array($programacion)):?>
+                    <?php foreach ($programacion as $cita):?>
+                        <tr>
+                            <td class="container-checkbox">
+                                <input type="checkbox" id="check">
+                            </td>
+                            <td><?php echo htmlspecialchars($cita['hora_inicio']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['hora_fin']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['tipo_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['id_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($cita['nombre_cliente']); ?></td>      
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>
