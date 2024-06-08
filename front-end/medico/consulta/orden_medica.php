@@ -18,6 +18,12 @@
             break;
         }
     }
+    
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $tipoProcedimiento = $_POST['tipoProcedimiento'];
+        $justificacion = $_POST['justificacion'];
+        crearOrdenMedica($id_cita, $justificacion, $tipoProcedimiento);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -37,7 +43,7 @@
 </div>
 
 <main class="formulario-cerrado contenedor">
-    <form action="">
+    <form action="" method="POST">
         <div class="form-grupo-cerrado">
             <div>
                 <label for="fecha">Fecha</label>
