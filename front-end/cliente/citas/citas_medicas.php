@@ -11,6 +11,9 @@
     if (isset($_SESSION['id_cliente'])) {
         $citas = obtenerCitas($_SESSION['id_cliente']);
     }
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_cita'])) {
+        eliminarCita($_GET['id_cita']);
+    }
 ?>
     <article class="contenedor contenedor-table">
         <div class="search-container">
@@ -28,6 +31,9 @@
                     <th>Hora</th>
                     <th>Médico/Colab.</th>
                     <th>Procedimiento</th>
+                    <?php if($_SESSION['administrador']): ?>
+                        <th>Editar</th>
+                    <?php endif; ?>
                     <th>Eliminar</th>
                 </tr>
             </thead>
@@ -45,21 +51,13 @@
                                 <td><?php echo htmlspecialchars($cita['nombre_medico']); ?></td>
                             <?php endif; ?>
                             <td><?php echo htmlspecialchars($cita['procedimiento']); ?></td>
-                            <td><a href="modificar_mascota.php?id_mascota=<?php echo $cita['id_mascota']?>"><button class="edit">EDITAR</button></a></td>
-                            <td><a href="mis_mascotas.php?id_mascota=<?php echo $cita['id_mascota']?>"><button class="delete">ELIMINAR</button></a></td>
+                            <?php if($_SESSION['administrador']): ?>
+                                <td><a href="modificar_cita.php?id_cita=<?php echo $cita['id_cita']?>"><button class="edit">EDITAR</button></a></td>
+                            <?php endif; ?>
+                            <td><a href="citas_medicas.php?id_cita=<?php echo $cita['id_cita']?>"><button class="delete">ELIMINAR</button></a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
-                <tr>
-                    <td>Nombre mascota</td>
-                    <td>Tipo de mascota</td>
-                    <td>Fecha</td>
-                    <td>Hora</td>
-                    <td>Médico/Colab.</td>
-                    <td>Procedimiento</td>
-                    <td><button class="delete">ELIMINAR</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
             </tbody>
         </table>
     </article>
