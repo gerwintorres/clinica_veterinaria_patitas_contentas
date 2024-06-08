@@ -118,7 +118,8 @@ def listar_estadias_cliente(id_cliente: int):
             m.tipo_mascota,
             g.fecha,
             g.hora,
-            m.peso
+            m.peso,
+            g.comentarios
         FROM 
             guarderia g
         JOIN 
@@ -140,7 +141,8 @@ def listar_estadias_cliente(id_cliente: int):
             "tipo_mascota": row[2],
             "fecha": row[3].isoformat() if isinstance(row[3], (date, datetime)) else row[3],
             "hora": str(row[4]) if isinstance(row[4], timedelta) else row[4].isoformat() if isinstance(row[4], (date, datetime)) else row[4],
-            "peso": row[5]
+            "peso": row[5],
+            "comentarios": row[6]
         }
         estadias.append(estancia)
 
