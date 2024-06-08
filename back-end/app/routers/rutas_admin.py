@@ -11,7 +11,7 @@ from models.models import (administrador, colaborador, proveedor, productos, reg
 from schemas.schemas import (
     ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
     CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, 
-    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema, CheckinSchema, CheckoutSchema)
+    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema, CheckinSchema, CheckoutSchema, CitaUpdateSchema)
 
 from passlib.context import CryptContext
 from pydantic import BaseModel
@@ -590,6 +590,28 @@ def obtener_citas(id_cliente: int):
         citas.append(cita)
 
     return JSONResponse(status_code=200, content=citas)
+
+@router_admin.put("/update/citas/{id_cita}")
+def modificar_cita(id_cita: int, cita_data: CitaUpdateSchema):
+    update_data = {key: value for key, value in cita_data.dict().items() if value is not None}
+
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Por favor verifica los datos ingresados")
+
+    query = (
+        update(citas)
+        .where(citas.c.id_cita == id_cita)
+        .values(**update_data)
+    )
+    
+    result = conn.execute(query)
+    conn.commit()
+
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="cita no encontrada")
+
+    return JSONResponse(content={"message": "Cita actualizado correctamente"}, status_code=200)
+    
 
 
 @router_admin.delete("/delete/citas/{id_cita}")
