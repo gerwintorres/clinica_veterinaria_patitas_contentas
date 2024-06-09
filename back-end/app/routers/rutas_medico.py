@@ -2,9 +2,10 @@ from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text, update, insert
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 from database.db import conn
-from models.models import clientes, orden_medica
-from schemas.schemas import CredencialesSchema, SolicitarTokenSchema, RestablecerPasswordSchema, OrdenMedicaSchema
+from models.models import clientes, orden_medica, medico
+from schemas.schemas import MedicoSchema, CredencialesSchema, SolicitarTokenSchema, RestablecerPasswordSchema, OrdenMedicaSchema
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
@@ -15,6 +16,7 @@ from datetime import datetime, timedelta
 import secrets
 import smtplib
 import os
+import bcrypt
 
 
 key = Fernet.generate_key()
@@ -24,7 +26,20 @@ f = Fernet(key)
 router_medico = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-#Inicio de sesión de médico
+@router_medico.post("/register/medico")
+def registrar_medico(doc: MedicoSchema):
+    hashed_password = bcrypt.hashpw(doc.clave.encode('utf-8'), bcrypt.gensalt())
+    medico_dict = doc.dict()
+    medico_dict['clave'] = hashed_password.decode('utf-8')
+    
+    try:
+        conn.execute(medico.insert().values(medico_dict))
+        conn.commit()
+        return Response(status_code=HTTP_201_CREATED)
+    except SQLAlchemyError as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router_medico.post('/login/medico')
 def login_medico(credenciales: CredencialesSchema):
     query = text(f"SELECT id_medico, nombres, clave FROM medico WHERE email = :email")
@@ -35,7 +50,7 @@ def login_medico(credenciales: CredencialesSchema):
     
     id_medico, nombres, clave = result
 
-    if credenciales.clave != clave:
+    if not bcrypt.checkpw(credenciales.clave.encode('utf-8'), clave.encode('utf-8')):
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
 
     return JSONResponse(content={"id_medico": id_medico, "nombres": nombres}, status_code=200)
@@ -198,7 +213,6 @@ def crear_orden_medica(orden: OrdenMedicaSchema):
     nueva_orden = orden.dict()
     result = conn.execute(orden_medica.insert().values(nueva_orden))
     conn.commit()
-    print(result)
 
     return JSONResponse(content=nueva_orden, status_code=HTTP_201_CREATED)
     
