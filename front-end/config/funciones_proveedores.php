@@ -1,5 +1,6 @@
 <?php   
 require 'funciones_alertas.php';
+
 function obtenerProveedores() {
 
     $url = "http://127.0.0.1:8000/admin/proveedores";
