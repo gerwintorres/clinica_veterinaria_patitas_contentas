@@ -92,7 +92,7 @@
             </div>
             <div class="form-botones">
                 <input class="boton-formulario-azul margen-superior" type="submit" value="MODIFICAR PRODUCTO">
-                <a class="boton-formulario-blanco margen-superior">CANCELAR</a>
+                <a href="productos.php" class="boton-formulario-blanco margen-superior">CANCELAR</a>
             </div>
         </form>
     </div>

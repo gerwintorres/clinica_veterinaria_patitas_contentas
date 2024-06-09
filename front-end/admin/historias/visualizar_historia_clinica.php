@@ -60,7 +60,7 @@
     </div>
     <div>
         <label class="margen-superior-2" for="descripcion">Descripción</label>
-        <textarea class="input-cerrado descripcion" id="descripcion" name="descripcion" disabled value="<?php echo $historia['descripcion']?>"></textarea>
+        <textarea class="input-cerrado descripcion" id="descripcion" name="descripcion" disabled><?php echo $historia['descripcion']?></textarea>
     </div>
     
 </main>

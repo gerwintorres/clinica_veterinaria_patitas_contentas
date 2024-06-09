@@ -433,7 +433,11 @@ def actualizar_descripcion(id_historia_clinica: int, update_data: UpdateDescripc
         raise HTTPException(status_code=404, detail="Historia clínica no encontrada")
     
     descripcion_actual = current_desc_result[0]
-    nueva_descripcion_completa = f"{descripcion_actual}\n\n{nueva_descripcion}"
+    
+    if descripcion_actual == None:
+        nueva_descripcion_completa = f"\n{nueva_descripcion}"
+    else:
+        nueva_descripcion_completa = f"{descripcion_actual}\n\n{nueva_descripcion}"
     
     # Consulta para actualizar la descripción
     update_query = (
