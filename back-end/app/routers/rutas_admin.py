@@ -426,9 +426,6 @@ def obtener_historia_detalle(id_historia_clinica: int):
 @router_admin.put("/admin/historia_clinica/update/{id_historia_clinica}")
 def actualizar_descripcion(id_historia_clinica: int, update_data: UpdateDescripcionSchema):
     nueva_descripcion = update_data.descripcion
-    fecha_actualizacion = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    # Consulta para obtener la descripción actual
     query = text("SELECT descripcion FROM historias_clinicas WHERE id_historia_clinica = :id_historia_clinica")
     current_desc_result = conn.execute(query, {"id_historia_clinica": id_historia_clinica}).fetchone()
     
@@ -436,7 +433,7 @@ def actualizar_descripcion(id_historia_clinica: int, update_data: UpdateDescripc
         raise HTTPException(status_code=404, detail="Historia clínica no encontrada")
     
     descripcion_actual = current_desc_result[0]
-    nueva_descripcion_completa = f"{descripcion_actual}\n\n{fecha_actualizacion}\n{nueva_descripcion}"
+    nueva_descripcion_completa = f"{descripcion_actual}\n\n{nueva_descripcion}"
     
     # Consulta para actualizar la descripción
     update_query = (
