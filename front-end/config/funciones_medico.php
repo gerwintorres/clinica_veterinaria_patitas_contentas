@@ -49,4 +49,34 @@ function insertarConsulta($id_historia_clinica, $descripcion){
         echo '<script>alert("Error en la actualización");</script>';
     }
 }
+
+function crearOrdenMedica($id_cita, $descripcion, $id_servicio){
+    $data = array(
+        'id_cita' => $id_cita,
+        'descripcion' => $descripcion,
+        'id_servicio' => $id_servicio,
+    );
+
+    $ch = curl_init('http://127.0.0.1:8000/medico/orden_medica');
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code == 201) {
+        $result = json_decode($response, true);
+        echo '<script>
+            window.location.href = "paciente_consulta.php";
+            alert("Registrado con éxito");
+        </script>';
+    } else {
+        // Maneja el error
+        echo '<script>alert("Error en el registro");</script>';
+    }
+}
 ?>

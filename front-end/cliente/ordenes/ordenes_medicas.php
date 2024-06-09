@@ -1,6 +1,12 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_ordenes.php';
+
+    if (isset($_SESSION['id_cliente'])) {
+        $id_cliente = $_SESSION['id_cliente'];
+        $ordenes = obtenerOrdenes($id_cliente);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -29,14 +35,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Código orden</td>
-                    <td>Nombre de la mascota</td>
-                    <td>Servicio</td>
-                    <td>Fecha orden</td>
-                    <td><a href="visualizar_orden.php"><button class="verOrden">Ver orden médica</button></a></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($ordenes) && is_array($ordenes)):?>
+                    <?php foreach ($ordenes as $orden): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($orden['id_orden']); ?></td>
+                            <td><?php echo htmlspecialchars($orden['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($orden['procedimiento']); ?></td>
+                            <td><?php echo htmlspecialchars($orden['fecha_cita']); ?></td>
+                            <td><a href="visualizar_orden.php?id_orden=<?php echo $orden['id_orden']?>"><button class="edit">Ver orden médica</button></a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>

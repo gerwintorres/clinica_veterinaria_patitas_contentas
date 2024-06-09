@@ -1,6 +1,18 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_guarderia.php';
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $factura = obtenerFactura($_SESSION['id_cobro']);
+    }
+
+    if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['irc'])){
+        $id_registro = $_GET['irc'];
+        $hora = date("H:i:s");
+        $fecha = date("Y-m-d");
+        realizarCheckOut($id_registro, $hora, $fecha);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -23,57 +35,57 @@
     <div class="form-grupo-cerrado-2">
         <div>
             <label for="nombreMascota">Nombre de la mascota</label>
-            <input type="text" class="input-cerrado" id="nombreMascota" name="nombreMascota" disabled>
+            <input type="text" class="input-cerrado" id="nombreMascota" name="nombreMascota" value="<?php echo $factura['nombre_mascota']?>" disabled>
         </div>
         <div>
             <label for="nombreDueno">Nombre del dueño</label>
-            <input type="text" class="input-cerrado" id="nombreDueno" name="nombreDueno" disabled>
+            <input type="text" class="input-cerrado" id="nombreDueno" name="nombreDueno" value="<?php echo $factura['nombre_duenio']?>" disabled>
         </div>
         <div>
             <label for="direccion">Dirección</label>
-            <input type="text" class="input-cerrado input-width" id="direccion" name="direccion" disabled>
+            <input type="text" class="input-cerrado input-width" id="direccion" name="direccion" value="<?php echo $factura['direccion']?>"  disabled>
         </div>
     </div>
     <div class="form-grupo-cerrado">
         <div>
             <label for="telefono">Teléfono</label>
-            <input type="number" class="input-cerrado" id="telefono" name="telefono" disabled>
+            <input type="number" class="input-cerrado" id="telefono" name="telefono" value="<?php echo $factura['telefono']?>" disabled>
         </div>
         <div>
             <label for="raza">Raza</label>
-            <input type="text" class="input-cerrado" id="raza" name="raza" disabled>
+            <input type="text" class="input-cerrado" id="raza" name="raza" value="<?php echo $factura['raza']?>" disabled>
         </div>
         <div>
             <label for="peso">Peso (Kg)</label>
-            <input type="number" class="input-cerrado" id="peso" name="peso" disabled>
+            <input type="number" class="input-cerrado" id="peso" name="peso" value="<?php echo $factura['peso']?>" disabled>
         </div>
         <div>
             <label for="edad">Edad</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
+            <input type="number" class="input-cerrado" id="edad" name="edad" value="<?php echo $factura['edad']?>" disabled>
         </div>
     </div>
     <div class="form-grupo-cerrado">
         <div>
             <label for="telefono">Fecha de ingreso</label>
-            <input type="number" class="input-cerrado" id="telefono" name="telefono" disabled>
+            <input type="date" class="input-cerrado" id="telefono" value="<?php echo $factura['fecha_entrada']?>" name="telefono" disabled>
         </div>
         <div>
             <label for="raza">Hora de ingreso</label>
-            <input type="text" class="input-cerrado" id="raza" name="raza" disabled>
+            <input type="time" class="input-cerrado" id="raza" name="raza" value="<?php echo $factura['hora_entrada']?>" disabled>
         </div>
         <div>
             <label for="peso">Fecha de salida</label>
-            <input type="number" class="input-cerrado" id="peso" name="peso" disabled>
+            <input type="date" class="input-cerrado" id="peso" name="peso" value="<?php echo $factura['fecha_salida']?>" disabled>
         </div>
         <div>
             <label for="edad">Hora de salida</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
+            <input type="time" class="input-cerrado" id="edad" name="edad" value="<?php echo $factura['hora_salida']?>" disabled>
         </div>
     </div>
     <div class="contenido-centrado total-pago">
         <div>
             <label class="contenido-centrado" for="total"><strong>TOTAL A PAGAR</strong></label>
-            <input type="number" class="input-cerrado" id="total" name="total" disabled>
+            <input type="text" class="input-cerrado" id="total" name="total" value="<?php echo $factura['total_a_pagar'] . ' COP'?>" disabled>
         </div>
     </div>
 </main>

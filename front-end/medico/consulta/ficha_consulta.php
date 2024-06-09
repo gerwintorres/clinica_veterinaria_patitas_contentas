@@ -31,6 +31,7 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        //Para actualizar la historia clínica
         $fr = $_POST['fr'];
         $fc = $_POST['fc'];
         $tpc = $_POST['tpc'];

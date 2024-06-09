@@ -1,6 +1,19 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_guarderia.php';
+    date_default_timezone_set('America/Bogota');
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $programacion = obtenerProgramacion();
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['ir'])) {
+        $id_registro= $_GET['ir'];
+        $hora = date("H:i:s");
+        $fecha = date("Y-m-d");
+        realizarCheckIn($id_registro, $hora, $fecha);
+        
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -35,17 +48,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="container-checkbox">
-                        <input type="checkbox" id="check">
-                    </td>
-                    <td>Mascota</td>
-                    <td>Cliente</td>
-                    <td>Fecha</td>
-                    <td><button class="edit">CHECK-IN</button></td>
-                    <td><button class="delete">CHECK-OUT</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($programacion) && is_array($programacion)):?>
+                    <?php foreach ($programacion as $estancia): ?>
+                        <tr>
+                            <td class="container-checkbox">
+                                <input type="checkbox" id="check">
+                            </td>
+                            <td><?php echo htmlspecialchars($estancia['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($estancia['nombre_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($estancia['fecha_reserva']); ?></td>
+                            <td><a href="programacion_guarderia.php?ir=<?php echo $estancia['id_registro']?>"><button class="edit">CHECK-IN</button></a></td>
+                            <td><a href="programacion_guarderia.php?irc=<?php echo $estancia['id_cobro']?>"><button class="delete">CHECK-OUT</button></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>
