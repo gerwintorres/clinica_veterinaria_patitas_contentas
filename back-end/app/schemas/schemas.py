@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+from datetime import datetime, date, timedelta
 from typing import Optional
 
 class CargoSchema(BaseModel):
@@ -7,7 +8,7 @@ class CargoSchema(BaseModel):
     
 
 class ServicioSchema(BaseModel):
-    id_servicio: int
+    #id_servicio: int
     nombre: str
     precio: int
 
@@ -17,7 +18,16 @@ class ClienteSchema(BaseModel):
     nombres: str
     apellidos: str
     tipo_documento: str
-    telefono: int
+    telefono: str
+    email: str
+    clave: str
+    direccion: str
+
+
+class ClienteUpdateSchema(BaseModel):
+    # nombres: str
+    # apellidos: str
+    telefono: str
     email: str
     clave: str
     direccion: str
@@ -30,7 +40,6 @@ class MascotaSchema(BaseModel):
     raza: str
     edad: int
     peso: float
-    historia_clinica: Optional[str] = None
     id_cliente: int
 
 class MascotaUpdateSchema(BaseModel):
@@ -40,6 +49,25 @@ class MascotaUpdateSchema(BaseModel):
     edad: int = None
     peso: float
 
+class HistoriaSchema(BaseModel):
+    id_historia_clinica: int
+    id_cliente: int
+    nombre_cliente: str
+    nombre_mascota: str
+    
+class UpdateDescripcionSchema(BaseModel):
+    descripcion: str
+
+class VerHistoriaSchema(BaseModel):
+    nombre_mascota: str
+    nombre_cliente: str
+    direccion: str
+    telefono: str
+    raza: str
+    peso: float 
+    edad: int
+    descripcion: str
+    
 
 class MedicoSchema(BaseModel):
     id_medico: int
@@ -47,7 +75,7 @@ class MedicoSchema(BaseModel):
     apellidos: str
     email: str
     clave: str
-    telefono: int
+    telefono: str
     
 class ColaboradorSchema(BaseModel):
     id_colaborador: int
@@ -55,28 +83,39 @@ class ColaboradorSchema(BaseModel):
     apellidos: str
     tipo_documento: str
     labor: str
-    telefono: int
+    telefono: str
 
 
 class ColaboradorUpdateSchema(BaseModel):
     nombres: str
     apellidos: str
     labor: str
-    telefono: int
+    telefono: str
 
-class CitaSchema(BaseModel):
-    id_cita: int
+# class CitaSchema(BaseModel):
+#     id_cita: int
+#     hora: str
+#     fecha: str
+#     procedimiento: str
+#     id_medico: int
+#     id_colaborador: int
+#     id_servicio: int
+#     id_mascota: int
+
+class CitaUpdateSchema(BaseModel):
     hora: str
     fecha: str
-    procedimiento: str
-    id_medico: int
-    id_colaborador: int
-    id_servicio: int
-    id_mascota: int
+    
+class ContactoSchema(BaseModel):
+    nombres: str
+    apellidos: str
+    email: EmailStr
+    numero_contacto: str
+    mensaje: str
 
 
 class OrdenMedicaSchema(BaseModel):
-    id_orden: int
+    #id_orden: int
     descripcion: str
     id_cita: int
     id_servicio: int
@@ -90,34 +129,72 @@ class GuarderiaSchema(BaseModel):
     id_mascota: int
 
 
-class LoteSchema(BaseModel):
-    id_lote: int
-    lote: int
-    id_producto: int
+class UpdateGuarderiaSchema(BaseModel):
+    hora: str
+    fecha: str
+    comentarios: Optional[str]
 
+
+class CitaSchema(BaseModel):
+    hora: str
+    fecha: date
+    procedimiento: str
+    id_medico: Optional[int] = None
+    id_colaborador: Optional[int] = None
+    id_servicio: int
+    id_mascota: int
+
+
+# Esquema para la solicitud de recuperación de contraseña
+class SolicitarTokenSchema(BaseModel):
+    email: EmailStr
+
+# Esquema para restablecer la contraseña
+class RestablecerPasswordSchema(BaseModel):
+    token: str
+    new_password: str
 
 class ProductoSchema(BaseModel):
     id_producto: int
     nombre: str
     fecha_vencimiento: str
     cantidad: int
+    id_proveedor: int
     precio_compra: float
     precio_venta: float
-    id_lote: Optional[int] = None
+    lote: Optional[int] = None
+    
+class ProductoUpdateSchema(BaseModel):
+    nombre: str
+    fecha_vencimiento: str
+    cantidad: int
+    id_proveedor: int
+    precio_compra: float
+    precio_venta: float
+    lote: Optional[int] = None
 
 
 class ProveedorSchema(BaseModel):
-    id_proveedor: int
+    #id_proveedor: int
     nombre: str
     ubicacion: str
     email: str
     telefono: str
 
+class ProveedorUpdateSchema(BaseModel):
+    nombre: str
+    ubicacion: str
+    email: str
+    telefono: str
 
 class RegistroProductoSchema(BaseModel):
-    id_registro: int
-    id_producto: int
     id_proveedor: int
+    nombre: str
+    fecha_vencimiento: str
+    cantidad: int
+    precio_compra: float
+    precio_venta: float
+    lote: Optional[int] = None
 
 
 class AdministradorSchema(BaseModel):
@@ -131,3 +208,19 @@ class AdministradorSchema(BaseModel):
 class CredencialesSchema(BaseModel):
     email: str
     clave: str
+
+
+class CheckinSchema(BaseModel):
+    #id_cobro: int
+    #total: Optional[float] = None
+    id_registro: int
+    fecha_entrada: str
+    hora_entrada: str
+    #hora_salida: Optional[str] = None
+
+class CheckoutSchema(BaseModel):
+    id_cobro: int
+    id_registro: int
+    total: Optional[float] = None
+    fecha_salida: str
+    hora_salida: str
