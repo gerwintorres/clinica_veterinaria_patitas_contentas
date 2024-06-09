@@ -3,7 +3,7 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    if($_SESSION['administrador']){
+    if(isset($_SESSION['administrador']) && ($_SESSION['administrador'])){
         $_SESSION['administrador'] = TRUE;
     }
     elseif(isset($_SESSION['loggedin']) && $_SESSION['usuario'] == 'admin'){
