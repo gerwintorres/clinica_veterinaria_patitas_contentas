@@ -706,6 +706,7 @@ def checkin_guarderia(checkin: CheckinSchema):
     nuevo_checkin['id_cobro'] = id_cobro
     return JSONResponse(content=nuevo_checkin, status_code=201)
 
+
 #endpoint para el checkout de la mascota
 @router_admin.post("/admin/checkout_guarderia")
 def checkout_guarderia(checkout: CheckoutSchema):
@@ -714,6 +715,7 @@ def checkout_guarderia(checkout: CheckoutSchema):
         SELECT 
             rg.fecha_entrada,
             rg.hora_entrada,
+            rg.id_cobro,
             g.id_mascota,
             m.peso
         FROM 
@@ -723,15 +725,15 @@ def checkout_guarderia(checkout: CheckoutSchema):
         JOIN 
             mascotas m ON g.id_mascota = m.id_mascota
         WHERE 
-            rg.id_cobro = :id_cobro
+            rg.id_registro = :id_registro
     """)
-    result = conn.execute(query, {"id_cobro": checkout.id_cobro}).fetchone()
+    result = conn.execute(query, {"id_registro": checkout.id_registro}).fetchone()
     if not result:
         raise HTTPException(status_code=404, detail="Registro no encontrado")
 
     fecha_entrada = result[0]
     hora_entrada = result[1]
-    peso_mascota = result[3]
+    peso_mascota = result[4]
 
     # Convertir fechas y horas a objetos datetime
     entrada = datetime.combine(fecha_entrada, datetime.strptime(str(hora_entrada), "%H:%M:%S").time())
@@ -751,14 +753,14 @@ def checkout_guarderia(checkout: CheckoutSchema):
         "hora_salida": checkout.hora_salida,
         "total": costo_total
     }
-    update_query = registro_guarderia.update().where(registro_guarderia.c.id_cobro == checkout.id_cobro).values(update_values)
+    update_query = registro_guarderia.update().where(registro_guarderia.c.id_registro == checkout.id_registro).values(update_values)
     update_result = conn.execute(update_query)
     if update_result.rowcount == 0:
         raise HTTPException(status_code=404, detail="Error al actualizar el registro")
 
     conn.commit()
     registro = {
-        "id_cobro": checkout.id_cobro,
+        "id_cobro": result[2],
         "fecha_salida": checkout.fecha_salida,
         "hora_salida": checkout.hora_salida,
         "total": costo_total
