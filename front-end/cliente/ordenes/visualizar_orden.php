@@ -1,6 +1,25 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_ordenes.php';
+
+    if (isset($_SESSION['id_cliente'])) {
+        $id_cliente = $_SESSION['id_cliente'];
+
+        $orden = obtenerOrden($_GET['id_orden']);
+
+        $hora = $orden['hora_cita'];
+
+        $timeParts = explode(':', $hora);
+        $hours = sprintf('%02d', $timeParts[0]); // Añade el 0 a la izquierda si es necesario
+        $minutes = sprintf('%02d', $timeParts[1]);
+        $seconds = sprintf('%02d', $timeParts[2]);
+
+        $hora_formateada = "$hours:$minutes:$seconds";
+        $timestamp = strtotime($hora_formateada);
+        $timestamp += 1800;
+        $hora_mas_media_hora = date('H:i:s', $timestamp);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -9,7 +28,7 @@
     </svg>Ir atrás</a>
 </div>
 
-<h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Orden médica: [Código orden]</h1>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Orden médica, Código <?php echo $_GET['id_orden'] ?></h1>
 
 <div class="imagen-formularios-cerrados contenedor">
         <img src="../../build/img/logo.webp" alt="Logotipo Patitas Contentas">
@@ -20,74 +39,43 @@
 </div>
 
 <main class="formulario-cerrado contenedor">
-    <div class="form-grupo-cerrado">
-        <div>
-            <label for="fecha">Fecha</label>
-            <input type="date" class="input-cerrado" id="fecha" name="fecha" disabled>
+    <form action="" method="POST">
+        <div class="form-grupo-cerrado">
+            <div>
+                <label for="fecha">Fecha</label>
+                <input type="date" class="input-cerrado" id="fecha" value="<?php echo $orden['fecha_cita']?>" name="fecha" disabled>
+            </div>
+            <div>
+                <label for="hora">Hora</label>
+                <input type="time" class="input-cerrado" id="hora" value="<?php echo $hora_mas_media_hora?>" name="hora" disabled>
+            </div>
+            <div>
+                <label for="nombreMascota">Nombre de la mascota</label>
+                <input type="text" class="input-cerrado" id="nombreMascota" value="<?php echo $orden['nombre_mascota']?>" name="nombreMascota" disabled>
+            </div> 
+            <div>
+                <label for="nombreDueno">Nombre del cliente</label>
+                <input type="text" class="input-cerrado" id="nombreDueno" value="<?php echo $_SESSION['nombres']?>" name="nombreDueno" disabled>
+            </div>
         </div>
-        <div>
-            <label for="hora">Hora</label>
-            <input type="time" class="input-cerrado" id="hora" name="hora" disabled>
+        <hr class="margen-superior">
+        <div class="form-grupo-cerrado-3">
+            <div>
+                <label for="medico">Médico solicitante</label>
+                <input type="text" class="input-cerrado" id="medico" name="medico" value="<?php echo $orden['nombre_medico']?>" disabled>
+            </div>
+            <div>
+                <label for="tipoProcedimiento">Tipo de procedimiento</label>
+                <select name="tipoProcedimiento" id="tipoProcedimiento" disabled class="procedimiento-orden">
+                    <option value="" selected><?php echo $orden['nombre_servicio']?></option>
+                </select>
+            </div>
+            <div>
+                <label for="justificacion">Justificación</label>
+                <input type="text" class="input-cerrado" id="justificacion" value="<?php echo $orden['descripcion']?>" name="justificacion" disabled>
+            </div>
         </div>
-        <div>
-            <label for="codigoHistoria">Código historia</label>
-            <input type="int" class="input-cerrado" id="codigoHistoria" name="codigoHistoria" disabled>
-        </div>  
-    </div>
-    <div class="form-grupo-cerrado-2">
-        <div>
-            <label for="nombreMascota">Nombre de la mascota</label>
-            <input type="text" class="input-cerrado" id="nombreMascota" name="nombreMascota" disabled>
-        </div>
-        <div>
-            <label for="nombreDueno">Nombre del dueño</label>
-            <input type="text" class="input-cerrado" id="nombreDueno" name="nombreDueno" disabled>
-        </div>
-        <div>
-            <label for="direccion">Dirección</label>
-            <input type="text" class="input-cerrado input-width" id="direccion" name="direccion" disabled>
-        </div>
-    </div>
-    <div class="form-grupo-cerrado">
-        <div>
-            <label for="telefono">Teléfono</label>
-            <input type="number" class="input-cerrado" id="telefono" name="telefono" disabled>
-        </div>
-        <div>
-            <label for="raza">Raza</label>
-            <input type="text" class="input-cerrado" id="raza" name="raza" disabled>
-        </div>
-        <div>
-            <label for="peso">Peso (Kg)</label>
-            <input type="number" class="input-cerrado" id="peso" name="peso" disabled>
-        </div>
-        <div>
-            <label for="edad">Edad</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
-        </div>
-    </div>
-    <hr class="margen-superior">
-    <div class="form-grupo-cerrado-3">
-        <div>
-            <label for="edad">Código servicio</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
-        </div>
-        <div>
-            <label for="edad">Servicio</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
-        </div>
-        <div>
-            <label for="edad">Justificación</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
-        </div>
-    </div>
-    
-    <div class="form-grupo-cerrado">
-        <div>
-            <label for="edad">Médico solicitante</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled>
-        </div>
-    </div>
+    </form>
 </main>
 <?php
     include '../../includes/templates/footer.php';

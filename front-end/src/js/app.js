@@ -108,3 +108,27 @@ function openChat() {
 function closeChat() {
     chatContainer.style.display = 'none';
 }
+
+//FUNCION PARA INPUT DINAMICO DE BUSCAR --------------------------------
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let match = false;
+            cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(query)) {
+                    match = true;
+                }
+            });
+            if (match) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+});

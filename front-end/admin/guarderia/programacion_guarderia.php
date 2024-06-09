@@ -1,6 +1,19 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_guarderia.php';
+    date_default_timezone_set('America/Bogota');
+
+    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        $programacion = obtenerProgramacion();
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['ir'])) {
+        $id_registro= $_GET['ir'];
+        $hora = date("H:i:s");
+        $fecha = date("Y-m-d");
+        realizarCheckIn($id_registro, $hora, $fecha);
+        
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -12,11 +25,16 @@
     
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Programación guardería</h1>
     <article class="contenedor contenedor-table">
-        <input type="text" id="search" placeholder="Buscar">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Buscar">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <table>
             <thead>
                 <tr>
-                    <th><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <th class="contenido-centrado icono-checkbox"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0.5" y="0.5" width="19" height="19" rx="5.5" fill="#F7FAFF"/>
                         <rect x="0.5" y="0.5" width="19" height="19" rx="5.5" stroke="#231F57"/>
                         <path d="M5.91602 10H14.0827" stroke="#231F57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -30,15 +48,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Mascota</td>
-                    <td>Cliente</td>
-                    <td>Fecha</td>
-                    <td><button class="edit">CHECK-IN</button></td>
-                    <td><button class="delete">CHECK-OUT</button></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($programacion) && is_array($programacion)):?>
+                    <?php foreach ($programacion as $estancia): ?>
+                        <tr>
+                            <td class="container-checkbox">
+                                <input type="checkbox" id="check">
+                            </td>
+                            <td><?php echo htmlspecialchars($estancia['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($estancia['nombre_cliente']); ?></td>
+                            <td><?php echo htmlspecialchars($estancia['fecha_reserva']); ?></td>
+                            <td><a href="programacion_guarderia.php?ir=<?php echo $estancia['id_registro']?>"><button class="edit">CHECK-IN</button></a></td>
+                            <td><a href="recibo_guarderia.php?irc=<?php echo $estancia['id_registro']?>"><button class="delete">CHECK-OUT</button></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>

@@ -1,5 +1,5 @@
 <?php   
-
+require 'funciones_alertas.php';
 function obtenerColaboradores() {
 
     $url = "http://127.0.0.1:8000/admin/colaboradores";
@@ -41,15 +41,11 @@ function registrarColaborador($nombres, $apellidos, $tipo_documento, $id_colabor
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "colaboradores.php";
-            alert("Registrado con éxito");
-        </script>';
+        $_SESSION['registro'] = true;
+        echo '<script> window.location.href = "colaboradores.php";</script>';
     } else {
-        // Maneja el error
-        echo '<script>alert("Error en el registro");</script>';
+        alertaErrorGeneral('Error al registrar el colaborador');
     }
-    
 }
 
 function actualizarColaborador($id_colaborador, $nombres, $apellidos, $labor, $telefono) {
@@ -71,15 +67,12 @@ function actualizarColaborador($id_colaborador, $nombres, $apellidos, $labor, $t
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    if ($http_code == 200) { // Verificar el código de estado HTTP correcto
+    if ($http_code == 200) {
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "colaboradores.php";
-            alert("Actualizado con éxito");
-        </script>';
+        $_SESSION['actualizado'] = true;
+        echo '<script> window.location.href = "colaboradores.php";</script>';
     } else {
-        // Maneja el error
-        echo '<script>alert("Error en la actualización");</script>';
+        alertaErrorGeneral('Error al actualizar el colaborador');
     }
 }
 
@@ -95,15 +88,11 @@ function eliminarColaborador($id_colaborador){
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);    
 
-    if ($http_code == 200) { // Verificar el código de estado HTTP correcto
+    if ($http_code == 200) {
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "colaboradores.php";
-            alert("Eliminado con éxito");
-        </script>';
+        $_SESSION['eliminado'] = true;
     } else {
-        // Maneja el error
-        echo '<script>alert("Error en la eliminación");</script>';
+        alertaErrorGeneral('Error al eliminar el colaborador');
     }
     
 }

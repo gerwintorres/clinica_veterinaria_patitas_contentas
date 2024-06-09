@@ -1,6 +1,12 @@
 <?php
     $pagina_actual = '';
     include '../../includes/templates/header.php';
+    require '../../config/funciones_ordenes.php';
+
+    if (isset($_SESSION['id_cliente'])) {
+        $id_cliente = $_SESSION['id_cliente'];
+        $ordenes = obtenerOrdenes($id_cliente);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -12,7 +18,12 @@
     
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">ÓRDENES MÉDICAS</h1>
     <article class="contenedor contenedor-table">
-        <input type="text" id="search" placeholder="Buscar">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Buscar">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.5 17.5L13.875 13.875M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -24,14 +35,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Código orden</td>
-                    <td>Nombre de la mascota</td>
-                    <td>Servicio</td>
-                    <td>Fecha orden</td>
-                    <td><a href="visualizar_orden.php"><button class="verOrden">Ver orden médica</button></a></td>
-                </tr>
-                <!-- Repite las filas según sea necesario -->
+                <?php if (isset($ordenes) && is_array($ordenes)):?>
+                    <?php foreach ($ordenes as $orden): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($orden['id_orden']); ?></td>
+                            <td><?php echo htmlspecialchars($orden['nombre_mascota']); ?></td>
+                            <td><?php echo htmlspecialchars($orden['procedimiento']); ?></td>
+                            <td><?php echo htmlspecialchars($orden['fecha_cita']); ?></td>
+                            <td><a href="visualizar_orden.php?id_orden=<?php echo $orden['id_orden']?>"><button class="edit">Ver orden médica</button></a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </article>
