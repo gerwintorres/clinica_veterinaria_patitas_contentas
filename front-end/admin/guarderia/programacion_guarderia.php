@@ -58,7 +58,7 @@
                             <td><?php echo htmlspecialchars($estancia['nombre_cliente']); ?></td>
                             <td><?php echo htmlspecialchars($estancia['fecha_reserva']); ?></td>
                             <td><a href="programacion_guarderia.php?ir=<?php echo $estancia['id_registro']?>"><button class="edit">CHECK-IN</button></a></td>
-                            <td><a href="programacion_guarderia.php?irc=<?php echo $estancia['id_cobro']?>"><button class="delete">CHECK-OUT</button></td>
+                            <td><a href="recibo_guarderia.php?irc=<?php echo $estancia['id_registro']?>"><button class="delete">CHECK-OUT</button></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

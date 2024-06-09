@@ -173,10 +173,11 @@ function realizarCheckOut($id_registro, $hora, $fecha){
 
     if ($http_code == 200) {
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "recibo_guarderia.php";
-            alert("CheckOut con éxito");
-        </script>';
+        return $result['id_cobro'];
+        // echo '<script>
+        //     window.location.href = "recibo_guarderia.php";
+        //     alert("CheckOut con éxito");
+        // </script>';
         
     } else {
         echo '<script>alert("Error en el registro");</script>';
