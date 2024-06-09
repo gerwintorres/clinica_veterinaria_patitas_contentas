@@ -14,12 +14,6 @@
         realizarCheckIn($id_registro, $hora, $fecha);
         
     }
-    if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['irc'])){
-        $id_cobro = $_GET['irc'];
-        $hora = date("H:i:s");
-        $fecha = date("Y-m-d");
-        realizarCheckOut($id_cobro, $hora, $fecha);
-    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">

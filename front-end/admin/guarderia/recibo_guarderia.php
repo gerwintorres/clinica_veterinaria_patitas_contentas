@@ -6,6 +6,13 @@
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
         $factura = obtenerFactura($_SESSION['id_cobro']);
     }
+
+    if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['irc'])){
+        $id_registro = $_GET['irc'];
+        $hora = date("H:i:s");
+        $fecha = date("Y-m-d");
+        realizarCheckOut($id_registro, $hora, $fecha);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
