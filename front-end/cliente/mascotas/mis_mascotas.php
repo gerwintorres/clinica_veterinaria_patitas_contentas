@@ -25,7 +25,7 @@
         alertaActualizado('Mascota actualizada exitosamente');
         unset($_SESSION['actualizado']);
     }elseif(isset($_SESSION['eliminado'])){
-        alertaEliminado('Mascota eliminada exitosamente', 'procedimientos.php');
+        alertaEliminado('Mascota eliminada exitosamente', 'mis_mascotas.php');
         unset($_SESSION['eliminado']);
     }
 ?>

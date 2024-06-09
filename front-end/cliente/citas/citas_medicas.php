@@ -14,6 +14,17 @@
     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_cita'])) {
         eliminarCita($_GET['id_cita']);
     }
+
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Cita para procedimiento registrada exitosamente');
+        unset($_SESSION['registro']);
+    }elseif(isset($_SESSION['actualizado'])){
+        alertaActualizado('Cita para procedimiento actualizada exitosamente');
+        unset($_SESSION['actualizado']);
+    }elseif(isset($_SESSION['eliminado'])){
+        alertaEliminado('Cita para procedimiento eliminada exitosamente', 'citas_medicas.php');
+        unset($_SESSION['eliminado']);
+    }
 ?>
     <article class="contenedor contenedor-table">
         <div class="search-container">
