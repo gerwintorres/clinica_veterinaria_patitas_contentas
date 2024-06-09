@@ -2,16 +2,18 @@
     $pagina_actual = '';
     include '../../includes/templates/header.php';
     require '../../config/funciones_guarderia.php';
+    date_default_timezone_set('America/Bogota');
 
-    if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
-        $factura = obtenerFactura($_SESSION['id_cobro']);
-    }
+    // if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
+        
+    // }
 
     if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['irc'])){
         $id_registro = $_GET['irc'];
         $hora = date("H:i:s");
         $fecha = date("Y-m-d");
-        realizarCheckOut($id_registro, $hora, $fecha);
+        $id_cobro = realizarCheckOut($id_registro, $hora, $fecha);
+        $factura = obtenerFactura($id_cobro);
     }
 ?>
 
