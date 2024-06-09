@@ -8,6 +8,11 @@
         $nombres = $_SESSION['nombres'];
     }
     include '../includes/templates/header.php';
+    require '../config/funciones_alertas.php';
+    if(isset($_SESSION['exito'])){
+        alertaExitoso('INICIO DE SESIÓN EXITOSO');
+        unset($_SESSION['exito']);
+    }
 ?>
 
 <h1 class="contenedor titulo-h1-pagina alineacion-izquierda">Bienvenido(a), Dr(a) <?php echo $nombres?></h1>
