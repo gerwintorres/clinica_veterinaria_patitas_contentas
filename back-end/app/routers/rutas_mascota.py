@@ -92,7 +92,6 @@ def registrar_mascota_guarderia(mascota: GuarderiaSchema):
     nueva_mascota_guarderia = mascota.dict()
     result = conn.execute(guarderia.insert().values(nueva_mascota_guarderia))
     conn.commit()
-    print(result)
 
     return JSONResponse(content=nueva_mascota_guarderia, status_code=HTTP_201_CREATED)
 

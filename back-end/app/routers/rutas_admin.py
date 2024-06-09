@@ -11,13 +11,16 @@ from models.models import (administrador, colaborador, proveedor, productos, reg
 from schemas.schemas import (
     ServicioSchema, ClienteSchema, HistoriaSchema, ProductoUpdateSchema, RegistroProductoSchema, 
     CredencialesSchema, ColaboradorSchema, ColaboradorUpdateSchema, ProveedorSchema, ProveedorUpdateSchema, ProductoSchema, 
-    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema, CheckinSchema, CheckoutSchema, CitaUpdateSchema)
+    RestablecerPasswordSchema, VerHistoriaSchema, UpdateDescripcionSchema, CheckinSchema, CheckoutSchema, CitaUpdateSchema,
+    AdministradorSchema)
 
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from cryptography.fernet import Fernet
 from typing import List
 from datetime import datetime, timedelta, date
+import bcrypt
+
 
 key = Fernet.generate_key()
 Fernet(key)
@@ -25,6 +28,21 @@ f = Fernet(key)
 
 router_admin = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+@router_admin.post("/register/admin")
+def registrar_admin(admin: AdministradorSchema):
+    hashed_password = bcrypt.hashpw(admin.clave.encode('utf-8'), bcrypt.gensalt())
+    admin_dict = admin.dict()
+    admin_dict['clave'] = hashed_password.decode('utf-8')
+    
+    try:
+        conn.execute(administrador.insert().values(admin_dict))
+        conn.commit()
+        return Response(status_code=HTTP_201_CREATED)
+    except SQLAlchemyError as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router_admin.post('/login/admin')
 def login_admin(credenciales: CredencialesSchema):
@@ -37,9 +55,8 @@ def login_admin(credenciales: CredencialesSchema):
     id_admin, nombres, clave = result
     
     #clave_desencriptada = f.decrypt(clave_encriptada.encode()).decode()
-    if credenciales.clave != clave:
+    if not bcrypt.checkpw(credenciales.clave.encode('utf-8'), clave.encode('utf-8')):
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
-
     return JSONResponse(content={"id_administrador": id_admin, "nombres": nombres}, status_code=200)
 
 
@@ -210,9 +227,6 @@ def eliminar_proveedor(id_proveedor: int):
 def obtener_productos():
     query = text("SELECT * FROM productos")
     result = conn.execute(query).fetchall()
-    
-    print(result)
-
     
     if not result:
         raise HTTPException(status_code=404, detail="Error al obtener productos")

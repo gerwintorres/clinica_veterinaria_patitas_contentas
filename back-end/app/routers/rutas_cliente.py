@@ -2,6 +2,7 @@ from fastapi import FastAPI, APIRouter, Depends, HTTPException, Response
 from starlette.status import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED
 from sqlalchemy import text, update, select, insert
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 from database.db import conn
 from models.models import clientes, mascotas, medico, colaborador, citas, servicio
 from schemas.schemas import ClienteSchema, CredencialesSchema, ContactoSchema, RestablecerPasswordSchema, ClienteUpdateSchema, CitaSchema
@@ -17,6 +18,7 @@ import smtplib
 import os
 from dotenv import load_dotenv
 from sqlalchemy.sql.expression import func
+import bcrypt
 
 #Carga de variables de entorno
 load_dotenv()
@@ -47,17 +49,22 @@ def get_random_colaborador(labor: str):
 
 @router_cliente.post("/register/client")
 def registrar_cliente(cliente: ClienteSchema):
-    #with engine.connect() as conn:
-    new_client = cliente.dict()
-    #new_client["clave"] = f.encrypt(cliente.clave.encode("utf-8"))
-    result = conn.execute(clientes.insert().values(new_client))
-    conn.commit()
-    return Response(status_code=HTTP_201_CREATED)
+    hashed_password = bcrypt.hashpw(cliente.clave.encode('utf-8'), bcrypt.gensalt())
+    cliente_dict = cliente.dict()
+    cliente_dict['clave'] = hashed_password.decode('utf-8')
+    
+    try:
+        conn.execute(clientes.insert().values(cliente_dict))
+        conn.commit()
+        return Response(status_code=HTTP_201_CREATED)
+    except SQLAlchemyError as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router_cliente.post('/login/client')
 def login_cliente(credenciales: CredencialesSchema):
-    query = text(f"SELECT id_cliente, nombres, clave FROM cliente WHERE email = :email")
+    query = text("SELECT id_cliente, nombres, clave FROM cliente WHERE email = :email")
     result = conn.execute(query, {"email": credenciales.email}).fetchone()
     
     if not result:
@@ -65,7 +72,7 @@ def login_cliente(credenciales: CredencialesSchema):
     
     id_cliente, nombres, clave = result
 
-    if credenciales.clave != clave:
+    if not bcrypt.checkpw(credenciales.clave.encode('utf-8'), clave.encode('utf-8')):
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
 
     return JSONResponse(content={"id_cliente": id_cliente, "nombres": nombres}, status_code=200)
