@@ -7,6 +7,18 @@
         $id_cliente = $_SESSION['id_cliente'];
 
         $orden = obtenerOrden($_GET['id_orden']);
+
+        $hora = $orden['hora_cita'];
+
+        $timeParts = explode(':', $hora);
+        $hours = sprintf('%02d', $timeParts[0]); // Añade el 0 a la izquierda si es necesario
+        $minutes = sprintf('%02d', $timeParts[1]);
+        $seconds = sprintf('%02d', $timeParts[2]);
+
+        $hora_formateada = "$hours:$minutes:$seconds";
+        $timestamp = strtotime($hora_formateada);
+        $timestamp += 1800;
+        $hora_mas_media_hora = date('H:i:s', $timestamp);
     }
 ?>
 
@@ -35,7 +47,7 @@
             </div>
             <div>
                 <label for="hora">Hora</label>
-                <input type="time" class="input-cerrado" id="hora" value="<?php echo $orden['hora_cita']?>" name="hora" disabled>
+                <input type="time" class="input-cerrado" id="hora" value="<?php echo $hora_mas_media_hora?>" name="hora" disabled>
             </div>
             <div>
                 <label for="nombreMascota">Nombre de la mascota</label>
