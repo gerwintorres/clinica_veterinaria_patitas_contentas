@@ -217,6 +217,7 @@ class CheckinSchema(BaseModel):
 
 class CheckoutSchema(BaseModel):
     id_cobro: int
+    id_registro: int
     total: Optional[float] = None
     fecha_salida: str
     hora_salida: str
