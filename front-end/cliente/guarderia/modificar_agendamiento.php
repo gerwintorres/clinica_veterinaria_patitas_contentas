@@ -68,7 +68,7 @@
             </div>
             <div class="form-botones">
                 <input class="boton-formulario-azul margen-superior" type="submit" value="MODIFICAR ESTANCIA">
-                <a class="boton-formulario-blanco margen-superior">CANCELAR</a>
+                <a href="guarderia.php" class="boton-formulario-blanco margen-superior">CANCELAR</a>
             </div>
         </form>
     </div>

@@ -97,7 +97,7 @@
             </div>
             <div class="form-botones">
                 <input class="boton-formulario-azul margen-superior" type="submit" value="MODIFICAR INFORMACIÓN">
-                <a class="boton-formulario-blanco margen-superior">CANCELAR</a>
+                <a href="configuracion.php" class="boton-formulario-blanco margen-superior">CANCELAR</a>
             </div>
         </form>
     </div>
