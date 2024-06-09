@@ -102,4 +102,103 @@ function eliminarEstancia($id_registro){
         echo '<script>alert("Error en la eliminación");</script>';
     }
 }
+
+function obtenerProgramacion(){
+
+    $url ="http://127.0.0.1:8000/admin/programacion_guarderia";
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code == 200) {
+        $programacion = json_decode($response, true);
+        return $programacion;
+    }
+}
+
+function realizarCheckIn($id_registro, $hora, $fecha){
+    $data = array(
+        'id_registro' => $id_registro,
+        'fecha_entrada' => $fecha,
+        'hora_entrada' => $hora
+    );
+
+    $ch = curl_init('http://127.0.0.1:8000/admin/checkin_guarderia');
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code == 201) {
+        $result = json_decode($response, true);
+        echo '<script>
+            alert("CheckIn con éxito");
+        </script>';
+    } else {
+        echo '<script>alert("Error en el registro");</script>';
+    }
+}
+
+function realizarCheckOut($id_registro, $hora, $fecha){
+
+    $data = array(
+        'id_cobro' => 0,
+        'id_registro' => $id_registro,
+        'total' => 0, // Se debe calcular el total
+        'fecha_salida' => $fecha,
+        'hora_salida' => $hora
+    );
+
+    $ch = curl_init('http://127.0.0.1:8000/admin/checkout_guarderia');
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code == 200) {
+        $result = json_decode($response, true);
+        echo '<script>
+            window.location.href = "recibo_guarderia.php";
+            alert("CheckOut con éxito");
+        </script>';
+        
+    } else {
+        echo '<script>alert("Error en el registro");</script>';
+    }
+}
+
+function obtenerFactura($id_cobro){
+    
+    $url ="http://127.0.0.1:8000/admin/facturacion/$id_cobro";
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code == 200) {
+        $factura = json_decode($response, true);
+        return $factura;
+    }
+}
 ?>

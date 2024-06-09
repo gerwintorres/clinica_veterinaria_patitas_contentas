@@ -16,7 +16,7 @@
     </svg>Ir atrás</a>
 </div>
 
-<h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Orden médica: [Código orden]</h1>
+<h1 class="contenedor titulo-h1-pagina alineacion-izquierda margen-inferior">Orden médica, Código <?php echo $_GET['id_orden'] ?></h1>
 
 <div class="imagen-formularios-cerrados contenedor">
         <img src="../../build/img/logo.webp" alt="Logotipo Patitas Contentas">
