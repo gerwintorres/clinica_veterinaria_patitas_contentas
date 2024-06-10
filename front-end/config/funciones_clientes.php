@@ -64,6 +64,7 @@ function actualizarCliente($id_cliente, $nombre, $apellidos, $telefono, $correo,
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
         $_SESSION['actualizado'] = true;
+        echo $_SESSION['actualizado'];
         echo '<script> window.location.href = "configuracion.php";</script>';
     } else {
         // Maneja el error
@@ -90,7 +91,7 @@ function eliminarCliente($id_cliente){
             }else{
                 session_unset();
                 session_destroy();
-                $_SESSION['eliminado'] = true;
+                echo '<script> window.location.href = "../../index.php?e=1";</script>';
             }
         } else {
             // Maneja el error

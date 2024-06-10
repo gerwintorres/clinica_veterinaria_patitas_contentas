@@ -1,6 +1,11 @@
 <?php	
     $pagina_actual = 'inicio';
-    include './includes/templates/header.php';  
+    include './includes/templates/header.php';
+    require 'config/funciones_alertas.php'; 
+    
+    if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['e'])){
+        alertaRegistro('Usuario eliminado exitosamente');
+    }    
 ?>
 
     <div class="contenedor seccion contenido-eslogan">

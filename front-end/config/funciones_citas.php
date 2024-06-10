@@ -1,6 +1,6 @@
 <?php 
 require_once 'funciones_alertas.php';
-
+    
 function agendarCita($id_mascota, $tipoProcedimiento, $fecha , $hora){
     $data = array(
         'hora' => $hora,
