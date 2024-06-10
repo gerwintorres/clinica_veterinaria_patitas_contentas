@@ -55,7 +55,7 @@
         </div>
         <div>
             <label for="edad">Edad</label>
-            <input type="number" class="input-cerrado" id="edad" name="edad" disabled value="<?php echo $historia['edad']?>">
+            <input type="text" class="input-cerrado" id="edad" name="edad" disabled value="<?php echo $historia['edad']?>">
         </div>
     </div>
     <div>
