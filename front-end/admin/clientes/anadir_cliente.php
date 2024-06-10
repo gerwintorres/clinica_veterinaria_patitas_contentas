@@ -14,6 +14,11 @@
         $direccion = $_POST['direccion'];
         registrarCliente($nombre, $apellidos, $tipoDocumento, $numeroDocumento, $telefono, $correo, $password, $direccion);
     }
+
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Usuario registrado exitosamente');
+        unset($_SESSION['registro']);
+    }
 ?>
 <div class="contenedor contenedor-boton-atras">
     <a href="clientes.php" class="boton-atras"> <svg width="11" height="20" viewBox="0 0 11 26" fill="none" xmlns="http://www.w3.org/2000/svg">

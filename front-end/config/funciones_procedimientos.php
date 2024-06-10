@@ -1,4 +1,5 @@
 <?php
+require 'funciones_alertas.php';
 
 function obtenerProcedimientos(){
     $url = "http://127.0.0.1:8000/admin/precios";
@@ -37,13 +38,10 @@ function registrarProcedimiento($nombre, $precio){
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "procedimientos.php";
-            alert("Registrado con éxito");
-        </script>';
+        $_SESSION['registro'] = true;
+        echo '<script> window.location.href = "procedimientos.php";</script>';
     } else {
-        // Maneja el error
-        echo '<script>alert("Error en el registro");</script>';
+        alertaErrorGeneral('Error al registrar el procedimiento');
     }
 }
 
@@ -66,13 +64,10 @@ function actualizarProcedimiento($id_servicio, $nombre, $precio){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "procedimientos.php";
-            alert("Actualizado con éxito");
-        </script>';
+        $_SESSION['actualizado'] = true;
+        echo '<script> window.location.href = "procedimientos.php";</script>';
     } else {
-        // Maneja el error
-        echo '<script>alert("Error en la actualización");</script>';
+        alertaErrorGeneral('Error al actualizar el procedimiento');
     }
 }
 
@@ -89,13 +84,9 @@ function eliminarProcedimiento($id_servicio){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "procedimientos.php";
-            alert("Eliminado con éxito");
-        </script>';
+        $_SESSION['eliminado'] = true;
     } else {
-        // Maneja el error
-        echo '<script>alert("Error en la eliminación");</script>';
+        alertaErrorGeneral('Error al eliminar el procedimiento');
     }
 }
 ?>

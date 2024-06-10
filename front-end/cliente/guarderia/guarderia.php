@@ -16,6 +16,16 @@
         eliminarEstancia($_GET['id_registro']);
     }
 
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Estancia en guardería registrada exitosamente');
+        unset($_SESSION['registro']);
+    }elseif(isset($_SESSION['actualizado'])){
+        alertaActualizado('Estancia en guardería actualizada exitosamente');
+        unset($_SESSION['actualizado']);
+    }elseif(isset($_SESSION['eliminado'])){
+        alertaEliminado('Estancia en guardería eliminada exitosamente', 'guarderia.php');
+        unset($_SESSION['eliminado']);
+    }
 ?>
     <article class="contenedor contenedor-table">
         <div class="search-container">

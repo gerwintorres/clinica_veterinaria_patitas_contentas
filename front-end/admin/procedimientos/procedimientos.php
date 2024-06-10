@@ -16,6 +16,17 @@
         $id_servicio = $_GET['id_servicio'];
         eliminarProcedimiento($id_servicio);
     }
+
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Procedimiento registrado exitosamente');
+        unset($_SESSION['registro']);
+    }elseif(isset($_SESSION['actualizado'])){
+        alertaActualizado('Procedimiento actualizado exitosamente');
+        unset($_SESSION['actualizado']);
+    }elseif(isset($_SESSION['eliminado'])){
+        alertaEliminado('Procedimiento eliminado exitosamente', 'procedimientos.php');
+        unset($_SESSION['eliminado']);
+    }
 ?>
 
 <article class="contenedor contenedor-table">
