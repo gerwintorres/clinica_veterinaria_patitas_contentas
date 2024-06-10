@@ -645,7 +645,7 @@ def eliminar_cita(id_cita: int):
     return JSONResponse(content={"message": "Cita eliminada correctamente"}, status_code=200)
 
 
-# Endpoint para restablecer la contraseña
+
 @router_admin.post('/admin/password-reset')
 def password_reset(request: RestablecerPasswordSchema):
     token = request.token
@@ -676,7 +676,7 @@ def password_reset(request: RestablecerPasswordSchema):
     return JSONResponse(content={"message": "Contraseña restablecida exitosamente"}, status_code=200)
 
 
-#endpoint para obtener la lista de la programación general de la guardería 
+
 @router_admin.get("/admin/programacion_guarderia", response_model=List[dict])
 def obtener_programacion_guarderia():
     query = text("""
@@ -715,7 +715,7 @@ def obtener_programacion_guarderia():
     return JSONResponse(content = programacion_guarderia, status_code=200)
 
 
-#endpoint para el checkin de la mascota
+
 @router_admin.post("/admin/checkin_guarderia") 
 def checkin_guarderia(checkin: CheckinSchema):
     nuevo_checkin = checkin.dict()
@@ -726,7 +726,7 @@ def checkin_guarderia(checkin: CheckinSchema):
     return JSONResponse(content=nuevo_checkin, status_code=201)
 
 
-#endpoint para el checkout de la mascota
+
 @router_admin.post("/admin/checkout_guarderia")
 def checkout_guarderia(checkout: CheckoutSchema):
     # Obtener todos los datos necesarios en una sola consulta
@@ -788,7 +788,6 @@ def checkout_guarderia(checkout: CheckoutSchema):
     return JSONResponse(content=registro, status_code=200)
 
 
-#endpoint para obtener los datos del recibo de pago
 @router_admin.get("/admin/facturacion/{id_cobro}")
 def obtener_datos_facturacion(id_cobro: int):
     query = text("""
