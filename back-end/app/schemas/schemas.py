@@ -8,7 +8,6 @@ class CargoSchema(BaseModel):
     
 
 class ServicioSchema(BaseModel):
-    #id_servicio: int
     nombre: str
     precio: int
 
@@ -25,8 +24,6 @@ class ClienteSchema(BaseModel):
 
 
 class ClienteUpdateSchema(BaseModel):
-    # nombres: str
-    # apellidos: str
     telefono: str
     email: str
     clave: str
@@ -34,7 +31,6 @@ class ClienteUpdateSchema(BaseModel):
 
 
 class MascotaSchema(BaseModel):
-    #id_mascota: int
     nombre: str
     tipo_mascota: str
     raza: str
@@ -91,17 +87,7 @@ class ColaboradorUpdateSchema(BaseModel):
     apellidos: str
     labor: str
     telefono: str
-
-# class CitaSchema(BaseModel):
-#     id_cita: int
-#     hora: str
-#     fecha: str
-#     procedimiento: str
-#     id_medico: int
-#     id_colaborador: int
-#     id_servicio: int
-#     id_mascota: int
-
+    
 class CitaUpdateSchema(BaseModel):
     hora: str
     fecha: str
@@ -115,14 +101,12 @@ class ContactoSchema(BaseModel):
 
 
 class OrdenMedicaSchema(BaseModel):
-    #id_orden: int
     descripcion: str
     id_cita: int
     id_servicio: int
 
 
 class GuarderiaSchema(BaseModel):
-    #id_registro: int
     hora: str
     fecha: str
     comentarios: Optional[str] = None
@@ -145,11 +129,9 @@ class CitaSchema(BaseModel):
     id_mascota: int
 
 
-# Esquema para la solicitud de recuperación de contraseña
 class SolicitarTokenSchema(BaseModel):
     email: EmailStr
 
-# Esquema para restablecer la contraseña
 class RestablecerPasswordSchema(BaseModel):
     token: str
     new_password: str
@@ -175,7 +157,6 @@ class ProductoUpdateSchema(BaseModel):
 
 
 class ProveedorSchema(BaseModel):
-    #id_proveedor: int
     nombre: str
     ubicacion: str
     email: str
@@ -204,19 +185,15 @@ class AdministradorSchema(BaseModel):
     email: str
     clave: str
 
-#esquema para recibir información de credenciales
 class CredencialesSchema(BaseModel):
     email: str
     clave: str
 
 
 class CheckinSchema(BaseModel):
-    #id_cobro: int
-    #total: Optional[float] = None
     id_registro: int
     fecha_entrada: str
     hora_entrada: str
-    #hora_salida: Optional[str] = None
 
 class CheckoutSchema(BaseModel):
     id_cobro: int

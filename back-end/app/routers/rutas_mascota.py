@@ -20,7 +20,6 @@ router_mascota = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-#registro de mascota
 @router_mascota.post("/register/mascota")
 def registrar_mascota(mascota: MascotaSchema):
     nueva_mascota = mascota.dict()
@@ -42,7 +41,7 @@ def registrar_mascota(mascota: MascotaSchema):
     
     return JSONResponse(content=nueva_mascota, status_code=HTTP_201_CREATED)
 
-#actualización de los datos de una mascota
+
 @router_mascota.put("/update/mascota/{id_mascota}")
 def actualizar_mascota(id_mascota: int, mascota: MascotaUpdateSchema):
     update_data = {key: value for key, value in mascota.dict().items() if value is not None}
@@ -63,7 +62,7 @@ def actualizar_mascota(id_mascota: int, mascota: MascotaUpdateSchema):
 
     return JSONResponse(content={"message": "Mascota actualizada correctamente"}, status_code=200)
 
-#retorna lista de mascotas pertenecientes a un cliente
+
 @router_mascota.get("/mascota/lista/{id_cliente}", response_model=List[MascotaSchema])
 def obtener_mascota(id_cliente: int):
     query = text("SELECT * FROM mascotas WHERE id_cliente = :id_cliente")
@@ -86,7 +85,6 @@ def obtener_mascota(id_cliente: int):
 
     return JSONResponse(status_code=200, content=mascotas)
 
-#registro de mascota en guardería
 @router_mascota.post("/mascota/guarderia")
 def registrar_mascota_guarderia(mascota: GuarderiaSchema):
     nueva_mascota_guarderia = mascota.dict()
@@ -95,7 +93,6 @@ def registrar_mascota_guarderia(mascota: GuarderiaSchema):
 
     return JSONResponse(content=nueva_mascota_guarderia, status_code=HTTP_201_CREATED)
 
-#Eliminar registro de guardería
 @router_mascota.delete("/delete/guarderia/{id_registro}")
 def eliminar_mascota_guarderia(id_registro: int):
     query = guarderia.delete().where(guarderia.c.id_registro == id_registro)
@@ -107,7 +104,6 @@ def eliminar_mascota_guarderia(id_registro: int):
 
     return JSONResponse(content={"message": "Registro de guarderia eliminado correctamente"}, status_code=200)
 
-#eliminación de la mascota de una cliente
 @router_mascota.delete("/delete/mascota/{id_mascota}")
 def eliminar_mascota(id_mascota: int):
     query = mascotas.delete().where(mascotas.c.id_mascota == id_mascota)
@@ -119,7 +115,6 @@ def eliminar_mascota(id_mascota: int):
 
     return JSONResponse(content={"message": "Mascota eliminada correctamente"}, status_code=200)
 
-#listar estancias de las mascotas de un cliente
 @router_mascota.get("/mascota/guarderia/lista/{id_cliente}", response_model=List[dict])
 def listar_estadias_cliente(id_cliente: int):
     query = text("""
