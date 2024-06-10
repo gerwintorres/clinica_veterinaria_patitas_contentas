@@ -92,7 +92,7 @@ orden_medica = Table(
     meta_data,
     Column("id_orden", Integer, primary_key=True),
     Column("descripcion", Text, nullable=False),
-    Column("id_cita", Integer, ForeignKey("citas.id_cita"), nullable=False),
+    Column("id_cita", Integer, ForeignKey("citas.id_cita", ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
     Column("id_servicio", Integer, ForeignKey("servicio.id_servicio",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
