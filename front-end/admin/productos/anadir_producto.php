@@ -17,6 +17,9 @@
         $valorVenta = $_POST['valorVenta'];
         registrarProductos($nombre, $fechaVencimiento, $unidades, $proveedor, $valorCompra, $valorVenta, $lote);
     }
+
+    // Obtener la fecha actual
+    $today = date("Y-m-d");
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -39,7 +42,7 @@
                 </div>
                 <div>
                     <label for="fechaVencimiento">Fecha de vencimiento</label>
-                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" required class="inputs">
+                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" required class="inputs" min=<?php echo $today;?>>
                 </div>
                 <div>
                     <label for="lote">Lote</label>

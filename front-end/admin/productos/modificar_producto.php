@@ -34,6 +34,9 @@
         $valorVenta = $_POST['valorVenta'];
         actualizarProductos($id_producto, $nombre, $fecha_vencimiento, $unidades, $proveedor, $valorCompra, $valorVenta, $lote);
     }
+
+    // Obtener la fecha actual
+    $today = date("Y-m-d");
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -56,7 +59,7 @@
                 </div>
                 <div>
                     <label for="fechaVencimiento">Fecha de vencimiento</label>
-                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" value="<?php echo $fecha_vencimiento?>" required class="inputs">
+                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" value="<?php echo $fecha_vencimiento?>" required class="inputs" min=<?php echo $today;?>>
                 </div>
                 <div>
                     <label for="lote">Lote</label>
