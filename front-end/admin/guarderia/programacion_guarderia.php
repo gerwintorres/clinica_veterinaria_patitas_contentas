@@ -4,6 +4,10 @@
     require '../../config/funciones_guarderia.php';
     date_default_timezone_set('America/Bogota');
 
+    if(isset($_SESSION['checkin'])){
+        alertaRegistro('Check-in registrado exitosamente');
+        unset($_SESSION['checkin']);
+    }
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
         $programacion = obtenerProgramacion();
     }
@@ -12,12 +16,6 @@
         $hora = date("H:i:s");
         $fecha = date("Y-m-d");
         realizarCheckIn($id_registro, $hora, $fecha);
-        
-    }
-
-    if(isset($_SESSION['checkin'])){
-        alertaRegistro('Check-in registrado exitosamente');
-        unset($_SESSION['registro']);
     }
 ?>
 

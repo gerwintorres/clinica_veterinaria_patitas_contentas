@@ -77,7 +77,7 @@ function alertaActualizado($texto){ ?>
 <?php 
 }
 
-function alertaEliminado($texto){ ?>
+function alertaEliminado($texto, $url){ ?>
     <script>
     $(document).ready(function() {
         Swal.fire({
