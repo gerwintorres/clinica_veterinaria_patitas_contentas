@@ -38,7 +38,7 @@ class MascotaSchema(BaseModel):
     nombre: str
     tipo_mascota: str
     raza: str
-    edad: int
+    edad: str
     peso: float
     id_cliente: int
 
@@ -46,7 +46,7 @@ class MascotaUpdateSchema(BaseModel):
     nombre: str = None
     tipo_mascota: str = None
     raza: str = None
-    edad: int = None
+    edad: str = None
     peso: float
 
 class HistoriaSchema(BaseModel):
@@ -65,7 +65,7 @@ class VerHistoriaSchema(BaseModel):
     telefono: str
     raza: str
     peso: float 
-    edad: int
+    edad: str
     descripcion: str
     
 
