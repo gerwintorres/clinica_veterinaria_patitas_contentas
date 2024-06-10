@@ -8,6 +8,7 @@
     require '../../config/funciones_clientes.php';
     include '../../includes/templates/pagina_card.php';
 
+    $_SESSION['administrador'] = FALSE;
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
         $clientes = obtenerClientes();
     }
