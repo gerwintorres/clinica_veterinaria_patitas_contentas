@@ -50,7 +50,7 @@
             <div class="formulario-datos">
                 <div>
                     <label for="edad">Edad</label>
-                    <input type="number" id="edad" name="edad" required class="inputs">
+                    <input type="text" id="edad" name="edad" required class="inputs">
                 </div>
                 <div>
                     <label for="peso">Peso (kg)</label>
