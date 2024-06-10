@@ -29,6 +29,9 @@
         $hora = $_POST['hora'];
         modificarCita($id_cita, $hora, $fecha);
     }
+
+    // Obtener la fecha actual
+    $today = date("Y-m-d");
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -59,7 +62,7 @@
                 </div>
                 <div>
                     <label for="fecha">Fecha</label>
-                    <input type="date" id="fecha" name="fecha" value="<?php echo $fecha?>" required class="inputs">
+                    <input type="date" id="fecha" name="fecha" value="<?php echo $fecha?>" required class="inputs" min="<?php echo $today;?>">
                 </div>
             </div>
             <div class="formulario-datos">

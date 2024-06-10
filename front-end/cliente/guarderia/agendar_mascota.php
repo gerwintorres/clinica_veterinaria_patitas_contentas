@@ -15,6 +15,9 @@
         $id_mascota = $_POST['mascota'];
         agendarEstancia($id_mascota, $fecha, $hora, $comentarios);
     }
+
+    // Obtener la fecha actual
+    $today = date("Y-m-d");
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -44,7 +47,7 @@
                 </div>
                 <div>
                     <label for="fecha">Fecha</label>
-                    <input type="date" id="fecha" name="fecha" required class="inputs">
+                    <input type="date" id="fecha" name="fecha" required class="inputs" min="<?php echo $today;?>">
                 </div>
                 <div>
                     <label for="hora">Hora</label>
