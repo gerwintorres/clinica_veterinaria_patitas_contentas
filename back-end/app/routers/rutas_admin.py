@@ -684,13 +684,16 @@ def obtener_programacion_guarderia():
             m.nombre AS nombre_mascota,
             c.nombres AS nombre_cliente,
             g.fecha,
-            g.id_registro
+            g.id_registro,
+            r.hora_salida
         FROM 
             guarderia g
         JOIN 
             mascotas m ON g.id_mascota = m.id_mascota
         JOIN 
             cliente c ON m.id_cliente = c.id_cliente
+        LEFT JOIN
+            registro_guarderia r ON g.id_registro = r.id_registro
     """)
     
     result = conn.execute(query).fetchall()
@@ -700,13 +703,14 @@ def obtener_programacion_guarderia():
 
     programacion_guarderia = []
     for row in result:
-        programacion = {
-            "nombre_mascota": row[0],
-            "nombre_cliente": row[1],
-            "fecha_reserva": row[2].isoformat() if isinstance(row[2], (date, datetime)) else row[2],
-            "id_registro": row[3]
-        }
-        programacion_guarderia.append(programacion)
+        if row[4] == None:
+            programacion = {
+                "nombre_mascota": row[0],
+                "nombre_cliente": row[1],
+                "fecha_reserva": row[2].isoformat() if isinstance(row[2], (date, datetime)) else row[2],
+                "id_registro": row[3]
+            }
+            programacion_guarderia.append(programacion)
 
     return JSONResponse(content = programacion_guarderia, status_code=200)
 
