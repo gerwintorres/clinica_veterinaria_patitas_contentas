@@ -1,6 +1,12 @@
 <?php
     $pagina_actual = '';
     include 'includes/templates/header.php';
+    require_once 'config/funciones_alertas.php';
+
+    if(isset($_SESSION['codigo'])){
+        alertaRegistro('Contraseña restablecida exitosamente');
+        unset($_SESSION['codigo']);
+    }
 ?>
 
 <h1 class="contenedor titulo-h1-pagina">Iniciar sesión</h1>

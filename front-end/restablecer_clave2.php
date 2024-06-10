@@ -3,18 +3,14 @@
     require 'config/funciones_restablecer_clave.php';
     include 'includes/templates/header.php';
 
+    if(isset($_SESSION['correo'])){
+        alertaRegistro('Código enviado exitosamente');
+        unset($_SESSION['correo']);
+    }
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $codigo = $_POST['codigo'];
         $clave = $_POST['clave'];
         enviarCodigo($codigo, $clave, $_SESSION['user']);
-    }
-
-    if(isset($_SESSION['correo'])){
-        alertaRegistro('Código enviado exitosamente');
-        unset($_SESSION['correo']);
-    }elseif(isset($_SESSION['codigo'])){
-        alertaRegistro('Contraseña restablecida exitosamente');
-        unset($_SESSION['codigo']);
     }
 ?>
 

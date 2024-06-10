@@ -3,6 +3,11 @@
     require 'config/funciones_contacto.php';
     include 'includes/templates/header.php';
 
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Mensaje enviado exitosamente');
+        unset($_SESSION['registro']);
+    }
+
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombres = $_POST['nombre'];
         $apellidos = $_POST['apellidos'];
@@ -12,11 +17,7 @@
 
         enviarDatos($nombres, $apellidos, $email, $telefono, $mensaje);
     }
-
-    if(isset($_SESSION['registro'])){
-        alertaRegistro('Mensaje enviado exitosamente');
-        unset($_SESSION['registro']);
-    }
+    
 ?>
 <h1 class="contenedor titulo-h1-pagina">Contáctanos</h1>
 <main class="formulario-contacto contenedor">
