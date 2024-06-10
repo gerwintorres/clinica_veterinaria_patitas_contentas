@@ -1,4 +1,5 @@
 <?php 
+require_once 'funciones_alertas.php';
 
 function enviarDatos($nombres, $apellidos, $email, $telefono, $mensaje){
     $data = array(
@@ -22,13 +23,11 @@ function enviarDatos($nombres, $apellidos, $email, $telefono, $mensaje){
 
     if ($http_code == 200) {
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "contactanos.php";
-            alert("Mensaje enviado con éxito");
-        </script>';
+        $_SESSION['registro'] = true;
+        echo '<script> window.location.href = "contactanos.php";</script>';
     } else {
         // Maneja el error
-        echo '<script>alert("Error al enviar el mensaje");</script>';
+        alertaErrorGeneral('Error al enviar el mensaje');
     }
 }
 ?>

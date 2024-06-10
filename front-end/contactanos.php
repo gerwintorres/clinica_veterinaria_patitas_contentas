@@ -12,6 +12,11 @@
 
         enviarDatos($nombres, $apellidos, $email, $telefono, $mensaje);
     }
+
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Mensaje enviado exitosamente');
+        unset($_SESSION['registro']);
+    }
 ?>
 <h1 class="contenedor titulo-h1-pagina">Contáctanos</h1>
 <main class="formulario-contacto contenedor">
