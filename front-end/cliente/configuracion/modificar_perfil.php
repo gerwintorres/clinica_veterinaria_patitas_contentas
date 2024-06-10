@@ -15,6 +15,11 @@
         $direccion = $_POST['direccion'];
         actualizarCliente($_SESSION['id_cliente'], $nombre, $apellidos, $telefono, $correo, $password, $direccion);
     }
+
+    if(isset($_SESSION['actualizado'])){
+        alertaActualizado('Usuario actualizado exitosamente');
+        unset($_SESSION['actualizado']);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
