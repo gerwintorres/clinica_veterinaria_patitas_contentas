@@ -22,7 +22,7 @@
         alertaActualizado('Cita para el procedimiento actualizada exitosamente');
         unset($_SESSION['actualizado']);
     }elseif(isset($_SESSION['eliminado'])){
-        alertaEliminado('Cita para el procedimiento eliminada exitosamente', 'mis_mascotas.php');
+        alertaEliminado('Cita para el procedimiento eliminada exitosamente', 'citas_medicas.php');
         unset($_SESSION['eliminado']);
     }
 ?>

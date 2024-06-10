@@ -14,6 +14,11 @@
         realizarCheckIn($id_registro, $hora, $fecha);
         
     }
+
+    if(isset($_SESSION['checkin'])){
+        alertaRegistro('Check-in registrado exitosamente');
+        unset($_SESSION['registro']);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">
