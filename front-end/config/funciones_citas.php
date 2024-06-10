@@ -1,6 +1,4 @@
 <?php 
-require 'funciones_alertas.php';
-
 function agendarCita($id_mascota, $tipoProcedimiento, $fecha , $hora){
     $data = array(
         'hora' => $hora,
@@ -25,10 +23,13 @@ function agendarCita($id_mascota, $tipoProcedimiento, $fecha , $hora){
 
     if ($http_code == 200) {
         $result = json_decode($response, true);
-        $_SESSION['registro'] = true;
-        echo '<script> window.location.href = "citas_medicas.php";</script>';
+        echo '<script>
+            window.location.href = "citas_medicas.php";
+            alert("Registrado con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al registrar la cita para el procedimiento');
+        // Maneja el error
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 
@@ -65,9 +66,13 @@ function eliminarCita($id_cita){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['eliminado'] = true;
+        echo '<script>
+            window.location.href = "citas_medicas.php";
+            alert("Eliminado con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al eliminar la cita para el procedimiento');
+        // Maneja el error
+        echo '<script>alert("Error en la eliminación");</script>';
     }
 }
 
@@ -90,11 +95,13 @@ function modificarCita($id_cita, $hora, $fecha){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['actualizado'] = true;
-        echo '<script> window.location.href = "citas_medicas.php";</script>';
+        echo '<script>
+            window.location.href = "citas_medicas.php";
+            alert("actualizado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al actualizar la cita para el procedimiento');
+        echo '<script>alert("Error en la eliminación");</script>';
     }
 }
 ?>
