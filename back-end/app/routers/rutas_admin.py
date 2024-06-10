@@ -649,8 +649,8 @@ def eliminar_cita(id_cita: int):
 @router_admin.post('/admin/password-reset')
 def password_reset(request: RestablecerPasswordSchema):
     token = request.token
-    new_password = request.new_password
-
+    new_password = bcrypt.hashpw(request.new_password.encode('utf-8'), bcrypt.gensalt())
+    
     query = text("SELECT * FROM tokens_recuperacion WHERE token = :token")
     result = conn.execute(query, {"token": token}).fetchone()
 
@@ -662,11 +662,11 @@ def password_reset(request: RestablecerPasswordSchema):
         raise HTTPException(status_code=400, detail="El token ha expirado")
 
     email = result.email
-    hashed_password = pwd_context.hash(new_password)
+    hashed_password = new_password.decode('utf-8')
 
     # Actualizar la contraseña del médico
     update_query = text("UPDATE administrador SET clave = :clave WHERE email = :email")
-    conn.execute(update_query, {"clave": new_password, "email": email})
+    conn.execute(update_query, {"clave": hashed_password, "email": email})
 
     # Eliminar el registro de recuperación de contraseña
     delete_query = text("DELETE FROM tokens_recuperacion WHERE token = :token")
