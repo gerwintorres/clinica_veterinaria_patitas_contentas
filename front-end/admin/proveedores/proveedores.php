@@ -6,7 +6,7 @@
     $texto_tabla = 'Lista de proveedores';
     $ruta_card = 'anadir_proveedor.php';
     require '../../config/funciones_proveedores.php';
-    include '../../includes/templates/pagina_card.php';
+    include '../../includes/templates/pagina_card.php'; 
 
     if(isset($_SESSION['loggedin']) && $_SESSION['usuario'] = 'admin'){
         $proveedores = obtenerProveedores();
@@ -15,17 +15,6 @@
     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_proveedor'])) {
         $id_proveedor = $_GET['id_proveedor'];
         eliminarProveedor($id_proveedor);
-    }
-
-    if(isset($_SESSION['registro'])){
-        alertaRegistro('Proveedor registrado exitosamente');
-        unset($_SESSION['registro']);
-    }elseif(isset($_SESSION['actualizado'])){
-        alertaActualizado('Proveedor actualizado exitosamente');
-        unset($_SESSION['actualizado']);
-    }elseif(isset($_SESSION['eliminado'])){
-        alertaEliminado('Proveedor eliminado exitosamente', 'proveedores.php');
-        unset($_SESSION['eliminado']);
     }
 ?>
     <article class="contenedor contenedor-table">

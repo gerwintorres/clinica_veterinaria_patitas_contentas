@@ -1,6 +1,5 @@
 <?php   
-require_once 'funciones_alertas.php';
-
+require 'funciones_alertas.php';
 function obtenerColaboradores() {
 
     $url = "http://127.0.0.1:8000/admin/colaboradores";

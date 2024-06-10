@@ -1,5 +1,4 @@
 <?php
-require_once 'funciones_alertas.php';
 
 function obtenerMascotas($id_cliente) {
 
@@ -44,10 +43,13 @@ function registrarMascota($nombre, $tipoMascota, $raza, $edad, $peso){
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        $_SESSION['registro'] = true;
-        echo '<script> window.location.href = "mis_mascotas.php";</script>';
+        echo '<script>
+            window.location.href = "../mascotas/mis_mascotas.php";
+            alert("Registrado con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al registrar la mascota');
+        // Maneja el error
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 
@@ -73,11 +75,13 @@ function actualizarMascota($id_mascota, $nombre, $tipoMascota, $raza, $edad, $pe
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['actualizado'] = true;
-        echo '<script> window.location.href = "mis_mascotas.php";</script>';
+        echo '<script>
+            window.location.href = "../mascotas/mis_mascotas.php";
+            alert("Actualizado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al actualizar la mascota');
+        echo '<script>alert("Error en la actualización");</script>';
     }
 }
 
@@ -95,9 +99,13 @@ function eliminarMascota($id_mascota){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['eliminado'] = true;
+        echo '<script>
+            window.location.href = "../mascotas/mis_mascotas.php";
+            alert("Eliminado con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al eliminar la mascota');
+        // Maneja el error
+        echo '<script>alert("Error en la eliminación");</script>';
     }
     
 }

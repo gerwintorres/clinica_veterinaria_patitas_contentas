@@ -1,5 +1,4 @@
 <?php
-require_once 'funciones_alertas.php';
 
 function agendarEstancia($id_mascota, $fecha, $hora, $comentarios){
     $data = array(
@@ -22,10 +21,12 @@ function agendarEstancia($id_mascota, $fecha, $hora, $comentarios){
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        $_SESSION['registro'] = true;
-        echo '<script> window.location.href = "guarderia.php";</script>';
+        echo '<script>
+            window.location.href = "guarderia.php";
+            alert("Registrado con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al registrar la estancia en la guardería');
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 
@@ -68,11 +69,13 @@ function actualizarEstancia($id_registro, $fecha, $hora, $comentarios){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['actualizado'] = true;
-        echo '<script> window.location.href = "guarderia.php";</script>';
+        echo '<script>
+            window.location.href = "guarderia.php";
+            alert("Actualizado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al actualizar la estancia en la guardería');
+        echo '<script>alert("Error en la actualización");</script>';
     }
 }
 
@@ -90,10 +93,13 @@ function eliminarEstancia($id_registro){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['eliminado'] = true;
+        echo '<script>
+            window.location.href = "guarderia.php";
+            alert("Eliminado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al eliminar la estancia en la guardería');
+        echo '<script>alert("Error en la eliminación");</script>';
     }
 }
 
@@ -136,10 +142,11 @@ function realizarCheckIn($id_registro, $hora, $fecha){
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        $_SESSION['checkin'] = true;
-        echo '<script> window.location.href = "programacion_guarderia.php";</script>';
+        echo '<script>
+            alert("CheckIn con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al registrar el check-in');
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 
@@ -167,8 +174,13 @@ function realizarCheckOut($id_registro, $hora, $fecha){
     if ($http_code == 200) {
         $result = json_decode($response, true);
         return $result['id_cobro'];
+        // echo '<script>
+        //     window.location.href = "recibo_guarderia.php";
+        //     alert("CheckOut con éxito");
+        // </script>';
+        
     } else {
-        alertaErrorGeneral('Error al registrar el check-out');
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 

@@ -1,5 +1,4 @@
 <?php 
-require_once 'funciones_alertas.php';
 
 function registrarCliente($nombre, $apellidos, $tipoDocumento, $numeroDocumento, $telefono, $correo, $password, $direccion) {
     $data = array(
@@ -26,10 +25,10 @@ function registrarCliente($nombre, $apellidos, $tipoDocumento, $numeroDocumento,
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        $_SESSION['registro'] = true;
+        echo '<script>alert("Añadido con exito");</script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al registrar el usuario');
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 ?>

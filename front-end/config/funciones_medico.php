@@ -1,5 +1,4 @@
 <?php 
-require_once 'funciones_alertas.php';
 
 function obtenerProgramacion($id_medico){
     date_default_timezone_set('America/Bogota');
@@ -41,11 +40,13 @@ function insertarConsulta($id_historia_clinica, $descripcion){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['consulta'] = true;
-        echo '<script> window.location.href = "paciente_consulta.php";</script>';
+        echo '<script>
+            window.location.href = "paciente_consulta.php";
+            alert("Actualizado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al registrar la nueva consulta');
+        echo '<script>alert("Error en la actualización");</script>';
     }
 }
 
@@ -69,11 +70,13 @@ function crearOrdenMedica($id_cita, $descripcion, $id_servicio){
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        $_SESSION['orden'] = true;
-        echo '<script> window.location.href = "paciente_consulta.php";</script>';
+        echo '<script>
+            window.location.href = "paciente_consulta.php";
+            alert("Registrado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al generar la orden médica');
+        echo '<script>alert("Error en el registro");</script>';
     }
 }
 ?>

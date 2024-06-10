@@ -1,5 +1,4 @@
 <?php 
-require_once 'funciones_alertas.php';
 
 function obtenerClientes(){
 
@@ -63,11 +62,13 @@ function actualizarCliente($id_cliente, $nombre, $apellidos, $telefono, $correo,
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['actualizado'] = true;
-        echo '<script> window.location.href = "configuracion.php";</script>';
+        echo '<script>
+            window.location.href = "configuracion.php";
+            alert("Actualizado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al actualizar el perfil');
+        echo '<script>alert("Error en la actualización");</script>';
     }        
 }
 
@@ -86,15 +87,21 @@ function eliminarCliente($id_cliente){
         if ($http_code == 200) { // Verificar el código de estado HTTP correcto
             $result = json_decode($response, true);
             if($_SESSION['usuario'] == 'admin'){
-                $_SESSION['eliminado'] = true;
+                echo '<script>
+                    window.location.href = "clientes.php";
+                    alert("Eliminado con éxito");
+                </script>';
             }else{
                 session_unset();
                 session_destroy();
-                $_SESSION['eliminado'] = true;
+                echo '<script>
+                    window.location.href = "../../index.php";
+                    alert("Eliminado con éxito");
+                </script>';
             }
         } else {
             // Maneja el error
-            alertaErrorGeneral('Error al eliminar el usuario');
+            echo '<script>alert("Error en la eliminación");</script>';
         }
     }
 

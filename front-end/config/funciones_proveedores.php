@@ -1,5 +1,4 @@
 <?php   
-require_once 'funciones_alertas.php';
 
 function obtenerProveedores() {
 
@@ -41,10 +40,13 @@ function registrarProveedor($nombre, $ubicacion, $email, $telefono){
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        $_SESSION['registro'] = true;
-        echo '<script> window.location.href = "proveedores.php";</script>';
+        echo '<script>
+            window.location.href = "proveedores.php";
+            alert("Registrado con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al registrar el proveedor');
+        // Maneja el error
+        echo '<script>alert("Error en el registro");</script>';
     }
     
 }
@@ -71,10 +73,13 @@ function actualizarProveedor($id_proveedor, $nombre, $ubicacion, $email, $telefo
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['actualizado'] = true;
-        echo '<script> window.location.href = "proveedores.php";</script>';
+        echo '<script>
+            window.location.href = "proveedores.php";
+            alert("Actualizado con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al actualizar el proveedor');
+        // Maneja el error
+        echo '<script>alert("Error en la actualización");</script>';
     }
 }
 
@@ -92,9 +97,13 @@ function eliminarProveedor($id_proveedor){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['eliminado'] = true;
+        echo '<script>
+            window.location.href = "proveedores.php";
+            alert("Eliminado con éxito");
+        </script>';
     } else {
-        alertaErrorGeneral('Error al eliminar el proveedor');
+        // Maneja el error
+        echo '<script>alert("Error en la eliminación");</script>';
     }
     
 }

@@ -15,11 +15,6 @@
     if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id_cliente'])) {
         eliminarCliente($_GET['id_cliente']);
     }
-
-    if(isset($_SESSION['eliminado'])){
-        alertaEliminado('Usuario eliminado exitosamente', 'clientes.php');
-        unset($_SESSION['eliminado']);
-    }
 ?>
 <article class="contenedor contenedor-table">
         <div class="search-container">

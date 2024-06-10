@@ -1,6 +1,5 @@
 <?php   
 require 'funciones_proveedores.php';
-require_once 'funciones_alertas.php';
 
 function obtenerProductos() {
 
@@ -56,11 +55,13 @@ function registrarProductos($nombre, $fecha_vencimiento, $cantidad, $id_proveedo
 
     if ($http_code == 201) {
         $result = json_decode($response, true);
-        $_SESSION['registro'] = true;
-        echo '<script> window.location.href = "productos.php";</script>';
+        echo '<script>
+            window.location.href = "productos.php";
+            alert("Registrado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al registrar el producto');
+        echo '<script>alert("Error en el registro");</script>';
     }
     
 }
@@ -89,11 +90,13 @@ function actualizarProductos($id_producto, $nombre, $fecha_vencimiento, $cantida
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['actualizado'] = true;
-        echo '<script> window.location.href = "productos.php";</script>';
+        echo '<script>
+            window.location.href = "productos.php";
+            alert("Actualizado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al actualizar el producto');
+        echo '<script>alert("Error en la actualización");</script>';
     }
 }
 
@@ -111,10 +114,13 @@ function eliminarProducto($id_producto){
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        $_SESSION['eliminado'] = true;
+        echo '<script>
+            window.location.href = "productos.php";
+            alert("Eliminado con éxito");
+        </script>';
     } else {
         // Maneja el error
-        alertaErrorGeneral('Error al eliminar el producto');
+        echo '<script>alert("Error en la eliminación");</script>';
     }
     
 }

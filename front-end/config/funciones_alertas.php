@@ -92,7 +92,7 @@ function alertaEliminado($texto){ ?>
             }
         }).then((result) => {
              if (result.isConfirmed) {
-                window.location.href = "<?php echo $url?>";
+                window.location.href = "colaboradores.php";
              }
         });
     });

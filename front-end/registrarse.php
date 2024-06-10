@@ -25,11 +25,6 @@
     if ($filename === $urlEsperada){
         $mostrarBotonAtras = true;
     }
-
-    if(isset($_SESSION['registro'])){
-        alertaRegistro('Usuario registrado exitosamente');
-        unset($_SESSION['registro']);
-    }
 ?>
 
 <?php if ($mostrarBotonAtras): ?>

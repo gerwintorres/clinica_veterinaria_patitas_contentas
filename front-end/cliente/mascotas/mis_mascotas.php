@@ -17,17 +17,6 @@
         $id_mascota = $_GET['id_mascota'];
         eliminarMascota($id_mascota);
     }
-
-    if(isset($_SESSION['registro'])){
-        alertaRegistro('Mascota registrada exitosamente');
-        unset($_SESSION['registro']);
-    }elseif(isset($_SESSION['actualizado'])){
-        alertaActualizado('Mascota actualizada exitosamente');
-        unset($_SESSION['actualizado']);
-    }elseif(isset($_SESSION['eliminado'])){
-        alertaEliminado('Mascota eliminada exitosamente', 'mis_mascotas.php');
-        unset($_SESSION['eliminado']);
-    }
 ?>
     <article class="contenedor contenedor-table">
         <div class="search-container">

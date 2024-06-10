@@ -10,14 +10,6 @@
         eliminarCliente($_GET['id_cliente']);
     }
 
-    if(isset($_SESSION['eliminado'])){
-        alertaEliminado('Usuario eliminado exitosamente', '../../index.php');
-        unset($_SESSION['eliminado']);
-    }
-    elseif(isset($_SESSION['actualizado'])){
-        alertaActualizado('Usuario actualizado exitosamente');
-        unset($_SESSION['actualizado']);
-    }
 ?>
 <div class="contenedor contenedor-boton-atras">
     <a href="../menu_cliente.php" class="boton-atras"> <svg width="11" height="20" viewBox="0 0 11 26" fill="none" xmlns="http://www.w3.org/2000/svg">
