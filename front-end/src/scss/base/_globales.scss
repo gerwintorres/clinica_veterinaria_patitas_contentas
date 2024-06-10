@@ -77,11 +77,18 @@ h4 {
     line-height: 1.1;
     margin-top: 4rem;
 }
+.alineacion-izquierda{
+    text-align: left;
+}
+.contenedor-boton-atras{
+    display: flex;
+    align-items: center;
+    margin-top: 3rem;
+}
 .boton-atras{
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 3rem;
     color: $azul_oscuro;
     font-weight: 900;
 }
@@ -108,6 +115,7 @@ label{
 
 textarea{
     width: 100%;
+    height: 8rem;
     padding: 0.5rem 0.5rem 0.5rem 0;
     border: none; /* Primero, eliminamos todos los bordes */
     border-bottom: 0.2rem solid $azul_oscuro; /* Luego, agregamos un borde solo en la parte inferior */

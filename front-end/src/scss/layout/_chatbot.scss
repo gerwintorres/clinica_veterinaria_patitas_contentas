@@ -4,7 +4,7 @@
     align-items: center;
     gap: 2rem;
 
-    button{
+    .boton-abrir{
         color: $negro;
         font-size: 1.5rem;
         font-weight: 700;
@@ -12,10 +12,141 @@
         box-shadow: 2px 2px 2px 3px rgba(0, 0, 0, 0.2);
 
         &:hover{
-            background-color: $azul_oscuro;
+            background-color: #DF662B;
+            border-color: #DF662B;
             color: $blanco;
             transition: all 0.5s;
-        
         }
     }
 }
+.chat-container {
+    width: 500px;
+    border: 0.25rem solid $azul_oscuro;
+    border-radius: 2rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    background-color: $blanco;
+    overflow: hidden;
+    display: none;
+    position: fixed;
+    bottom: 7rem;
+    left: 40rem;
+    z-index: 1000;
+} //listo
+
+.chat-header {
+    background-color: $azul_oscuro;
+    font-family: $fuente_secundaria;
+    font-weight: 400;
+    color: $blanco;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-header-izq{
+    display: flex;
+    gap: 1rem;
+}
+.chat-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.chat-title span {
+    line-height: 1.2;
+}
+
+.chat-status {
+    color: #4CAF50;
+}
+.close-button {
+    background-color: #DF662B;
+    color: $blanco;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-family: $fuente_secundaria;
+    font-weight: 600;
+
+    &:hover{
+        background-color: $blanco;
+        color: #DF662B;
+        transition: all 0.5s;
+    }
+}
+
+.chat-box {
+
+    .men{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    height: 200px;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+.response{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+    margin-bottom: 1rem;
+}
+.response-bot{
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 10px;
+}
+
+.message {
+    padding: 5px 10px;
+    border-radius: 10px;
+    max-width: 80%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.bot-message {
+    background-color: #E3E3E3;
+    // margin-top: 10px;
+}
+
+.user-message {
+    background-color: #DF662B;
+    color: white;
+    align-self: flex-end;
+    
+}
+
+.question-buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    height: 200px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+.question-buttons button {
+    margin: 5px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #E3E3E3;
+    color: black;
+    cursor: pointer;
+    text-align: left;
+
+    &:hover{
+        background-color: #DF662B;
+        color: $blanco;
+        transition: all 0.5s;
+    }
+}   

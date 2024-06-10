@@ -2,17 +2,17 @@ from sqlalchemy import MetaData, Table, Column, Integer, String, ForeignKey, Flo
 from database.db import engine, meta_data
 
 
-cargo = Table(
+"""cargo = Table(
     "cargo",
     meta_data,
     Column("id_cargo", Integer, primary_key=True),
     Column("nombre_cargo", String(100), nullable=False)
-)
+)"""
 
 servicio = Table(
     "servicio",
     meta_data,
-    Column("id_servicio", Integer, primary_key=True),
+    Column("id_servicio", Integer, autoincrement = True, primary_key=True),
     Column("nombre", String(100), nullable=False),
     Column("precio", Integer, nullable=False)
 )
@@ -23,8 +23,8 @@ clientes = Table(
     Column("id_cliente", Integer, primary_key=True),
     Column("nombres", String(100), nullable=False),
     Column("apellidos", String(100), nullable=False),
-    Column("tipo_documento", String(20), nullable=False),
-    Column("telefono", Integer, nullable=False, unique=True),
+    Column("tipo_documento", String(50), nullable=False),
+    Column("telefono", String(100), nullable=False, unique=True),
     Column("email", String(255), nullable=False, unique=True),
     Column("clave", String(100), nullable=False),
     Column("direccion", String(50), nullable=False)
@@ -37,10 +37,18 @@ mascotas = Table(
     Column("nombre", String(100), nullable=False),
     Column("tipo_mascota", String(100), nullable=False),
     Column("raza", String(50), nullable=False),
-    Column("edad", Integer, nullable=False),
+    Column("edad", String(20), nullable=False),
     Column("peso", Float, nullable=False),
-    Column("historia_clinica", Text),
-    Column("id_cliente", Integer, ForeignKey("cliente.id_cliente"), nullable=False)
+    Column("id_cliente", Integer, ForeignKey("cliente.id_cliente",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
+)
+
+historias_clinicas = Table(
+    "historias_clinicas",
+    meta_data,
+    Column("id_historia_clinica", Integer, autoincrement = True, primary_key=True),
+    Column("descripcion", Text),
+    Column("id_cliente", Integer, ForeignKey("cliente.id_cliente",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
+    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 medico = Table(
@@ -51,7 +59,7 @@ medico = Table(
     Column("apellidos", String(100), nullable=False),
     Column("email", String(100), nullable=False, unique=True),
     Column("clave", String(255), nullable=False),
-    Column("telefono", Integer, nullable=False, unique=True)
+    Column("telefono", String(100), nullable=False, unique=True)
 )
 
 colaborador = Table(
@@ -60,10 +68,10 @@ colaborador = Table(
     Column("id_colaborador", Integer, primary_key=True),
     Column("nombres", String(100), nullable=False),
     Column("apellidos", String(100), nullable=False),
-    Column("cargo", String(50), nullable=False),
-    Column("email", String(100), nullable=False, unique=True),
-    Column("telefono", Integer, nullable=False, unique=True),
-    Column("id_cargo", Integer, ForeignKey("cargo.id_cargo"), nullable=False)
+    Column("tipo_documento", String(20), nullable=False),    
+    Column("labor", String(50), nullable=False),
+    Column("telefono", String(100), nullable=False, unique=True),
+    #Column("id_cargo", Integer, ForeignKey("cargo.id_cargo"), nullable=False)
 )
 
 citas = Table(
@@ -73,10 +81,10 @@ citas = Table(
     Column("hora", Time, nullable=False),
     Column("fecha", Date, nullable=False),
     Column("procedimiento", String(100), nullable=False),
-    Column("id_medico", Integer, ForeignKey("medico.id_medico"), nullable=False),
-    Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador"), nullable=False),
-    Column("id_servicio", Integer, ForeignKey("servicio.id_servicio"), nullable=False),
-    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota"), nullable=False)
+    Column("id_medico", Integer, ForeignKey("medico.id_medico", ondelete="CASCADE", onupdate="CASCADE"), nullable= True),
+    Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador"), nullable = True),
+    Column("id_servicio", Integer, ForeignKey("servicio.id_servicio",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
+    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 orden_medica = Table(
@@ -84,8 +92,8 @@ orden_medica = Table(
     meta_data,
     Column("id_orden", Integer, primary_key=True),
     Column("descripcion", Text, nullable=False),
-    Column("id_cita", Integer, ForeignKey("citas.id_cita"), nullable=False),
-    Column("id_servicio", Integer, ForeignKey("servicio.id_servicio"), nullable=False)
+    Column("id_cita", Integer, ForeignKey("citas.id_cita", ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
+    Column("id_servicio", Integer, ForeignKey("servicio.id_servicio",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 guarderia = Table(
@@ -95,7 +103,7 @@ guarderia = Table(
     Column("hora", Time, nullable=False),
     Column("fecha", Date, nullable=False),
     Column("comentarios", Text),
-    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota"), nullable=False)
+    Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
 
 productos = Table(
@@ -107,7 +115,7 @@ productos = Table(
     Column("cantidad", Integer, nullable=False),
     Column("precio_compra", Float, nullable=False),
     Column("precio_venta", Float, nullable=False),
-    Column("id_lote", Integer, ForeignKey("lotes.id_lote"), nullable=True)
+    Column("lote", Integer, nullable=True)
 )
 
 proveedor = Table(
@@ -123,18 +131,11 @@ proveedor = Table(
 registro_productos = Table(
     "registro_productos",
     meta_data,
-    Column("id_registro", Integer, primary_key=True),
+    Column("id_registro", Integer, autoincrement = True,  primary_key=True),
     Column("id_producto", Integer, ForeignKey("productos.id_producto"), nullable=False),
     Column("id_proveedor", Integer, ForeignKey("proveedor.id_proveedor"), nullable=False)
 )
 
-lotes = Table(
-    "lotes",
-    meta_data,
-    Column("id_lote", Integer, primary_key=True),
-    Column("lote", Integer, nullable=False, unique=True),
-    Column("id_producto", Integer, ForeignKey("productos.id_producto"), nullable=False)
-)
 
 administrador = Table(
     "administrador",
@@ -146,4 +147,28 @@ administrador = Table(
     Column("clave", String(100), nullable=False)
 )
 
-meta_data.create_all(engine)
+tokens_recuperacion = Table(
+    "tokens_recuperacion",
+    meta_data,
+    Column("id", Integer, primary_key=True),
+    Column("email", String(255), nullable=False),
+    Column("token", String(255), nullable=False),
+    Column("expiration", String(255), nullable=False),
+    Column("created_at", String(255), nullable=False)
+)
+
+registro_guarderia = Table(
+    "registro_guarderia",
+    meta_data,
+    Column("id_cobro", Integer, primary_key=True),
+    Column("total", Float, nullable=True),
+    Column("id_registro", Integer, ForeignKey("guarderia.id_registro", ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
+    Column("fecha_entrada", Date, nullable=False),
+    Column("hora_entrada", Time, nullable=False),
+    Column("fecha_salida", Date, nullable=True),
+    Column("hora_salida", Time, nullable=True)
+)
+
+
+
+meta_data.create_all(engine);

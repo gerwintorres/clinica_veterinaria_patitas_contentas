@@ -1,6 +1,23 @@
 <?php
     $pagina_actual = 'contactanos';
+    require 'config/funciones_contacto.php';
     include 'includes/templates/header.php';
+
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Mensaje enviado exitosamente');
+        unset($_SESSION['registro']);
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nombres = $_POST['nombre'];
+        $apellidos = $_POST['apellidos'];
+        $email = $_POST['email'];
+        $telefono = $_POST['numero'];
+        $mensaje = $_POST['mensaje'];
+
+        enviarDatos($nombres, $apellidos, $email, $telefono, $mensaje);
+    }
+    
 ?>
 <h1 class="contenedor titulo-h1-pagina">Contáctanos</h1>
 <main class="formulario-contacto contenedor">
@@ -53,15 +70,15 @@
 
 
     </div>
-    <form action="">
+    <form action="" method="POST">
         <div class="campos">
             <div>
                 <label for="nombre">Nombre(s)</label>
                 <input class="inputs" type="text" id="nombre" name="nombre" required>
             </div>
             <div>
-                <label for="nombre">Apellidos</label>
-                <input class="inputs" type="text" id="nombre" name="nombre" required>
+                <label for="apellidos">Apellidos</label>
+                <input class="inputs" type="text" id="apellidos" name="apellidos" required>
             </div>
         </div>
         <div class="campos">
@@ -82,5 +99,5 @@
     </form>
 </main>
 <?php
-    include 'includes/templates/footer.php';
+    include './includes/templates/footer.php';
 ?>

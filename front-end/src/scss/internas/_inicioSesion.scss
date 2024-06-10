@@ -5,3 +5,20 @@
     margin-top: 4rem;
     margin-bottom: 10.7rem;
 }
+.ultima-fila-card{
+    margin-top: -8.8rem;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 10.7rem;
+
+    .last{
+        padding-left: 2.8rem;
+        padding-right: 2.8rem;
+    }
+
+    .last1{
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
+}
