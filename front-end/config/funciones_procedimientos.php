@@ -1,5 +1,5 @@
 <?php
-require 'funciones_alertas.php';
+require_once 'funciones_alertas.php';
 
 function obtenerProcedimientos(){
     $url = "http://127.0.0.1:8000/admin/precios";
