@@ -62,7 +62,7 @@
                 </div>
                 <div>
                     <label for="hora">Hora</label>
-                    <input type="time" id="hora" name="hora" value="<?php echo $hora_formateada?>" required class="inputs">
+                    <input type="time" id="hora" name="hora" value="<?php echo $hora_formateada?>" required class="inputs" step="1800">
                 </div>
             </div>
             <div class="formulario-datos-comentarios">
