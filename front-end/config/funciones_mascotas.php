@@ -1,5 +1,5 @@
 <?php
-require 'funciones_alertas.php';
+require_once 'funciones_alertas.php';
 
 function obtenerMascotas($id_cliente) {
 
