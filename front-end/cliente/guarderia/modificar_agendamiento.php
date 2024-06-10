@@ -31,6 +31,9 @@
         $comentarios = $_POST['comentarios'];
         actualizarEstancia($id_registro, $fecha, $hora, $comentarios);
     }
+
+    // Obtener la fecha actual
+    $today = date("Y-m-d");
 ?>
 
 <div class="contenedor contenedor-boton-atras">
@@ -55,11 +58,11 @@
                 </div>
                 <div>
                     <label for="fecha">Fecha</label>
-                    <input type="date" id="fecha" name="fecha" value="<?php echo $fecha?>" required class="inputs">
+                    <input type="date" id="fecha" name="fecha" value="<?php echo $fecha?>" required class="inputs" min="<?php echo $today;?>">
                 </div>
                 <div>
                     <label for="hora">Hora</label>
-                    <input type="time" id="hora" name="hora" value="<?php echo $hora_formateada?>" required class="inputs">
+                    <input type="time" id="hora" name="hora" value="<?php echo $hora_formateada?>" required class="inputs" step="1800">
                 </div>
             </div>
             <div class="formulario-datos-comentarios">

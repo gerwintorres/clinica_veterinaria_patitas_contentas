@@ -1,4 +1,5 @@
 <?php 
+require_once 'funciones_alertas.php';
 
 function obtenerClientes(){
 
@@ -62,13 +63,12 @@ function actualizarCliente($id_cliente, $nombre, $apellidos, $telefono, $correo,
 
     if ($http_code == 200) { // Verificar el código de estado HTTP correcto
         $result = json_decode($response, true);
-        echo '<script>
-            window.location.href = "configuracion.php";
-            alert("Actualizado con éxito");
-        </script>';
+        $_SESSION['actualizado'] = true;
+        echo $_SESSION['actualizado'];
+        echo '<script> window.location.href = "configuracion.php";</script>';
     } else {
         // Maneja el error
-        echo '<script>alert("Error en la actualización");</script>';
+        alertaErrorGeneral('Error al actualizar el perfil');
     }        
 }
 
@@ -87,21 +87,15 @@ function eliminarCliente($id_cliente){
         if ($http_code == 200) { // Verificar el código de estado HTTP correcto
             $result = json_decode($response, true);
             if($_SESSION['usuario'] == 'admin'){
-                echo '<script>
-                    window.location.href = "clientes.php";
-                    alert("Eliminado con éxito");
-                </script>';
+                $_SESSION['eliminado'] = true;
             }else{
                 session_unset();
                 session_destroy();
-                echo '<script>
-                    window.location.href = "../../index.php";
-                    alert("Eliminado con éxito");
-                </script>';
+                echo '<script> window.location.href = "../../index.php?e=1";</script>';
             }
         } else {
             // Maneja el error
-            echo '<script>alert("Error en la eliminación");</script>';
+            alertaErrorGeneral('Error al eliminar el usuario');
         }
     }
 

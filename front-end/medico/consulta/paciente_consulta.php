@@ -7,6 +7,14 @@
     if (isset($_SESSION['id_medico']) && $_SESSION['loggedin'] == true) {
         $programacion = obtenerProgramacion($_SESSION['id_medico']);
     }
+
+    if(isset($_SESSION['consulta'])){
+        alertaRegistro('Nueva consulta registrada exitosamente');
+        unset($_SESSION['consulta']);
+    }elseif(isset($_SESSION['orden'])){
+        alertaRegistro('Orden médica generada exitosamente');
+        unset($_SESSION['orden']);
+    }
 ?>
 
 <div class="contenedor contenedor-boton-atras">

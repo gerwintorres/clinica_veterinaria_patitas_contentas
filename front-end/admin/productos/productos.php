@@ -16,6 +16,17 @@
         $id_producto = $_GET['id_producto'];
         eliminarProducto($id_producto);
     }
+
+    if(isset($_SESSION['registro'])){
+        alertaRegistro('Producto registrado exitosamente');
+        unset($_SESSION['registro']);
+    }elseif(isset($_SESSION['actualizado'])){
+        alertaActualizado('Producto actualizado exitosamente');
+        unset($_SESSION['actualizado']);
+    }elseif(isset($_SESSION['eliminado'])){
+        alertaEliminado('Producto eliminado exitosamente', 'productos.php');
+        unset($_SESSION['eliminado']);
+    }
 ?>
 
 <article class="contenedor contenedor-table">

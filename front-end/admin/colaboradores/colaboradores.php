@@ -24,7 +24,7 @@
         alertaActualizado('Colaborador actualizado exitosamente');
         unset($_SESSION['actualizado']);
     }elseif(isset($_SESSION['eliminado'])){
-        alertaEliminado('Colaborador eliminado exitosamente');
+        alertaEliminado('Colaborador eliminado exitosamente', 'colaboradores.php');
         unset($_SESSION['eliminado']);
     }
 ?>

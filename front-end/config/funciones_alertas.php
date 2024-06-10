@@ -77,7 +77,7 @@ function alertaActualizado($texto){ ?>
 <?php 
 }
 
-function alertaEliminado($texto){ ?>
+function alertaEliminado($texto, $url){ ?>
     <script>
     $(document).ready(function() {
         Swal.fire({
@@ -92,7 +92,7 @@ function alertaEliminado($texto){ ?>
             }
         }).then((result) => {
              if (result.isConfirmed) {
-                window.location.href = "colaboradores.php";
+                window.location.href = "<?php echo $url?>";
              }
         });
     });

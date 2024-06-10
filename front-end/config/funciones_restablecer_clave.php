@@ -1,4 +1,5 @@
 <?php   
+require_once 'funciones_alertas.php';
 
 function enviarCorreo($email){
     $data = array(
@@ -18,13 +19,11 @@ function enviarCorreo($email){
 
     if ($http_code == 200) {
         $response = json_decode($response, true);
-        echo '<script>
-            window.location.href = "restablecer_clave2.php";
-            alert("Se ha enviado un código de verificación a tu correo electrónico.");
-        </script>';
+        $_SESSION['correo'] = true;
+        echo '<script> window.location.href = "restablecer_clave2.php";</script>';
     } else {
         // Maneja el error
-        echo '<script>alert("Correo invalido");</script>';
+        alertaErrorGeneral('Error al enviar el código, correo inválido');
     }
 }
 
@@ -53,12 +52,10 @@ function enviarCodigo($codigo, $clave, $user) {
     curl_close($ch);
 
     if ($http_code == 200) {
-        echo '<script>
-            alert("Tu contraseña ha sido restablecida con éxito. Inicia sesión con tu nueva contraseña.");
-            window.location.href = "iniciar_sesion.php";
-        </script>';
+        $_SESSION['codigo'] = true;
+        echo '<script> window.location.href = "iniciar_sesion.php";</script>';
     } else {
-        echo '<script>alert("Token inválido");</script>';
+        alertaErrorGeneral('Código inválido');
     }
 }
 ?>
