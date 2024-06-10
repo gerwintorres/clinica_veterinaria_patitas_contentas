@@ -82,7 +82,7 @@ citas = Table(
     Column("fecha", Date, nullable=False),
     Column("procedimiento", String(100), nullable=False),
     Column("id_medico", Integer, ForeignKey("medico.id_medico", ondelete="CASCADE", onupdate="CASCADE"), nullable= True),
-    Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador"), nullable = True),
+    Column("id_colaborador", Integer, ForeignKey("colaborador.id_colaborador", ondelete="CASCADE", onupdate="CASCADE"), nullable = True),
     Column("id_servicio", Integer, ForeignKey("servicio.id_servicio",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False),
     Column("id_mascota", Integer, ForeignKey("mascotas.id_mascota",  ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
 )
